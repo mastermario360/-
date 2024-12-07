@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="GFP3_SeoSDX.png">
+	<!-- Created with Adobe Animate version 21.0.3.38773 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="GF_Idle30000" x="40" y="40" width="627" height="609" frameX="0" frameY="-1" frameWidth="627" frameHeight="610"/>
+	<SubTexture name="GF_Idle30001" x="667" y="40" width="627" height="609" frameX="0" frameY="-1" frameWidth="627" frameHeight="610"/>
+	<SubTexture name="GF_Idle30002" x="1294" y="40" width="627" height="606" frameX="0" frameY="-4" frameWidth="627" frameHeight="610"/>
+	<SubTexture name="GF_Idle30003" x="1921" y="40" width="627" height="606" frameX="0" frameY="-4" frameWidth="627" frameHeight="610"/>
+	<SubTexture name="GF_Idle30004" x="2548" y="40" width="627" height="601" frameX="0" frameY="-9" frameWidth="627" frameHeight="610"/>
+	<SubTexture name="GF_Idle30005" x="3175" y="40" width="627" height="601" frameX="0" frameY="-9" frameWidth="627" frameHeight="610"/>
+	<SubTexture name="GF_Idle30006" x="40" y="649" width="627" height="601" frameX="0" frameY="-9" frameWidth="627" frameHeight="610"/>
+	<SubTexture name="GF_Idle30007" x="667" y="649" width="627" height="601" frameX="0" frameY="-9" frameWidth="627" frameHeight="610"/>
+	<SubTexture name="GF_Idle30008" x="1294" y="649" width="627" height="601" frameX="0" frameY="-9" frameWidth="627" frameHeight="610"/>
+	<SubTexture name="GF_Idle30009" x="1921" y="649" width="627" height="601" frameX="0" frameY="-9" frameWidth="627" frameHeight="610"/>
+	<SubTexture name="GF_Idle30010" x="2548" y="649" width="627" height="601" frameX="0" frameY="-9" frameWidth="627" frameHeight="610"/>
+	<SubTexture name="GF_Idle30011" x="3175" y="649" width="627" height="601" frameX="0" frameY="-9" frameWidth="627" frameHeight="610"/>
+	<SubTexture name="GF_Idle30012" x="40" y="1250" width="627" height="601" frameX="0" frameY="-9" frameWidth="627" frameHeight="610"/>
+	<SubTexture name="GF_Idle30013" x="667" y="1250" width="627" height="601" frameX="0" frameY="-9" frameWidth="627" frameHeight="610"/>
+	<SubTexture name="GF_Idle30014" x="1294" y="1250" width="627" height="601" frameX="0" frameY="-9" frameWidth="627" frameHeight="610"/>
+	<SubTexture name="GF_Idle30015" x="1921" y="1250" width="627" height="601" frameX="0" frameY="-9" frameWidth="627" frameHeight="610"/>
+	<SubTexture name="GF_Idle30016" x="2548" y="1250" width="627" height="601" frameX="0" frameY="-9" frameWidth="627" frameHeight="610"/>
+	<SubTexture name="GF_Idle30017" x="3175" y="1250" width="627" height="601" frameX="0" frameY="-9" frameWidth="627" frameHeight="610"/>
+	<SubTexture name="GF_Idle30018" x="40" y="1851" width="627" height="601" frameX="0" frameY="-9" frameWidth="627" frameHeight="610"/>
+	<SubTexture name="GF_Idle30019" x="667" y="1851" width="627" height="601" frameX="0" frameY="-9" frameWidth="627" frameHeight="610"/>
+	<SubTexture name="GF_Idle30020" x="1294" y="1851" width="627" height="601" frameX="0" frameY="-9" frameWidth="627" frameHeight="610"/>
+	<SubTexture name="GF_Idle30021" x="1921" y="1851" width="627" height="601" frameX="0" frameY="-9" frameWidth="627" frameHeight="610"/>
+	<SubTexture name="GF_Idle30022" x="2548" y="1851" width="627" height="601" frameX="0" frameY="-9" frameWidth="627" frameHeight="610"/>
+	<SubTexture name="GF_Idle30023" x="3175" y="1851" width="627" height="601" frameX="0" frameY="-9" frameWidth="627" frameHeight="610"/>
+	<SubTexture name="GF_Idle30024" x="40" y="2452" width="627" height="601" frameX="0" frameY="-9" frameWidth="627" frameHeight="610"/>
+	<SubTexture name="GF_Idle30025" x="667" y="2452" width="627" height="601" frameX="0" frameY="-9" frameWidth="627" frameHeight="610"/>
+	<SubTexture name="GF_Idle30026" x="1294" y="2452" width="627" height="601" frameX="0" frameY="-9" frameWidth="627" frameHeight="610"/>
+	<SubTexture name="GF_Idle30027" x="1921" y="2452" width="627" height="601" frameX="0" frameY="-9" frameWidth="627" frameHeight="610"/>
+	<SubTexture name="GF_Idle30028" x="2548" y="2452" width="627" height="601" frameX="0" frameY="-9" frameWidth="627" frameHeight="610"/>
+	<SubTexture name="GF_Idle30029" x="3175" y="2452" width="627" height="601" frameX="0" frameY="-9" frameWidth="627" frameHeight="610"/>
+</TextureAtlas>

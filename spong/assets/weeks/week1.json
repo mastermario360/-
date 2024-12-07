@@ -1,0 +1,57 @@
+{
+	"songs": [
+		[
+			"spong",
+			"spong",
+			[
+				255,
+				255,
+				53
+			]
+		],
+		[
+			"absorb",
+			"spong",
+			[
+				255,
+				255,
+				53
+			]
+		],
+		[
+			"abrasive",
+			"character",
+			[
+				255,
+				255,
+				53
+			]
+		],
+		[
+			"pineappled",
+			"papple",
+			[
+				255,
+				255,
+				53
+			]
+		]
+	],
+	"hideFreeplay": false,
+	"weekBackground": "stage",
+	"weekCharacters": [
+		"dad",
+		"bf",
+		"gf"
+	],
+	"storyName": "spong:the destroyer of worlds",
+	"weekName": "",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"hideStoryMode": false,
+	"weekBefore": "tutorial",
+	"startUnlocked": true
+}

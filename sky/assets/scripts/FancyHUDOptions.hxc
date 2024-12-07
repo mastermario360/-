@@ -1,0 +1,131 @@
+import funkin.modding.module.Module;
+import funkin.ui.options.OptionsState;
+import funkin.ui.options.PageName;
+import flixel.util.FlxSave;
+import openfl.utils.Assets;
+import Std;
+
+class FancyHUDOptions extends Module {
+	// private var options:Array<Array<Dynamic>> = [];
+	private var lastStateIsOptions:Bool = false;
+	private var save:FlxSave;
+	private var lines:Array<String> = ['Done!', 'Huh?', 'Why?', 'Enough', 'Stop', 'BRO-', 'CALM DOWN', 'WTF', '???'];
+	private var resetAttempts:Int = 0;
+
+	function new() {
+		super('Fancy HUD Options', 800);
+	}
+
+	function onStateChangeEnd(event) {
+		super.onStateChangeEnd(event);
+		if (!Std.isOfType(event.targetState, OptionsState))
+			return;
+		lastStateIsOptions = true;
+		var preferences = event.targetState.pages.get(PageName.Preferences);
+		save = new FlxSave();
+		save.bind('FancyHUD', 'Ralsi');
+
+		if (save.data.healthBarBGStyle == null)
+			save.data.healthBarBGStyle = 1;
+		if (save.data.accuracyType == null)
+			save.data.accuracyType = 'Funkin';
+
+		preferences.items.createItem(300, 120 * preferences.items.length + 30, '*Fancy HUD* Settings', 'bold', () -> {}).fireInstantly = true;
+
+		preferences.createPrefItemCheckbox('Judgements Counter', 'Shows ratings count at the right of the HUD.', (value) -> {
+			save.data.showJudgements = value;
+		}, save.data.showJudgements);
+
+		preferences.createPrefItemCheckbox('Hits Counter', 'Adds hits counter to the score display.', (value) -> {
+			save.data.hitsCounter = value;
+		}, save.data.hitsCounter);
+
+		preferences.createPrefItemCheckbox('Misses Counter', 'Adds misses counter to the score display, doesn\'t affect the judgement counter.', (value) -> {
+			save.data.displayMisses = value;
+		}, save.data.displayMisses);
+		
+		preferences.createPrefItemCheckbox('Misses To Combo Break', 'Renames "Misses" to "Combo Breaks" on the score display, doesn\'t affect the judgement counter.', (value) -> {
+			save.data.missesToComboBreak = value;
+		}, save.data.missesToComboBreak);
+
+		preferences.createPrefItemCheckbox('Score Bounce', 'Makes Score Text bounce on note hit, like in PE.', (value) -> {
+			save.data.scoreBounce = value;
+		}, save.data.scoreBounce);
+		
+		preferences.createPrefItemCheckbox('Center Popups', 'Centers the popups (rating and combo) to the strumline.', (value) -> {
+			save.data.centerPopups = value;
+		}, save.data.centerPopups);
+
+		preferences.createPrefItemCheckbox('Fancy Popups', 'Adds popup animation to the rating and random rotation to the combo.', (value) -> {
+			save.data.fancyPopups = value;
+		}, save.data.fancyPopups);
+
+		preferences.createPrefItemCheckbox('Note Combo splash', '"Note Combo" splash text that appears after you successfully hit at least 20 notes in a single stretch.', (value) -> {
+			save.data.comboSplash = value;
+		}, save.data.comboSplash);
+
+		preferences.createPrefItemCheckbox('Lane Underlay', 'Adds background to the notefield to darken the area behind.', (value) -> {
+			save.data.underlay = value;
+		}, save.data.underlay);
+
+		preferences.createPrefItemCheckbox('Wait Timer', 'Adds a timer next to your notes that shows the amount of time left before its your time to sing.', (value) -> {
+			save.data.turnTimer = value;
+		}, save.data.turnTimer);
+
+		var stylesList:Array<String> = ['Default'];
+		var openflList:Array<String> = Assets.list('IMAGE');
+		for (asset in openflList)
+			if (asset.split('assets/shared/images/fancy-healthbars/')[0] != asset)
+				stylesList.push(asset.split('assets/shared/images/fancy-healthbars/')[1].split('.png')[0]);
+		trace(stylesList);
+		// trace(openflList);
+
+		if (save.data.healthBarBGStyle == null)
+			save.data.healthBarBGStyle = stylesList.indexOf('Splash') == -1 ? 'Default' : 'Splash';
+		preferences.createPrefItemCheckbox('HP Bar Style: ' + save.data.healthBarBGStyle, 'Changes the style of the health bar background.', (value) -> {
+			var newValue = stylesList.length > 1 ? stylesList[((stylesList.indexOf(save.data.healthBarBGStyle) % (stylesList.length)) + 1) % stylesList.length] : 'Default';
+			preferences.items.getFirst((anything) -> {
+				anything.label.text == 'HP Bar Style: ' + save.data.healthBarBGStyle;
+			}).label.text = 'HP Bar Style: ' + newValue;
+			save.data.healthBarBGStyle = newValue;
+		}, false);
+
+		if (save.data.accuracyType == null)
+			save.data.accuracyType = 'Funkin';
+		preferences.createPrefItemCheckbox('Accuracy Type: ' + save.data.accuracyType, 'Changes how accuracy is calculated. Psych is simple, Funkin is complex.', (value) -> {
+			var newValue = save.data.accuracyType == 'Psych' ? 'Funkin' : 'Psych';
+			preferences.items.getFirst((anything) -> {
+				return anything.label.text == 'Accuracy Type: ' + save.data.accuracyType;
+			}).label.text = 'Accuracy Type: ' + newValue;
+			save.data.accuracyType = newValue;
+		}, save.data.accuracyType == 'Psych');
+
+		resetAttempts = 0;
+		preferences.createPrefItemCheckbox('Reset FancyHUD?', 'Resets Fancy HUD save data to default. Might help if some setting is causing an error.', (value) -> {
+			save.data.showJudgements = false;
+			save.data.scoreBounce = false;
+			save.data.centerPopups = false;
+			save.data.fancyPopups = false;
+			save.data.comboSplash = false;
+			save.data.underlay = false;
+			save.data.turnTimer = false;
+			save.data.healthBarBGStyle = stylesList.indexOf('Splash') == -1 ? 'Default' : 'Splash';
+			save.data.accuracyType = 'Funkin';
+			
+			resetAttempts += 1;
+			preferences.items.getFirst((anything) -> {
+				return anything.label.text == 'Reset FancyHUD?' || anything.label.text == 'Reset FancyHUD? (' + (lines[Math.floor((resetAttempts-1)/5)]) + ')';
+			}).label.text = 'Reset FancyHUD? (' + (lines[Math.floor(resetAttempts/5)]) + ')';
+		}, false);
+
+		save.flush();
+	}
+
+	function onStateChangeBegin(event) {
+		super.onStateChangeBegin(event);
+		if (!lastStateIsOptions)
+			return;
+		save.flush();
+		save.destroy();
+	}
+}

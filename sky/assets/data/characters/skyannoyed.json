@@ -1,0 +1,169 @@
+{
+    "version": "1.0.0",
+    "name": "Sky Annoyed",
+    "assetPath": "characters/sky_annoyed_assets",
+    "startingAnimation": "danceRight",
+    "flipX": false,
+    "singTime": 4,
+    "animations": [
+        {
+            "name": "idle",
+            "prefix": "sky annoyed idle",
+            "offsets": [
+                0,
+                0
+            ]
+        },
+        {
+            "name": "idle-alt",
+            "prefix": "sky annoyed alt idle",
+            "offsets": [
+                0,
+                0
+            ]
+        },
+        {
+            "name": "danceLeft",
+            "prefix": "sky annoyed idle",
+            "frameIndices": [8, 9, 10, 11, 12, 13, 14, 15],
+            "offsets": [
+                0,
+                0
+            ]
+        },
+        {
+            "name": "danceLeft-alt",
+            "prefix": "sky annoyed alt idle",
+            "frameIndices": [8, 9, 10, 11, 12, 13, 14, 15],
+            "offsets": [
+                0,
+                0
+            ]
+        },
+        {
+            "name": "danceRight",
+            "prefix": "sky annoyed idle",
+            "frameIndices": [0, 1, 2, 3, 4, 5, 6, 7],
+            "offsets": [
+                0,
+                0
+            ]
+        },
+        {
+            "name": "danceRight-alt",
+            "prefix": "sky annoyed alt idle",
+            "frameIndices": [0, 1, 2, 3, 4, 5, 6, 7],
+            "offsets": [
+                0,
+                0
+            ]
+        },
+        {
+            "name": "singDOWN",
+            "prefix": "sky annoyed down",
+            "offsets": [
+                0,
+                0
+            ]
+        },
+        {
+            "name": "singDOWN-alt",
+            "prefix": "sky annoyed alt down",
+            "offsets": [
+                0,
+                0
+            ]
+        },
+        {
+            "name": "singLEFT",
+            "prefix": "sky annoyed left",
+            "offsets": [
+                0,
+                0
+            ]
+        },
+        {
+            "name": "singLEFT-alt",
+            "prefix": "sky annoyed alt left",
+            "offsets": [
+                0,
+                0
+            ]
+        },
+        {
+            "name": "singRIGHT",
+            "prefix": "sky annoyed right",
+            "offsets": [
+                0,
+                0
+            ]
+        },
+        {
+            "name": "singRIGHT-alt",
+            "prefix": "sky annoyed alt right",
+            "offsets": [
+                0,
+                0
+            ]
+        },
+        {
+            "name": "singUP",
+            "prefix": "sky annoyed up",
+            "offsets": [
+                0,
+                0
+            ]
+        },
+        {
+            "name": "singUP-alt",
+            "prefix": "sky annoyed alt up",
+            "offsets": [
+                0,
+                0
+            ]
+        },
+        {
+        	"name": "oh",
+            "prefix": "sky annoyed oh",
+            "offsets": [
+                0,
+                0
+            ],
+            "looped": true
+        },
+        {
+        	"name": "grr",
+            "prefix": "sky annoyed grr",
+            "offsets": [
+                0,
+                0
+            ],
+            "looped": true
+        },
+        {
+        	"name": "huh",
+            "prefix": "sky annoyed huh",
+            "offsets": [
+                0,
+                0
+            ],
+            "looped": true
+        },
+        {
+        	"name": "ugh",
+            "prefix": "sky annoyed ugh",
+            "offsets": [
+                0,
+                0
+            ]
+        },
+        {
+        	"name": "manifest",
+            "prefix": "sky annoyed manifesting",
+            "offsets": [
+                0,
+                0
+            ]
+        }
+    ]
+}

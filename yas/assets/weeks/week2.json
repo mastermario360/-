@@ -1,0 +1,43 @@
+{
+	"storyName": "Terminal Velocity Parallel",
+	"hideFreeplay": false,
+	"weekBackground": "halloween",
+	"weekBefore": "week1",
+	"startUnlocked": false,
+	"weekCharacters": [
+		"",
+		"",
+		""
+	],
+	"songs": [
+		[
+			"Personal Best Parallel",
+			"mario",
+			[
+				203,
+				7,
+				50
+			]
+		],
+		[
+			"Qpu Alignment Parallel",
+			"mario",
+			[
+				203,
+				7,
+				50
+			]
+		],
+		[
+			"Speed Demon Parallel",
+			"mario",
+			[
+				203,
+				7,
+				50
+			]
+		]
+	],
+	"hideStoryMode": false,
+	"weekName": "week2"
+}

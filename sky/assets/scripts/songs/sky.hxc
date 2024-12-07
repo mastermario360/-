@@ -1,0 +1,226 @@
+import funkin.play.character.CharacterType;
+import funkin.play.song.Song;
+import funkin.play.PlayState;
+import funkin.play.PlayStatePlaylist;
+import funkin.graphics.FunkinSprite;
+import funkin.audio.FunkinSound;
+import funkin.Paths;
+import flixel.FlxSprite;
+import flixel.util.FlxTimer;
+import flixel.tweens.FlxTween;
+import flixel.tweens.FlxEase;
+import flixel.FlxG;
+
+class SkySong extends Song {
+    var hasPlayedCutscene:Bool;
+  	var hasPlayedSecondCutscene:Bool;
+    var goingManifest:Bool;
+    var manifestSound:FunkinSound;
+    var isMad:Bool;
+    
+    public function new(){
+        super('sky');
+
+        hasPlayedCutscene = false;
+    	hasPlayedSecondCutscene = false;
+        goingManifest = false;
+    }
+
+    function onCreate(event:ScriptEvent)
+    {
+        super.onCreate(event);
+
+        hasPlayedCutscene = false;
+        isMad = false;
+        setMad(false);
+    }
+
+    public override function onCountdownStart(event:CountdownScriptEvent):Void {
+		super.onCountdownStart(event);
+	  
+		if (!PlayStatePlaylist.isStoryMode)
+     		hasPlayedCutscene = true;
+      
+        if(!hasPlayedCutscene){
+            hasPlayedCutscene = true;
+                
+            event.cancel();
+
+            startDialogue();
+        }
+	}
+  	
+
+    function onSongRetry(event:ScriptEvent) {
+    	super.onSongRetry(event);
+
+    	hasPlayedCutscene = true;
+    	hasPlayedSecondCutscene = false;
+
+        setMad(false);
+        isMad = false;
+  	}
+
+    function playCutscene()
+    {
+        // Skipping dialogue, IDK how to make it work :c
+        //if(hasPlayedSecondCutscene && !goingManifest)
+        //{
+        //    trace("oh boi");
+        //    goingManifest = true;
+        //    startEndDialogue();
+        //    return;
+        //}
+
+        PlayState.instance.onConversationComplete();
+
+        trace("here we go");
+        PlayState.instance.isInCutscene = true;
+
+        manifestSound = FunkinSound.load(Paths.sound('manifest'), 1);
+        
+        var bg:FlxSprite = PlayState.instance.currentStage.getNamedProp('bg_annoyed');
+
+        new FlxTimer().start(1, function(e:FlxTimer){
+            PlayState.instance.currentStage.getDad().playAnimation('manifest', false, true);
+			manifestSound.play();
+			FlxTween.tween(FlxG.camera, {zoom: 1.2}, 1, {ease: FlxEase.quadInOut});
+			
+			new FlxTimer().start(1, function(e:FlxTimer){
+				bg.scrollFactor.set(1, 1);
+				bg.animation.play('manifest');
+			    FlxTween.tween(FlxG.camera, {zoom: 1}, 0.3, {ease: FlxEase.quadInOut});
+				FlxG.camera.shake(0.05, 5);
+				
+			});
+			new FlxTimer().start(2, function(e:FlxTimer){
+				FlxG.camera.fade(0xFFFFFFFF, 2, false);
+			    FlxTween.tween(FlxG.camera, {zoom: 1.1}, 2, {ease: FlxEase.quadInOut});	
+			});
+			new FlxTimer().start(4.5, function(e:FlxTimer){
+				FlxG.camera.fade(0xFF000000, 0.1, false);
+			});
+			new FlxTimer().start(5, function(e:FlxTimer){
+				// Goes to the next song
+                PlayState.instance.endSong();
+                FlxG.camera.stopFX();
+			});
+			
+			
+		});
+    }
+
+    function startDialogue() {
+        PlayState.instance.camCutscene.visible = true;
+  	
+        var black:FlxSprite = new FunkinSprite(-20, -20).makeSolidColor(FlxG.width * 1.5, FlxG.height * 1.5, 0xFF000000);
+        black.cameras = [PlayState.instance.camCutscene];
+        black.zIndex = 1000000;
+        PlayState.instance.add(black);
+        black.alpha = 1.0;
+    
+        FlxTween.tween(black, {alpha: 0}, 2);
+    
+        new FlxTimer().start(2, function(tmr:FlxTimer) {
+            black.destroy();
+            PlayState.instance.startConversation('sky-dia');
+        });
+    }
+
+    function startEndDialogue() {
+        PlayState.instance.camCutscene.visible = true;
+  	
+        var black:FlxSprite = new FunkinSprite(-20, -20).makeSolidColor(FlxG.width * 1.5, FlxG.height * 1.5, 0xFF000000);
+        black.cameras = [PlayState.instance.camCutscene];
+        black.zIndex = 1000000;
+        PlayState.instance.add(black);
+        black.alpha = 1.0;
+    
+        FlxTween.tween(black, {alpha: 0}, 2);
+    
+        new FlxTimer().start(2, function(tmr:FlxTimer) {
+            black.destroy();
+            PlayState.instance.startConversation('sky-diaEnd');
+            if(!goingManifest)
+            {
+                goingManifest = true;
+                PlayState.instance.currentConversation.completeCallback = playCutscene;
+            }
+        });
+    }
+
+    function onBeatHit(event:SongTimeScriptEvent)
+    {
+        // When overriding onBeatHit, make sure to call super.onBeatHit,
+        // otherwise boppers will not work.
+        super.onBeatHit(event);
+
+        switch(event.beat){
+		    case 30,31,62,63: PlayState.instance.currentStage.getDad().playAnimation('oh');
+		    case 126,127,190,191: PlayState.instance.currentStage.getDad().playAnimation('grr');
+		    case 254,255,270,271: PlayState.instance.currentStage.getDad().playAnimation('huh');
+		    case 286: PlayState.instance.currentStage.getDad().playAnimation('ugh', false, true);
+	    }
+
+        if(event.beat == 128)
+        {
+            setMad(true);
+            trace('oh no, she is mad');
+        }
+    }
+
+    function onSongEnd(event:ScriptEvent) {
+		super.onSongEnd(event);
+		
+		if (!PlayStatePlaylist.isStoryMode)
+     		hasPlayedSecondCutscene = true;
+      
+    	if(!hasPlayedSecondCutscene) { 
+    		hasPlayedSecondCutscene = true;
+      
+      		event.cancel();
+
+			startEndDialogue();
+            //playCutscene();
+		}
+	}
+
+    function onNoteHit(event:HitNoteScriptEvent)
+    {
+        if (!event.note.noteData.getMustHitNote() && PlayState.instance.currentStage.getDad().characterType == CharacterType.DAD) {
+            // Override the hit note animation.
+            if(isMad) {
+                holdTimer = 0;
+                PlayState.instance.currentStage.getDad().playSingAnimation(event.note.noteData.getDirection(), false, 'alt');
+            }
+        }
+    
+        super.onNoteHit(event);
+    }
+
+    function setMad(flag:Bool)
+    {
+        if(flag)
+        {
+            PlayState.instance.currentStage.getDad().idleSuffix = '-alt';
+            isMad = true;
+        }
+        else
+        {
+            PlayState.instance.currentStage.getDad().idleSuffix = '';
+            isMad = false;
+        }
+    }
+
+    public override function onDialogueEnd()
+    {
+        
+        trace("dialogue ended");
+        if(goingManifest) {
+            trace("She's manifesting, oh no!");
+            playCutscene();
+            return;
+        }
+        PlayState.instance.startCountdown();
+    }
+}

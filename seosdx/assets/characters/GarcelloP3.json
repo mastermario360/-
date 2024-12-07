@@ -1,0 +1,89 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "idle",
+			"indices": [],
+			"name": "OGGar_Idle"
+		},
+		{
+			"offsets": [
+				0,
+				13
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "OGGar_Left"
+		},
+		{
+			"offsets": [
+				0,
+				-15
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "OGGar_Down"
+		},
+		{
+			"offsets": [
+				0,
+				-25
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "OGGar_Right"
+		},
+		{
+			"offsets": [
+				0,
+				4
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singUP",
+			"indices": [],
+			"name": "OGGar_UpP3"
+		},
+		{
+			"offsets": [
+				0,
+				13
+			],
+			"loop": false,
+			"fps": 31,
+			"anim": "tight",
+			"indices": [],
+			"name": "OGGar_TightBarsP3"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/Finalized_SEOS_DX_GARW2_Phase3",
+	"position": [
+		0,
+		-300
+	],
+	"healthicon": "gardead",
+	"flip_x": false,
+	"healthbar_colors": [
+		0,
+		255,
+		144
+	],
+	"camera_position": [
+		185,
+		50
+	],
+	"sing_duration": 6.1,
+	"scale": 1
+}

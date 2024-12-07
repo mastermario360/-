@@ -1,0 +1,26 @@
+import funkin.play.cutscene.dialogue.Conversation;
+import funkin.play.PlayState;
+import funkin.audio.FunkinSound;
+import funkin.Paths;
+
+class PostSkyConversation extends Conversation {
+  var sound:FunkinSound;
+
+  function new() {
+    super('sky-diaEnd');
+  }
+  
+  override function onCreate(event){
+    super.onCreate(event);
+
+    sound = FunkinSound.load(Paths.sound('pixelText', 'week6'), 0.6);
+
+    currentDialogueBox.textDisplay.sounds = [sound];
+  }
+
+  override public function onDialogueLine(event){
+    super.onDialogueLine(event);
+
+    FunkinSound.playOnce(Paths.sound("clickText"), 0.6);
+  }
+}

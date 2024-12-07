@@ -1,0 +1,121 @@
+{
+  "version": "1.0.0",
+
+  "backdrop": {
+    "type": "solid",
+    "fadeTime": 2.0,
+    "color": "#BF808080"
+  },
+
+  "music": {
+    "asset": "",
+    "fadeTime": 2.0,
+    "looped": true
+  },
+
+  "outro": {
+    "type": "fade",
+    "fadeTime": 1.0
+  },
+
+  "dialogue": [
+    {
+      "speaker": "skyannoyed",
+      "speakerAnimation": "talk",
+      "box": "skybox",
+      "boxAnimation": "enter",
+      "text": ["FOR WHATT!!!"]
+    },
+    {
+      "speaker": "bfsky",
+      "speakerAnimation": "talk",
+      "box": "skybox",
+      "boxAnimation": "idle",
+      "text": [
+        "beep oop"
+      ]
+    },
+    {
+      "speaker": "skyannoyed",
+      "speakerAnimation": "talk",
+      "box": "skybox",
+      "boxAnimation": "idle",
+      "text": ["so ..."]
+    },
+    {
+      "speaker": "skyannoyed",
+      "speakerAnimation": "talk",
+      "box": "skybox",
+      "boxAnimation": "idle",
+      "text": [
+        "it's that stupid girlfriend that's keeping you away from me??"
+      ]
+    },
+    {
+      "speaker": "bfsky",
+      "speakerAnimation": "talk",
+      "box": "skybox",
+      "boxAnimation": "idle",
+      "text": ["behp"]
+    },
+    {
+      "speaker": "skyannoyed",
+      "speakerAnimation": "talk",
+      "box": "skybox",
+      "boxAnimation": "idle",
+      "text": [
+        "..."
+      ]
+    },
+    {
+      "speaker": "sky",
+      "speakerAnimation": "talk",
+      "box": "skybox",
+      "boxAnimation": "idle",
+      "text": [".."]
+    },
+    {
+      "speaker": "sky",
+      "speakerAnimation": "talk",
+      "box": "skybox",
+      "boxAnimation": "idle",
+      "text": [
+        "...no matter..."
+      ]
+    },
+    {
+      "speaker": "sky",
+      "speakerAnimation": "talk",
+      "box": "skybox",
+      "boxAnimation": "idle",
+      "text": [
+        "..i'll just manifest her away"
+      ]
+    },
+    {
+      "speaker": "bfsky",
+      "speakerAnimation": "talk",
+      "box": "skybox",
+      "boxAnimation": "idle",
+      "text": ["beep o poo?"]
+    },
+    {
+      "speaker": "sky",
+      "speakerAnimation": "talk",
+      "box": "skybox",
+      "boxAnimation": "idle",
+      "text": [
+        "IT MEANS YOUR PRECIOUS LITTLE GIRLFRIEND IS GOOD AS GONE."
+      ]
+    },
+    {
+      "speaker": "sky",
+      "speakerAnimation": "talk",
+      "box": "skybox",
+      "boxAnimation": "idle",
+      "text": [
+        "FOR GOOD!!!!"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+import funkin.play.character.SparrowCharacter;
+import funkin.play.character.CharacterType;
+import funkin.play.PlayState;
+
+class SkyCharacter extends SparrowCharacter
+{
+    function new()
+    {
+        super('sky');
+    }
+}

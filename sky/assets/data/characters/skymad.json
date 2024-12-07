@@ -1,0 +1,68 @@
+{
+    "version": "1.0.0",
+    "name": "Sky Mad",
+    "assetPath": "characters/sky_mad_assets",
+    "startingAnimation": "danceRight",
+    "flipX": false,
+    "singTime": 4,
+    "animations": [
+        {
+            "name": "idle",
+            "prefix": "sky mad idle",
+            "offsets": [
+                0,
+                0
+            ]
+        },
+        {
+            "name": "danceLeft",
+            "prefix": "sky mad idle",
+            "frameIndices": [8, 9, 10, 11, 12, 13, 14, 15],
+            "offsets": [
+                0,
+                0
+            ]
+        },
+        {
+            "name": "danceRight",
+            "prefix": "sky mad idle",
+            "frameIndices": [0, 1, 2, 3, 4, 5, 6, 7],
+            "offsets": [
+                0,
+                0
+            ]
+        },
+        {
+            "name": "singDOWN",
+            "prefix": "sky mad down",
+            "offsets": [
+                0,
+                0
+            ]
+        },
+        {
+            "name": "singLEFT",
+            "prefix": "sky mad left",
+            "offsets": [
+                0,
+                0
+            ]
+        },
+        {
+            "name": "singRIGHT",
+            "prefix": "sky mad right",
+            "offsets": [
+                0,
+                0
+            ]
+        },
+        {
+            "name": "singUP",
+            "prefix": "sky mad up",
+            "offsets": [
+                0,
+                0
+            ]
+        }
+    ]
+}

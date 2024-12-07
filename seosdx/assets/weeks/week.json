@@ -1,0 +1,23 @@
+{
+	"songs": [
+		["Headache", "gar", [146, 113, 253]],
+		["Nerves", "gartired", [146, 113, 253]],
+		["Release", "gardead", [146, 113, 253]],
+		["Fading", "garfade", [146, 113, 253]]
+	],
+
+	"weekCharacters": [
+		"",
+		"",
+		""
+	],
+	"weekBackground": "stage",
+	"difficulties":"hard",
+	"storyName": "",
+	"weekBefore": "",
+	"weekName": "WEEK <g>G<g>",
+	"startUnlocked": true,
+
+	"hideStoryMode": false,
+	"hideFreeplay": false
+}

@@ -1,0 +1,203 @@
+import funkin.play.cutscene.dialogue.DialogueBox;
+import funkin.play.cutscene.dialogue.Conversation;
+import funkin.play.character.CharacterType;
+import funkin.play.song.Song;
+import funkin.play.PlayState;
+import funkin.play.PlayStatePlaylist;
+import funkin.graphics.FunkinSprite;
+import funkin.audio.FunkinSound;
+import funkin.Paths;
+import funkin.Highscore;
+import flixel.FlxSprite;
+import flixel.util.FlxTimer;
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
+import flixel.math.FlxPoint;
+import flixel.FlxG;
+import flixel.FlxCamera;
+
+import Std;
+import Math;
+
+class ManifestSong extends Song {
+    var hasPlayedCutscene:Bool;
+    var hasShownEnding:Bool;
+    var manifestBGSound:FunkinSound;
+    var endingSong:FunkinSound;
+    var ending:FunkinSprite;
+    
+    public function new(){
+        super('manifest');
+
+        hasPlayedCutscene = false;
+        hasShownEnding = false;
+    }
+
+    public override function onCountdownStart(event:CountdownScriptEvent):Void {
+        super.onCountdownStart(event);
+        
+        if (!PlayStatePlaylist.isStoryMode)
+            hasPlayedCutscene = true;
+        
+        if(!hasPlayedCutscene){
+            hasPlayedCutscene = true;
+        
+            event.cancel();
+        
+            //startDialogue();
+            playCutscene();
+        }
+    }
+
+    function onSongStart(event:ScriptEvent)
+    {
+        super.onSongStart(event);
+        if(hasPlayedCutscene)
+        {
+            if(manifestBGSound != null && manifestBGSound.isPlaying){
+                manifestBGSound.stop();
+            } 
+        }
+        
+    }
+
+    function onSongEnd(event:ScriptEvent) {
+		super.onSongEnd(event);
+		
+        if(!PlayStatePlaylist.isStoryMode)
+            hasShownEnding = true;
+        
+
+		if (!hasShownEnding)
+     	{
+            hasShownEnding = true;
+
+            event.cancel();
+
+            showEnding();
+        }
+	}
+
+    function playCutscene()
+    {
+        PlayState.instance.isInCutscene = true;
+        PlayState.instance.camHUD.visible = false;
+
+        var blackScreen = new FlxSprite(-200, -200).makeGraphic(FlxG.width * 2, FlxG.height * 2, 0xFF000000);
+        blackScreen.scrollFactor.set(0, 0);
+        blackScreen.zIndex = 1000000;
+        PlayState.instance.add(blackScreen);
+
+        manifestBGSound = FunkinSound.load(Paths.music('manifest'), 1, true);
+
+        new FlxTimer().start(0.1, function(tmr:FlxTimer)
+        {
+            PlayState.instance.remove(blackScreen);
+            //FlxG.sound.play(Paths.sound('Lights_Turn_On'));
+            //camFollow.y = gf.y+130;
+            //camFollow.x = gf.getGraphicMidpoint().x;
+            PlayState.instance.cameraFollowPoint.setPosition(
+                PlayState.instance.currentStage.getGirlfriend().getGraphicMidpoint().x, 
+                PlayState.instance.currentStage.getGirlfriend().cameraFocusPoint.y + 130
+            );
+                
+            FlxG.camera.focusOn(FlxPoint.get(
+                PlayState.instance.currentStage.getGirlfriend().getGraphicMidpoint().x,
+                PlayState.instance.currentStage.getGirlfriend().cameraFocusPoint.y - 130));
+            FlxG.camera.zoom = 3;
+            manifestBGSound.play();
+            new FlxTimer().start(2, function(tmr:FlxTimer)
+            {
+                PlayState.instance.camHUD.visible = true;
+                //remove(blackScreen);
+                FlxTween.tween(FlxG.camera, {zoom: PlayState.instance.stageZoom}, 2.5, {
+                    ease: FlxEase.quadInOut,
+                    onComplete: function(twn:FlxTween)
+                    {
+                        startDialogue();
+                    }
+                });
+            });
+        });
+    }
+
+    function startDialogue()
+    {
+        PlayState.instance.camCutscene.visible = true;
+  	
+        var black:FlxSprite = new FunkinSprite(-20, -20).makeSolidColor(FlxG.width * 1.5, FlxG.height * 1.5, 0xFF000000);
+        black.cameras = [PlayState.instance.camCutscene];
+        black.zIndex = 1000000;
+        PlayState.instance.add(black);
+        black.alpha = 1.0;
+    
+        FlxTween.tween(black, {alpha: 0}, 2);
+    
+        new FlxTimer().start(2, function(tmr:FlxTimer) {
+            black.destroy();
+            PlayState.instance.startConversation('mad-dia');
+        });
+    }
+
+    public override function onDialogueEnd() {
+        PlayState.instance.startCountdown();
+    }
+
+    function showEnding()
+    {
+        PlayState.instance.camCutscene.visible = true;
+        
+        var tallies = Highscore.tallies;
+		var notes = tallies.sick + (tallies.good * 0.785) + (tallies.bad * 0.65) + (tallies.shit * 0.3);
+		var acc = Math.max(Math.floor((notes / (tallies.totalNotesHit + tallies.missed)) * 10000) / 100, 0);
+
+        var blackScreen = new FlxSprite(-200, -200).makeGraphic(FlxG.width * 2, FlxG.height * 2, 0xFF000000);
+        blackScreen.scrollFactor.set(0, 0);
+        blackScreen.zIndex = 1000000;
+        PlayState.instance.add(blackScreen);
+
+        var endingString = '';
+        var endingSongString = '';
+
+        if(FlxG.random.bool(30))
+        {
+            // Secret ending
+            endingString = 'ending0003';
+            endingSongString = 'peanut';
+        }
+        else if(acc > 70)
+        {
+            // Good ending
+            endingString = 'ending0002';
+            endingSongString = 'goodEnding';
+        }
+        else
+        {
+            // Bad ending
+            endingString = 'ending0001';
+            endingSongString = 'badEnding';
+        }
+
+        endingSong = FunkinSound.load(Paths.music(endingSongString), 1, false);
+        ending = new FunkinSprite(0, 0).loadTexture(endingString);
+
+        ending.cameras = [PlayState.instance.camCutscene];
+        ending.zIndex = 1100000;
+        PlayState.instance.add(ending);
+        ending.alpha = 0;
+
+        FlxTween.tween(ending, {alpha: 1}, 2);
+        endingSong.play();
+
+        new FlxTimer().start(10, function(tmr:FlxTimer)
+        {
+            //PlayState.instance.endSong();}
+            FlxTween.tween(ending, {alpha: 0}, 0.4, {
+                onComplete: function(twn:FlxTween)
+                {
+                    PlayState.instance.camCutscene.visible = false;
+                    PlayState.instance.endSong();
+                }});
+        });
+    }
+}
