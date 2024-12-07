@@ -1,0 +1,48 @@
+{
+	"storyName": "A New Challenger!!",
+	"hideFreeplay": false,
+	"weekBackground": "",
+	"weekBefore": "tutorial",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"startUnlocked": true,
+	"songs": [
+		[
+			"Light It Up",
+			"matt",
+			[
+				175,
+				0,
+				255
+			]
+		],
+		[
+			"Ruckus",
+			"matt",
+			[
+				175,
+				0,
+				255
+			]
+		],
+		[
+			"Target Practice",
+			"matt",
+			[
+				175,
+				0,
+				255
+			]
+		]
+	],
+	"hideStoryMode": false,
+	"weekCharacters": [
+		"matt",
+		"bf",
+		"gf"
+	],
+	"weekName": "Wiik1"
+}

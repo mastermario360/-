@@ -1,0 +1,32 @@
+{
+	"dialogue": [
+		{
+			"speed": 0.035,
+			"portrait": "matt",
+			"boxState": "normal",
+			"expression": "talk",
+			"text": "Oh, you finally made it. Hi there!"
+		},
+		{
+			"speed": 0.035,
+			"portrait": "bf",
+			"boxState": "normal",
+			"expression": "talk",
+			"text": "Yeah, there was alot of traffic. Nice to meet you!"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "matt",
+			"boxState": "normal",
+			"expression": "talk",
+			"text": "Welcome to training kid, you'll definitely enjoy this!"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "bf",
+			"boxState": "normal",
+			"expression": "pissed",
+			"text": "Lets do this!"
+		}
+	]
+}

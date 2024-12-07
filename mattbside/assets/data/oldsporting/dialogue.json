@@ -1,0 +1,46 @@
+{
+	"dialogue": [
+		{
+			"expression": "",
+			"text": "I got back into shape recently.",
+			"boxState": "normal",
+			"portrait": "mattmad",
+			"speed": 0.03
+		},
+		{
+			"expression": "pissed",
+			"text": "Last time you saw me I wasn't doing the best.",
+			"boxState": "normal",
+			"portrait": "mattmad",
+			"speed": 0.03
+		},
+		{
+			"expression": "talk",
+			"text": "Now that I am back in shape, let's rap!",
+			"boxState": "angry",
+			"portrait": "mattmad",
+			"speed": 0.035
+		},
+		{
+			"expression": "pissed",
+			"text": "Bet!",
+			"boxState": "angry",
+			"portrait": "bf",
+			"speed": 0.05
+		},
+		{
+			"expression": "",
+			"text": "I'll give it all I've got this time, get ready!",
+			"boxState": "normal",
+			"portrait": "mattmad",
+			"speed": 0.03
+		},
+		{
+			"expression": "pissed",
+			"text": "Let's goooooooooo!",
+			"boxState": "angry",
+			"portrait": "bf",
+			"speed": 0.05
+		}
+	]
+}

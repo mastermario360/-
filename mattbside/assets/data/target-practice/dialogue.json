@@ -1,0 +1,32 @@
+{
+	"dialogue": [
+		{
+			"expression": "",
+			"text": "Alright.. Alright, that song was a test.. Want a real challenge?",
+			"boxState": "normal",
+			"speed": 0.025,
+			"portrait": "mattmad"
+		},
+		{
+			"expression": "pissed",
+			"text": "Finally!",
+			"boxState": "angry",
+			"speed": 0.05,
+			"portrait": "bf"
+		},
+		{
+			"expression": "excited",
+			"text": "Don't get cocky now. You might not be able to pass this one.",
+			"boxState": "normal",
+			"speed": 0.025,
+			"portrait": "mattmad"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "gf",
+			"boxState": "normal",
+			"expression": "confused",
+			"text": "Oh no..."
+		}
+	]
+}

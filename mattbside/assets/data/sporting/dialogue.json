@@ -1,0 +1,39 @@
+{
+	"dialogue": [
+		{
+			"expression": "",
+			"text": "I am going home after this one kid.",
+			"boxState": "normal",
+			"speed": 0.035,
+			"portrait": "mattmad"
+		},
+		{
+			"expression": "",
+			"text": "Okay, let's do one more.",
+			"boxState": "normal",
+			"speed": 0.035,
+			"portrait": "bf"
+		},
+		{
+			"expression": "",
+			"text": "May the best man win.",
+			"boxState": "angry",
+			"speed": 0.035,
+			"portrait": "mattmad"
+		},
+		{
+			"expression": "pissed",
+			"text": "You're on!",
+			"boxState": "normal",
+			"speed": 0.075,
+			"portrait": "bf"
+		},
+		{
+			"expression": "confused",
+			"text": "It's about to get crazy.",
+			"boxState": "normal",
+			"speed": 0.05,
+			"portrait": "gf"
+		}
+	]
+}

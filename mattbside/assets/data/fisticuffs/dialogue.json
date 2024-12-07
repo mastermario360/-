@@ -1,0 +1,53 @@
+{
+	"dialogue": [
+		{
+			"speed": 0.05,
+			"portrait": "bf",
+			"boxState": "normal",
+			"expression": "talk",
+			"text": "Hello Matthew."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "mattmad",
+			"boxState": "normal",
+			"expression": "talk",
+			"text": "Oh it's you. Long time no see kid!"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "bf",
+			"boxState": "normal",
+			"expression": "talk",
+			"text": "What's up! I see you've gotten a bit... out of shape, to say the least."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "mattmad",
+			"boxState": "normal",
+			"expression": "talk",
+			"text": "Yeah, I got demotivated after the night you came and beat me."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "bf",
+			"boxState": "normal",
+			"expression": "talk",
+			"text": "Oh... I am sorry."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "mattmad",
+			"boxState": "normal",
+			"expression": "talk",
+			"text": "No worries!"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "mattmad",
+			"boxState": "normal",
+			"expression": "talk",
+			"text": "I haven't faced another opponent in years, lets see if I still got it."
+		}
+	]
+}

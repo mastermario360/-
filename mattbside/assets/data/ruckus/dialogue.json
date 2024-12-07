@@ -1,0 +1,39 @@
+{
+	"dialogue": [
+		{
+			"expression": "",
+			"text": "Feelin' the burn yet?",
+			"boxState": "normal",
+			"speed": 0.05,
+			"portrait": "mattmad"
+		},
+		{
+			"expression": "pissed",
+			"text": "That was nothing!",
+			"boxState": "angry",
+			"speed": 0.05,
+			"portrait": "bf"
+		},
+		{
+			"expression": "",
+			"text": "That was just warmup kid.",
+			"boxState": "normal",
+			"speed": 0.05,
+			"portrait": "mattmad"
+		},
+		{
+			"expression": "pissed",
+			"text": "Man I don't need warmup!",
+			"boxState": "angry",
+			"speed": 0.05,
+			"portrait": "bf"
+		},
+		{
+			"expression": "talk",
+			"text": "It's getting dark out, I suppose we can do a few more.",
+			"boxState": "normal",
+			"speed": 0.05,
+			"portrait": "mattmad"
+		}
+	]
+}

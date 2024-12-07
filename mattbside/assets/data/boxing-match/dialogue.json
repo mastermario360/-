@@ -1,0 +1,60 @@
+{
+	"dialogue": [
+		{
+			"expression": "",
+			"text": "What are you doing here kid? This is my time to train.",
+			"boxState": "normal",
+			"portrait": "mattmad",
+			"speed": 0.035
+		},
+		{
+			"expression": "pissed",
+			"text": "I want more!",
+			"boxState": "angry",
+			"portrait": "bf",
+			"speed": 0.05
+		},
+		{
+			"speed": 0.035,
+			"portrait": "mattmad",
+			"boxState": "normal",
+			"expression": "talk",
+			"text": "Who turned the lights off?"
+		},
+		{
+			"speed": 0.11,
+			"portrait": "gf",
+			"boxState": "normal",
+			"expression": "demon",
+			"text": "Heh.."
+		},
+		{
+			"expression": "talk",
+			"text": "I don't even have my equipment...",
+			"boxState": "normal",
+			"portrait": "mattmad",
+			"speed": 0.035
+		},
+		{
+			"expression": "excited",
+			"text": "Please!",
+			"boxState": "normal",
+			"speed": 0.045,
+			"portrait": "bf"
+		},
+		{
+			"expression": "",
+			"text": "I guess we can do a few rounds..",
+			"boxState": "normal",
+			"portrait": "mattmad",
+			"speed": 0.02
+		},
+		{
+			"expression": "",
+			"text": "Proper training is tommorw though, so don't expect warm-up rounds.",
+			"boxState": "normal",
+			"speed": 0.03,
+			"portrait": "mattmad"
+		}
+	]
+}

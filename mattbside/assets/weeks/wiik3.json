@@ -1,0 +1,57 @@
+{
+	"storyName": "Years later",
+	"hideFreeplay": false,
+	"weekBackground": "",
+	"weekBefore": "wiik2",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"startUnlocked": false,
+	"songs": [
+		[
+			"fisticuffs",
+			"matt",
+			[
+				175,
+				0,
+				255
+			]
+		],
+		[
+			"wind-up",
+			"matt",
+			[
+				175,
+				0,
+				255
+			]
+		],
+		[
+			"deathmatch",
+			"matt",
+			[
+				175,
+				0,
+				255
+			]
+		],
+		[
+			"king-hit",
+			"matt",
+			[
+				175,
+				0,
+				255
+			]
+		]
+	],
+	"hideStoryMode": false,
+	"weekCharacters": [
+		"matt",
+		"bf",
+		"gf"
+	],
+	"weekName": "wiik3"
+}

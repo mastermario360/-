@@ -1,0 +1,39 @@
+{
+	"storyName": "Lights Out.",
+	"hideFreeplay": false,
+	"weekBackground": "",
+	"weekBefore": "wiik1",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"startUnlocked": false,
+	"weekCharacters": [
+		"mattmad",
+		"bf",
+		"gf"
+	],
+	"songs": [
+		[
+			"Boxing Match",
+			"mattired",
+			[
+				175,
+				0,
+				255
+			]
+		],
+		[
+			"Sporting",
+			"mattired",
+			[
+				175,
+				0,
+				255
+			]
+		]
+	],
+	"hideStoryMode": false,
+	"weekName": "wiik2"
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="MattMad_portait.png">
+	<!-- Created with Adobe Animate version 20.0.1.19255 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="mattidle0000" x="14" y="14" width="248" height="307"/>
+	<SubTexture name="mattspeak0000" x="272" y="14" width="254" height="313"/>
+	<SubTexture name="mattspeak0001" x="272" y="14" width="254" height="313"/>
+	<SubTexture name="mattspeak0002" x="536" y="14" width="254" height="313"/>
+	<SubTexture name="mattspeak0003" x="14" y="337" width="254" height="313"/>
+	<SubTexture name="mattspeak0004" x="14" y="337" width="254" height="313"/>
+</TextureAtlas>

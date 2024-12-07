@@ -1,0 +1,25 @@
+{
+	"dialogue": [
+		{
+			"speed": 0.035,
+			"portrait": "mattmad",
+			"boxState": "normal",
+			"expression": "talk",
+			"text": "I'm feeling pretty warmed up now. I still wont be doing as good as I used to."
+		},
+		{
+			"speed": 0.035,
+			"portrait": "mattmad",
+			"boxState": "angry",
+			"expression": "talk",
+			"text": "But, this should be quite the challenge!"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "bf",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "Finally!"
+		}
+	]
+}

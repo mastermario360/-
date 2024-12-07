@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "idle",
+			"indices": [],
+			"name": "GrasoIDLE"
+		},
+		{
+			"offsets": [
+				90,
+				0
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "GrasoLEFT"
+		},
+		{
+			"offsets": [
+				0,
+				-10
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "grasoDOWN"
+		},
+		{
+			"offsets": [
+				-55,
+				110
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singUP",
+			"indices": [],
+			"name": "GrasoUP"
+		},
+		{
+			"offsets": [
+				-50,
+				60
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "GrasoRIGHT"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/graso",
+	"position": [
+		0,
+		280
+	],
+	"healthicon": "graso",
+	"flip_x": false,
+	"healthbar_colors": [
+		255,
+		235,
+		18
+	],
+	"camera_position": [
+		50,
+		300
+	],
+	"sing_duration": 6.1,
+	"scale": 0.6
+}

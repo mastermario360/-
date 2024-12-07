@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				240,
+				0
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "idle",
+			"indices": [],
+			"name": "idlex"
+		},
+		{
+			"offsets": [
+				347,
+				-3
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "left"
+		},
+		{
+			"offsets": [
+				290,
+				25
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singUP",
+			"indices": [],
+			"name": "up"
+		},
+		{
+			"offsets": [
+				350,
+				-110
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "right"
+		},
+		{
+			"offsets": [
+				330,
+				-40
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "Down"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/peter-griffos",
+	"position": [
+		140,
+		0
+	],
+	"healthicon": "griffin",
+	"flip_x": false,
+	"healthbar_colors": [
+		252,
+		254,
+		252
+	],
+	"camera_position": [
+		-200,
+		60
+	],
+	"sing_duration": 6.1,
+	"scale": 1
+}

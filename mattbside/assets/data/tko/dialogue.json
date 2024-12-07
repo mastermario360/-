@@ -1,0 +1,32 @@
+{
+	"dialogue": [
+		{
+			"speed": 0.05,
+			"portrait": "mattmad",
+			"boxState": "normal",
+			"expression": "talk",
+			"text": "You're still standing after that?"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "bf",
+			"boxState": "normal",
+			"expression": "pissed",
+			"text": "You know it!"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "mattmad",
+			"boxState": "normal",
+			"expression": "talk",
+			"text": "Not after this one."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "gf",
+			"boxState": "normal",
+			"expression": "demon",
+			"text": "Thank you for playing this mod! It was made by invalid_bruh. Good Luck!"
+		}
+	]
+}
