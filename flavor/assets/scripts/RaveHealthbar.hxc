@@ -1,0 +1,626 @@
+import funkin.play.PlayState;
+import funkin.play.character.SparrowCharacter;
+import funkin.play.character.CharacterType;
+import funkin.play.character.BaseCharacter;
+import funkin.play.components.HealthIcon;
+import funkin.Preferences;
+import funkin.Paths;
+import flixel.math.FlxMath;
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
+import flixel.FlxSprite;
+import openfl.utils.Assets;
+import flixel.ui.FlxBar;
+import flixel.ui.FlxBarFillDirection;
+import funkin.util.Constants;
+import funkin.graphics.FunkinSprite;
+import funkin.modding.module.Module;
+import funkin.Conductor;
+import flixel.FlxG;
+import flixel.text.FlxTextBorderStyle;
+import flixel.util.FlxTimer;
+import flixel.text.FlxText;
+import flixel.math.FlxMath;
+import flixel.math.FlxRect;
+import Std;
+import StringTools;
+
+
+class RaveHealthbar extends Module
+{
+	public function new()
+    {
+        super('RaveHealthbar');
+    }
+
+    // Setting 
+	var ALLSONG = true; // change this to true if you want this on every song
+	var SongList:Array<String> = ['megaheartz','rockcandy','timeshock']; // for a song that you want to use this Huds
+	var FriendlySongList:Array<String> = ['megaheartz','timeshock']; // for a song that you want iconP1 and iconP2 only play Winning and idle animation
+	
+    var IconScale = 0.7;
+	var IconMaxScale = 0.9;
+	var PixelIconScale = 3.7;
+	var PixelIconMaxScale = 4.5;
+	
+	// HealthDrain Mechanic
+	var TurnOnDadHealthDrian:Bool = false;
+	var HealthDrain = 0.02;
+	var HealthDrainHold = 0.15;
+	var HealthDrainLimit = 0.2;
+	
+	// HealthBar
+	var TurnOnCustomHpBar:Bool = false; // if you want to custom your own hpbar change this to true
+	var TimeBarColor:Int = 0xFF450272;
+	var TimeBarColor2:Int = 0xFF15071F;
+	var Hpbar:String = 'bf'; // Boyfriend HpBar
+	var OppHpbar:String = 'dad'; // Dad HpBar
+	var UsedBaseGameScoreText:Bool = false;
+	
+	// ChibiDancer :D
+	var TurnOnChibiDancer:Bool = false;
+	var RandomChibi:Bool = true;
+    var ChibiDancer:String = 'rika_chibi'; // Chibi Lists "sweet_chibi, sour_chibi, rika_chibi"
+	
+	// Ignore this
+	var oppmode:Bool = false;
+	var playerbar:FlxBar;
+	var healthpointer:FlxSprite;
+    var friendly:Bool;
+    var bar:FunkinSprite;
+	var timeBar;
+	var chibi:FunkinSprite;
+	var misses:Int = 0;
+	var songname:FlxText;
+	var scoretxt:FlxText;
+	var healthPercent:Float = 1;
+	var inPlay = false;
+	var allowScroll:Bool = true;
+	var SongScroll:Bool = false;
+	var state;
+
+    var Ravehuds:Array<Dynamic>;
+	
+
+    function onPlayStateEnter() {
+		
+		    state.iconP1.bopEvery = 0;
+			state.iconP2.bopEvery = 0;
+			
+			if (FriendlySongList.contains(state.currentSong.id)){ 
+			friendly = true;
+			}else{
+			friendly = false;
+			}
+			
+			if (!TurnOnCustomHpBar){
+			switch (state.currentStage.getBoyfriend().characterId){
+			
+			  case 'rika-close':
+			  Hpbar = 'rika';
+			  case 'sour-close-mh':
+			  Hpbar = 'sour';
+			  case 'sour':
+			  Hpbar = 'sour';
+			  case 'sweet':
+			  Hpbar = 'sweet';
+			  default:
+			  Hpbar = 'bf';
+			
+			}
+			
+			switch (state.currentStage.getDad().characterId){
+			
+			  case 'rika-close':
+			  TimeBarColor = 0xFFD1DD64;
+			  TimeBarColor2 = 0xFFD1DD64;
+			  OppHpbar = 'rika';
+			  case 'sour':
+			  TimeBarColor = 0xFF07ECA8;
+			  TimeBarColor2 = 0xFFFAF1CB;
+			  OppHpbar = 'sour';
+			  default:
+			  TimeBarColor = 0xFF450272;
+			  TimeBarColor2 = 0xFF15071F;
+			  OppHpbar = 'dad';
+			
+			}
+		}
+		
+		if (state.currentStage.getBoyfriend().characterType == CharacterType.BF){
+		    oppmode = false;
+		    state.playerStrumline.x = 740;
+			state.opponentStrumline.x = 100;
+			}else{
+			oppmode = true;
+			state.playerStrumline.x = 100;
+			state.opponentStrumline.x = 740;
+			}
+ 
+            state.iconP1.autoUpdate = false;
+			state.iconP2.autoUpdate = false;
+            
+			bar = new FunkinSprite();
+            bar.frames = Paths.getSparrowAtlas('healthbarstaff/FlavorHUD');
+			bar.animation.addByPrefix('idle', "FRHUD", 24, false);
+            bar.zIndex = 1098;
+            bar.cameras = [state.camHUD];
+            bar.scale.set(1, 1);
+            bar.updateHitbox();
+            bar.screenCenter();
+            bar.y = Preferences.downscroll ? (state.healthBarBG.y - (bar.height / 2) - 20) : (state.healthBarBG.y - (bar.height / 2) + 20);
+            state.add(bar);
+			
+			if(TurnOnChibiDancer){
+			   if(RandomChibi){ 
+			   var GORandom:Int = FlxG.random.int(0, 2);
+			   
+			   switch(GORandom){
+			   case 0:
+			   ChibiDancer = 'rika_chibi';
+			   case 1:
+			   ChibiDancer = 'sour_chibi';
+			   case 2:
+			   ChibiDancer = 'sweet_chibi';
+			   }
+			}	
+			
+			chibi = new FunkinSprite();
+            chibi.frames = Paths.getSparrowAtlas('healthbarstaff/' + ChibiDancer);
+			chibi.animation.addByPrefix('idle', "chibi dance", 24, true);
+			chibi.animation.play('idle', true);
+            chibi.zIndex = 1095;
+            chibi.cameras = [state.camHUD];
+            chibi.scale.set(0.5, 0.5);
+            chibi.updateHitbox();
+            chibi.screenCenter();
+			chibi.x -= 10;
+			chibi.flipY = Preferences.downscroll ? true : false;
+            chibi.y = Preferences.downscroll ? (bar.y - (chibi.height / 2) + 140) : (bar.y - (chibi.height / 2) - 50);
+            state.add(chibi);
+			}
+			
+			healthpointer = new FlxSprite().loadGraphic(Paths.image("healthbarstaff/healthpointer"));
+            healthpointer.cameras = [state.camHUD];
+			healthpointer.screenCenter();
+			healthpointer.x = bar.x + 398;
+			healthpointer.y = bar.y + 70;
+			healthpointer.zIndex = 1100;
+			state.add(healthpointer);
+			
+			playerbar = new FlxBar(bar.x + 164, bar.y + 44, FlxBarFillDirection.RIGHT_TO_LEFT, 494 + 8, 22 + 4, this, 'healthPercent', 0 , 2);
+			playerbar.createImageBar(Paths.image("healthbarstaff/health/" + OppHpbar), Paths.image("healthbarstaff/health/" + Hpbar));
+            playerbar.cameras = [state.camHUD];
+			playerbar.numDivisions = Std.int(playerbar.width);
+			playerbar.updateBar();
+			playerbar.zIndex = 1097;
+			state.add(playerbar);
+			
+		    timeBar = new FlxBar(bar.x + 120, bar.y + 10, FlxBarFillDirection.LEFT_TO_RIGHT, 275, 30);
+			timeBar.createGradientBar([0xFF000000, 0xFF000000], [TimeBarColor2, TimeBarColor], 1, 180);
+			timeBar.cameras = [state.camHUD];
+			timeBar.zIndex = 1096;
+			state.add(timeBar);
+			
+			songname = new FlxText(bar.x + 130, bar.y + 13, 0, state.currentChart.songName + ' - ' + state.currentChart.songArtist, 20);
+            songname.setFormat(Paths.font('Krungthep.ttf'), 16, 0xFFFFFFFF, "left");
+			songname.setBorderStyle(FlxTextBorderStyle.OUTLINE, 0xFF000000, 1.5, 1.5);
+			songname.cameras = [state.camHUD];
+            songname.zIndex = 1097;
+			if (songname.width > 255) resetSongname(false);
+			songname.clipRect = new FlxRect(timeBar.x - songname.x, timeBar.y - songname.y, timeBar.width, timeBar.height);
+            state.add(songname);
+			
+		if(state.iconP1.isPixel){
+            state.iconP1.zIndex = 1100;
+			state.iconP1.scale.set(PixelIconScale, PixelIconScale);
+            state.iconP1.setPosition(960, (bar.y + (bar.height / 2) - (state.iconP1.height / 2) - 10));
+			}else{
+			state.iconP1.zIndex = 1100;
+			state.iconP1.scale.set(IconScale, IconScale);
+            state.iconP1.setPosition(900, (bar.y + (bar.height / 2) - (state.iconP1.height / 2) - 10));
+			}
+ 
+        if(state.iconP2.isPixel){
+            state.iconP2.zIndex = 1100;
+			state.iconP2.scale.set(PixelIconScale, PixelIconScale);
+            state.iconP2.setPosition(290, (bar.y + (bar.height / 2) - (state.iconP1.height / 2)) - 10);
+			}else{
+			state.iconP2.zIndex = 1100;
+			state.iconP2.scale.set(IconScale, IconScale);
+            state.iconP2.setPosition(230, (bar.y + (bar.height / 2) - (state.iconP1.height / 2)));
+			}
+			
+			state.scoreText.zIndex = 1100;
+			state.scoreText.setPosition(bar.x + 440, (bar.y + (bar.height / 2) - (state.iconP1.height / 2) + 48));
+
+            state.refresh();
+
+            state.healthBarBG.visible = false;
+            state.healthBar.visible = false;
+			
+		if (!UsedBaseGameScoreText){	
+			scoretxt = new FlxText(bar.x + 443, bar.y + 13, 0, '', 20);
+            scoretxt.setFormat(Paths.font('Krungthep.ttf'), 16, 0xFFFFFFFF, "right");
+			scoretxt.cameras = [state.camHUD];
+            scoretxt.zIndex = 1099;
+            state.add(scoretxt);
+			state.scoreText.visible = false;
+			
+			scoretxt.text = 'Score: 0 | Misses: 0';		
+		    Ravehuds = [bar, state.iconP1, state.iconP2, timeBar, songname, scoretxt, playerbar, healthpointer, chibi, state.playerStrumline, state.opponentStrumline];				
+        }else{
+		    state.scoreText.visible = true;
+		    Ravehuds = [bar, state.iconP1, state.iconP2, timeBar, songname, state.scoreText, playerbar, healthpointer, chibi, state.playerStrumline, state.opponentStrumline];				
+		}  		
+    } 
+	
+	override function onUpdate(ev:ScriptEvent) {
+		super.onUpdate(ev);
+		if (PlayState.instance == null) return;
+		if (!inPlay) return;			
+		
+		if(timeBar != null) {
+			timeBar.value = (PlayState.instance.conductorInUse.songPosition / PlayState.instance.currentSongLengthMs) * 100;
+			timeBar.updateBar();
+		
+		processNotes(ev.elapsed);
+		
+		if(FlxG.keys.justPressed.M) state.isBotPlayMode = !state.isBotPlayMode;
+		
+		if (oppmode){
+		
+    if (state.currentStage.getDad().isSinging())
+    {
+      // TODO: Rework this code (and all character animations ugh)
+      // such that the hold time is handled by padding frames,
+      // and reverting to the idle animation is done when `isAnimationFinished()`.
+      // This lets you add frames to the end of the sing animation to ease back into the idle!
+
+      state.currentStage.getDad().holdTimer += ev.elapsed;
+      var singTimeSec:Float = state.currentStage.getDad().singTimeSteps * (Conductor.instance.stepLengthMs / Constants.MS_PER_SEC); // x beats, to ms.
+	  if (StringTools.endsWith('miss')) singTimeSec *= 2;
+
+      // Without this check here, the player character would only play the `sing` animation
+      // for one beat, as opposed to holding it as long as the player is holding the button.
+	  
+	  var shouldStopSinging:Bool = (state.currentStage.getDad().characterType == CharacterType.BF) ? !state.currentStage.getDad().isHoldingNote() : true;
+
+      if (state.currentStage.getDad().holdTimer > singTimeSec && shouldStopSinging)
+      {
+        state.currentStage.getDad().holdTimer = 0;
+        state.currentStage.getDad().dance(true);
+      }
+    }
+    else
+    {
+      state.currentStage.getDad().holdTimer = 0;
+      // super.onBeatHit handles the regular `dance()` calls.
+    }		
+		
+		}
+		
+		updateScore();
+		
+		if (allowScroll)
+		{
+			if (songname.x + songname.width < timeBar.x)
+				resetSongname(true);
+			else if (SongScroll)
+			songname.x -= 0.2 * 2;
+
+			songname.clipRect.x = timeBar.x - songname.x;
+			songname.clipRect = songname.clipRect;
+		}
+		
+		if (playerbar != null){
+        healthPercent = state.health;
+		playerbar.value = state.healthBar.value;
+		healthpointer.x = playerbar.x + (playerbar.width * (FlxMath.remapToRange(playerbar.percent, 0, 100, 100, 0) * 0.01)) + (150 * healthpointer.scale.x - 150) / 2 - 15;
+		}
+		
+		if(state.iconP1.isPixel){
+		if(state.iconP1.scale.x == PixelIconMaxScale){
+		FlxTween.tween(state.iconP1.scale, {x: PixelIconScale, y: PixelIconScale}, (0.5 * (1 / (Conductor.instance.bpm / 60))), {ease: FlxEase.cubeOut});
+		}
+		}else{
+		if(state.iconP1.scale.x == IconMaxScale){
+		FlxTween.tween(state.iconP1.scale, {x: IconScale, y: IconScale}, (0.5 * (1 / (Conductor.instance.bpm / 60))), {ease: FlxEase.cubeOut});
+		}
+		}
+		
+		if(state.iconP2.isPixel){
+		if(state.iconP2.scale.x == PixelIconMaxScale){
+		FlxTween.tween(state.iconP2.scale, {x: PixelIconScale, y: PixelIconScale}, (0.5 * (1 / (Conductor.instance.bpm / 60))), {ease: FlxEase.cubeOut});
+		}
+		}else{
+		if(state.iconP2.scale.x == IconMaxScale){
+		FlxTween.tween(state.iconP2.scale, {x: IconScale, y: IconScale}, (0.5 * (1 / (Conductor.instance.bpm / 60))), {ease: FlxEase.cubeOut});
+		}
+		}
+		
+		if (!UsedBaseGameScoreText && state.scoreText.visible == true) state.scoreText.visible = false;
+		
+		if(friendly){
+		
+			if(state.health > 1.6){
+				
+				state.iconP1.animation.play('winning');
+				state.iconP2.animation.play('winning');
+
+			}else if(state.health < 1.6 && state.health > 0.4){
+			
+			    state.iconP1.animation.play('idle');
+				state.iconP2.animation.play('idle');
+			}else{
+				
+				state.iconP1.animation.play('winning');
+				state.iconP2.animation.play('winning');
+
+			}
+	    }else{
+			if(state.health > 1.6){
+				
+				state.iconP1.animation.play('winning');
+				state.iconP2.animation.play('losing');
+
+			}else if(state.health < 1.6 && state.health > 0.4){
+			
+			    state.iconP1.animation.play('idle');
+				state.iconP2.animation.play('idle');
+			}else{
+				
+				state.iconP1.animation.play('losing');
+				state.iconP2.animation.play('winning');
+
+			}		
+		
+		}
+
+	  }
+	}
+
+	function onBeatHit(event:SongTimeScriptEvent)
+	{
+		super.onBeatHit(event);
+		
+		if (PlayState.instance == null) return;
+		if (!inPlay) return;
+		
+		if(bar != null) {
+		   bar.animation.play('idle', true);
+		   
+        if(state.iconP1.isPixel){		   
+		   if(state.iconP1.scale.x < PixelIconMaxScale){
+		   FlxTween.tween(state.iconP1.scale, {x: PixelIconMaxScale, y: PixelIconMaxScale}, (0.06 * (1 / (Conductor.instance.bpm / 60))), {ease: FlxEase.cubeOut});
+		   
+		   }
+		   }else{
+		   if(state.iconP1.scale.x < IconMaxScale){
+		   FlxTween.tween(state.iconP1.scale, {x: IconMaxScale, y: IconMaxScale}, (0.06 * (1 / (Conductor.instance.bpm / 60))), {ease: FlxEase.cubeOut});
+				}
+		   }
+		   
+        if(state.iconP2.isPixel){		   
+		   if(state.iconP2.scale.x < PixelIconMaxScale){
+		   FlxTween.tween(state.iconP2.scale, {x: PixelIconMaxScale, y: PixelIconMaxScale}, (0.06 * (1 / (Conductor.instance.bpm / 60))), {ease: FlxEase.cubeOut});
+		   
+		   }
+		   }else{
+		   if(state.iconP2.scale.x < IconMaxScale){
+		   FlxTween.tween(state.iconP2.scale, {x: IconMaxScale, y: IconMaxScale}, (0.06 * (1 / (Conductor.instance.bpm / 60))), {ease: FlxEase.cubeOut});
+				}
+		   }
+		   
+		if (oppmode && !state.currentStage.getDad().isSinging()) state.currentStage.getDad().dance();
+		   
+		   
+		   
+		}
+
+    }
+	
+    function onNoteHit(ev:HitNoteScriptEvent) {
+		super.onNoteHit(ev);
+		
+		if (!ev.note.noteData.getMustHitNote()) {
+			if(TurnOnDadHealthDrian && state.health > HealthDrainLimit) state.health -= HealthDrain;
+		
+		}
+		
+	}
+	
+	function updateScore() {
+	
+     if(scoretxt != null){  
+	   if (state.isBotPlayMode){
+	     scoretxt.text = 'Bot Play Moment :3';
+	   }else{
+		 scoretxt.text = 'Score: '+ state.songScore + ' | Misses: ' + misses;
+       }
+	}
+	}
+	
+	function cleanup() {
+		var stuffToRemove = [timeBar, bar, songname, playerbar, healthpointer, scoretxt, chibi];
+
+		for (thing in stuffToRemove) {
+			if(thing != null) thing.destroy();
+		}
+		
+		misses = 0;
+
+		timeBar = null;
+		bar = null;
+		songname = null;
+		playerbar = null;
+		healthpointer = null;
+		scoretxt = null;
+		SongScroll = false;
+		chibi = null;
+	}
+	
+	override function onNoteMiss(ev:ScriptEvent) {
+		super.onNoteMiss(ev);
+		if (!inPlay) return;
+        
+		misses++;
+	}
+
+	override function onNoteGhostMiss(ev:ScriptEvent) {
+		super.onNoteGhostMiss(ev);
+		if (!inPlay) return;
+
+		misses++;
+	}
+	
+    function onSongRetry(event:ScriptEvent) {
+       super.onSongRetry(event);
+        cleanup();
+
+	}
+	
+	override function onDestroy(event:ScriptEvent) {
+		super.onDestroy();
+      oppmode = false;
+      cleanup();
+	}
+	
+    override function onStateChangeBegin(ev:ScriptEvent) {
+		super.onStateChangeBegin(ev);
+		oppmode = false;
+		inPlay = false;
+	}
+
+	override function onCountdownStart(event:CountdownScriptEvent):Void
+	{
+	     super.onCountdownStart(event);	
+
+		state = PlayState.instance;
+		if (bar == null){
+		if(!ALLSONG){
+        if (SongList.contains(state.currentSong.id))
+        {		
+		    inPlay = true;
+	          if (state != null && inPlay) {
+                  onPlayStateEnter();
+			      return;
+		        }
+		}
+		}else{
+		   inPlay = true;
+	          if (state != null && inPlay) {
+              onPlayStateEnter();
+			  return;
+		    }		
+		}
+	  }
+    }
+	
+
+	
+	public function TweenRaveHuds(?Alpha:Float = 1, ?duration:Float = 1, ?Visible:Bool = true, ?ease:Null<Float->Float>):Void {
+	
+	     for (r in Ravehuds){
+		 if (r != null){
+	
+	          FlxTween.cancelTweensOf(r, ['alpha']);
+	          r.visible = Visible;
+	
+	if (duration == 0){
+	
+	   r.alpha = Alpha;
+	
+	  }else{
+	
+	   FlxTween.tween(r, {alpha: Alpha}, duration, {ease: ease});
+	
+	  }
+	   }
+	 }
+	
+	}
+	
+	private function resetSongname(fadeIn:Bool = true):Void
+	{
+		if (fadeIn && !allowScroll)
+			return;
+
+		if (fadeIn)
+		{
+			SongScroll = false;
+			songname.x = bar.x + 130;
+
+			songname.alpha = 0.0001;
+			FlxTween.tween(songname, {alpha: 1}, 0.25, {ease: FlxEase.linear, startDelay: 1});
+		}
+
+		new FlxTimer().start(fadeIn ? 4 : 3, function(tmr:FlxTimer)
+		{
+			SongScroll = true;
+		});
+	}
+
+function processNotes(elapsed:Float):Void
+{
+
+for (holdNote in state.opponentStrumline.holdNotes.members)
+    {
+      if (holdNote == null || !holdNote.alive) continue;
+
+      // While the hold note is being hit, and there is length on the hold note...
+      if (holdNote.hitNote && !holdNote.missedNote && holdNote.sustainLength > 0)
+      {
+	   if(TurnOnDadHealthDrian && state.health > HealthDrainLimit) state.health -= HealthDrainHold * elapsed;
+	   
+	    if(!oppmode){		
+		if (state.currentStage != null && state.currentStage.getDad().isSinging() && state.currentStage.getDad().animation.curAnim.curFrame >= 1)
+        			{
+        	  			state.currentStage.getDad().animation.curAnim.curFrame = 0;
+        			}
+		}else{
+	    if (state.currentStage != null && state.currentStage.getGirlfriend().isSinging() && state.currentStage.getGirlfriend().animation.curAnim.curFrame >= 1)
+        			{
+        	  			state.currentStage.getGirlfriend().animation.curAnim.curFrame = 0;
+						state.currentStage.getGirlfriend().holdTimer = 0;
+        			}
+		if (state.currentStage != null && state.currentStage.getBoyfriend().isSinging() && state.currentStage.getBoyfriend().animation.curAnim.curFrame >= 1)
+        			{
+        	  			state.currentStage.getBoyfriend().animation.curAnim.curFrame = 0;
+						state.currentStage.getBoyfriend().holdTimer = 0;
+        			}
+		}
+      }
+    }
+	
+for (holdNote in state.playerStrumline.holdNotes.members)
+    {
+      if (holdNote == null || !holdNote.alive) continue;
+
+      // While the hold note is being hit, and there is length on the hold note...
+      if (holdNote.hitNote && !holdNote.missedNote && holdNote.sustainLength > 0)
+      {
+		if(!oppmode){
+	    if (state.currentStage != null && state.currentStage.getGirlfriend().isSinging() && state.currentStage.getGirlfriend().animation.curAnim.curFrame >= 1)
+        			{
+        	  			state.currentStage.getGirlfriend().animation.curAnim.curFrame = 0;
+						state.currentStage.getGirlfriend().holdTimer = 0;
+        			}
+		if (state.currentStage != null && state.currentStage.getBoyfriend().isSinging() && state.currentStage.getBoyfriend().animation.curAnim.curFrame >= 1)
+        			{
+        	  			state.currentStage.getBoyfriend().animation.curAnim.curFrame = 0;
+        			}
+		}else{
+		if (state.currentStage != null && state.currentStage.getDad().isSinging() && state.currentStage.getDad().animation.curAnim.curFrame >= 1)
+        			{
+        	  			state.currentStage.getDad().animation.curAnim.curFrame = 0;
+						state.currentStage.getDad().holdTimer = 0;
+        			}
+		}
+      }
+    }
+
+
+}	
+
+}

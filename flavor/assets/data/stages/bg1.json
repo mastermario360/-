@@ -1,0 +1,494 @@
+{
+  "version": "1.0.0",
+  "cameraZoom": 0.65,
+  "props": [
+    {
+      "zIndex": 10,
+      "danceEvery": 0,
+      "position": [-1000, -700],
+      "scale": [1.5, 1.5],
+      "name": "Sky",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [0, 0],
+      "assetPath": "tbd/bg1/sky",
+      "animations": []
+    },
+    {
+      "zIndex": 15,
+      "danceEvery": 0,
+      "position": [-1000, -700],
+      "scale": [1.5, 1.5],
+      "name": "clouds",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [0.15, 0.2],
+      "assetPath": "tbd/bg1/clouds",
+      "animations": []
+    },
+    {
+      "zIndex": 20,
+      "danceEvery": 0,
+      "position": [-1000, -700],
+      "scale": [1.5, 1.5],
+      "name": "farhill",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [0.2, 1],
+      "assetPath": "tbd/bg1/farhill",
+      "animations": []
+    },
+    {
+      "zIndex": 25,
+      "danceEvery": 0,
+      "position": [-1000, -700],
+      "scale": [1.5, 1.5],
+      "name": "midhill",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [0.25, 1],
+      "assetPath": "tbd/bg1/midhill",
+      "animations": []
+    },
+    {
+      "zIndex": 30,
+      "danceEvery": 0,
+      "position": [-1000, -700],
+      "scale": [1.5, 1.5],
+      "name": "hillR",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [0.3, 1],
+      "assetPath": "tbd/bg1/hillR",
+      "animations": []
+    },
+    {
+      "zIndex": 35,
+      "danceEvery": 0,
+      "position": [-1000, -700],
+      "scale": [1.5, 1.5],
+      "name": "hillL",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [0.3, 1],
+      "assetPath": "tbd/bg1/hillL",
+      "animations": []
+    },
+    {
+      "zIndex": 35,
+      "danceEvery": 0,
+      "position": [-1000, -700],
+      "scale": [1.5, 1.5],
+      "name": "atmosphere",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [0.3, 1],
+      "assetPath": "tbd/bg1/atmosphere",
+      "animations": []
+    },
+    {
+      "zIndex": 40,
+      "danceEvery": 0,
+      "position": [-1000, -700],
+      "scale": [1.5, 1.5],
+      "name": "trees",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [0.4, 1],
+      "assetPath": "tbd/bg1/trees",
+      "animations": []
+    },
+    {
+      "zIndex": 45,
+      "danceEvery": 0,
+      "position": [-1000, -700],
+      "scale": [1.5, 1.5],
+      "name": "streetlamps",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [0.6, 1],
+      "assetPath": "tbd/bg1/streetlamps",
+      "animations": []
+    },
+    {
+      "zIndex": 50,
+      "danceEvery": 0,
+      "position": [-1000, -700],
+      "scale": [1.5, 1.5],
+      "name": "streetlights",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [0.6, 1],
+      "assetPath": "tbd/bg1/streetlights",
+      "animations": []
+    },
+    {
+      "zIndex": 55,
+      "danceEvery": 0,
+      "position": [-1000, -700],
+      "scale": [1.5, 1.5],
+      "name": "parking",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [1, 1],
+      "assetPath": "tbd/bg1/parking",
+      "animations": []
+    },
+    {
+      "zIndex": 60,
+      "danceEvery": 0,
+      "position": [-1000, -700],
+      "scale": [1.5, 1.5],
+      "name": "venuespotL",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [0.45, 1],
+      "assetPath": "tbd/bg1/venuespotL",
+      "animations": []
+    },
+    {
+      "zIndex": 61,
+      "danceEvery": 0,
+      "position": [-1000, -700],
+      "scale": [1.5, 1.5],
+      "name": "venuespotR",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [0.45, 1],
+      "assetPath": "tbd/bg1/venuespotR",
+      "animations": []
+    },
+    {
+      "zIndex": 62,
+      "danceEvery": 0,
+      "position": [-1000, -700],
+      "scale": [1.5, 1.5],
+      "name": "venue",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [0.5, 1],
+      "assetPath": "tbd/bg1/venue",
+      "animations": []
+    },
+    {
+      "zIndex": 63,
+      "danceEvery": 2,
+      "position": [600, 270],
+      "scale": [0.7, 0.7],
+      "name": "stans",
+      "animType": "sparrow",
+      "isPixel": false,
+	  "startingAnimation": "idle",
+      "scroll": [0.7, 1],
+      "assetPath": "tbd/bg1/stans",
+      "animations": [
+	    {
+          "offsets": [0, 0],
+          "flipY": false,
+          "frameRate": 24,
+          "prefix": "Fans",
+          "name": "idle",
+          "looped": false,
+          "flipX": false
+        }	  
+	  ]
+    },
+    {
+      "zIndex": 64,
+      "danceEvery": 0,
+      "position": [-1000, -700],
+      "scale": [1.5, 1.5],
+      "name": "sweettruck",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [0.7, 1],
+      "assetPath": "tbd/bg1/sweettruck",
+      "animations": []
+    },
+    {
+      "zIndex": 65,
+      "danceEvery": 0,
+      "position": [-1000, -700],
+      "scale": [1.5, 1.5],
+      "name": "sweettrucklight",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [0.7, 1],
+      "assetPath": "tbd/bg1/sweettrucklight",
+      "animations": []
+    },
+    {
+      "zIndex": 66,
+      "danceEvery": 0,
+      "position": [-1000, -700],
+      "scale": [1.5, 1.5],
+      "name": "sourvan",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [0.8, 1],
+      "assetPath": "tbd/bg1/sourvan",
+      "animations": []
+    },
+    {
+      "zIndex": 67,
+      "danceEvery": 0,
+      "position": [-1000, -700],
+      "scale": [1.5, 1.5],
+      "name": "sourvanlight",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [0.8, 1],
+      "assetPath": "tbd/bg1/sourvanlight",
+      "animations": []
+    },
+    {
+      "zIndex": 68,
+      "danceEvery": 0,
+      "position": [-1000, -700],
+      "scale": [1.5, 1.5],
+      "name": "sweetbus",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [0.8, 1],
+      "assetPath": "tbd/bg1/sweetbus",
+      "animations": []
+    },
+    {
+      "zIndex": 69,
+      "danceEvery": 0,
+      "position": [-1000, -700],
+      "scale": [1.5, 1.5],
+      "name": "sweetbuslight",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [0.8, 1],
+      "assetPath": "tbd/bg1/sweetbuslight",
+      "animations": []
+    },
+    {
+      "zIndex": 70,
+      "danceEvery": 2,
+      "position": [2200, 70],
+      "scale": [0.7, 0.7],
+      "name": "kyle",
+      "animType": "sparrow",
+      "isPixel": false,
+	  "startingAnimation": "idle",
+      "scroll": [0.95, 1],
+      "assetPath": "tbd/bg1/koolguykyle",
+      "animations": [
+	    {
+          "offsets": [0, 0],
+          "flipY": false,
+          "frameRate": 24,
+          "prefix": "kool_guy_kyle",
+          "name": "idle",
+          "looped": false,
+          "flipX": false
+        }	  
+	  ]
+    },
+    {
+      "zIndex": 70,
+      "danceEvery": 0,
+      "position": [-1000, -700],
+      "scale": [1.5, 1.5],
+      "name": "equipment",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [0.95, 1],
+      "assetPath": "tbd/bg1/equipment",
+      "animations": []
+    },
+    {
+      "zIndex": 71,
+      "danceEvery": 0,
+      "position": [0, 0],
+      "scale": [1, 1],
+      "name": "sweetBG",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [0, 0],
+	  "alpha": 0.0001,
+      "assetPath": "tbd/closeup/SweetBG",
+      "animations": []
+    },
+    {
+      "zIndex": 72,
+      "danceEvery": 0,
+      "position": [0, 0],
+      "scale": [1, 1],
+      "name": "SourBG",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [0, 0],
+	  "alpha": 0.0001,
+      "assetPath": "tbd/closeup/SourBG",
+      "animations": []
+    },
+    {
+      "zIndex": 73,
+      "danceEvery": 0,
+      "position": [0, 0],
+      "scale": [1, 1],
+      "name": "bothBG",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [0, 0],
+	  "alpha": 0.0001,
+      "assetPath": "tbd/closeup/BothBG",
+      "animations": []
+    },
+    {
+      "zIndex": 90,
+      "danceEvery": 0,
+      "position": [300, 150],
+      "scale": [1, 1],
+      "name": "sourBack",
+      "animType": "sparrow",
+	  "startingAnimation": "idle",
+      "isPixel": false,
+      "scroll": [1, 1],
+	  "alpha": 0.0001,
+      "assetPath": "tbd/closeup/SourCloseBack",
+      "animations": [
+	    {
+          "offsets": [0, 0],
+          "flipY": false,
+          "frameRate": 24,
+          "prefix": "SourBack",
+          "name": "idle",
+          "looped": true,
+          "flipX": false
+        }	  
+	  ]
+    },
+    {
+      "zIndex": 90,
+      "danceEvery": 0,
+      "position": [1700, 150],
+      "scale": [1, 1],
+      "name": "sweetBack",
+      "animType": "sparrow",
+	  "startingAnimation": "idle",
+      "isPixel": false,
+      "scroll": [1, 1],
+	  "alpha": 0.0001,
+      "assetPath": "tbd/closeup/SweetCloseBack",
+      "animations": [
+	    {
+          "offsets": [0, 0],
+          "flipY": false,
+          "frameRate": 24,
+          "prefix": "SweetBack",
+          "name": "idle",
+          "looped": true,
+          "flipX": false
+        }	  
+	  ]
+    },
+    {
+      "zIndex": 77,
+      "danceEvery": 0,
+      "position": [-1280, 91],
+      "scale": [1, 1],
+      "name": "SourCutin",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [0, 0],
+	  "alpha": 0.0001,
+      "assetPath": "tbd/closeup/SourCutin",
+      "animations": [
+	    {
+          "offsets": [0, 0],
+          "flipY": false,
+          "frameRate": 24,
+          "prefix": "SourCutin",
+          "name": "idle",
+          "looped": false,
+          "flipX": false
+        }	  
+	  ]
+    },
+    {
+      "zIndex": 78,
+      "danceEvery": 0,
+      "position": [1280, 359],
+      "scale": [1, 1],
+      "name": "SweetCutIn",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [0, 0],
+	  "alpha": 0.0001,
+      "assetPath": "tbd/closeup/SweetCutIns",
+      "animations": [
+	    {
+          "offsets": [0, 0],
+          "flipY": false,
+          "frameRate": 24,
+          "prefix": "SugarCutin",
+          "name": "idle",
+          "looped": false,
+          "flipX": false
+        }	  
+	  ]
+    },
+    {
+      "zIndex": 350,
+      "danceEvery": 0,
+      "position": [-2600, 0],
+      "scale": [1, 1],
+      "name": "transition",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [0, 0],
+	  "alpha": 0.0001,
+      "assetPath": "tbd/closeup/TransitionOut",
+      "animations": []
+    },
+    {
+      "zIndex": 400,
+      "danceEvery": 0,
+      "position": [0, -102],
+      "scale": [1.1, 1],
+      "name": "barTop",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [0, 0],
+	  "alpha": 0.0001,
+      "assetPath": "tbd/closeup/TightBars",
+      "animations": []
+    },
+    {
+      "zIndex": 400,
+      "danceEvery": 0,
+      "position": [0, 822],
+      "scale": [1.1, 1],
+      "name": "barBottom",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [0, 0],
+	  "alpha": 0.0001,
+      "assetPath": "tbd/closeup/TightBars",
+      "animations": []
+    }
+  ],
+  "characters": {
+    "bf": {
+      "zIndex": 200,
+      "position": [1270, 900],
+      "cameraOffsets": [-100, -100]
+    },
+    "gf": {
+      "zIndex": 70,
+      "position": [750, 820],
+      "cameraOffsets": [0, -100]
+    },
+    "dad": {
+      "zIndex": 300,
+      "position": [220, 880],
+      "cameraOffsets": [150, -100]
+    }
+  },
+  "name": "Bg1"
+}

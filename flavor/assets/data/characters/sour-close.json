@@ -1,0 +1,107 @@
+{
+    "version": "1.0.0",
+    "name": "Sour Close",
+    "assetPath": "characters/SourCloseUp",
+    "singTime": 6,
+    "isPixel": false,
+    "scale": 1,
+    "healthIcon": {
+        "id": "sour",
+        "isPixel": false,
+        "flipX": false,
+        "scale": 1
+    },
+    "animations": [
+        {
+            "name": "idle",
+            "prefix": "SourCloseUpIdle",
+            "offsets": [
+                0,
+                0
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singLEFT",
+            "prefix": "SourCloseUpLeft0",
+            "offsets": [
+                34,
+                -5
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singDOWN",
+            "prefix": "SourCloseUpDown0",
+            "offsets": [
+                17,
+                -46
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singUP",
+            "prefix": "SourCloseUpUp0",
+            "offsets": [
+                20,
+                11
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singRIGHT",
+            "prefix": "SourCloseUpRight0",
+            "offsets": [
+                -21,
+                4
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singLEFTmiss",
+            "prefix": "SourCloseUpLeftMiss",
+            "offsets": [
+                38,
+                1
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singDOWNmiss",
+            "prefix": "SourCloseUpDownMiss",
+            "offsets": [
+                51,
+                -50
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singUPmiss",
+            "prefix": "SourCloseUpUpMiss",
+            "offsets": [
+                35,
+                8
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singRIGHTmiss",
+            "prefix": "SourCloseUpRightMiss",
+            "offsets": [
+                -35,
+                7
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        }
+    ],
+    "flipX": false
+}

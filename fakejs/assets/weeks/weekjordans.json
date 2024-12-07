@@ -1,0 +1,32 @@
+{
+	"storyName": "THIS MF GOT THEM FAKE J'S!!!!",
+	"difficulties": "normal",
+	"hideFreeplay": false,
+	"weekBackground": "jordans",
+	"weekBefore": "tutorial",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"startUnlocked": true,
+	"hideStoryMode": false,
+	"songs": [
+		[
+			"Fake Jays",
+			"sponge",
+			[
+				255,
+				233,
+				135
+			]
+		]
+	],
+	"weekCharacters": [
+		"",
+		"",
+		""
+	],
+	"hiddenUntilUnlocked": false,
+	"weekName": "Week Jordans"
+}

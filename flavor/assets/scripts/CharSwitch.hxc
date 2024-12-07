@@ -1,0 +1,140 @@
+package funkin.play.character;
+import funkin.play.PlayState;
+import funkin.play.event.SongEvent;
+import funkin.modding.module.Module;
+import funkin.modding.module.ModuleHandler;
+import funkin.play.character.BaseCharacter;
+import funkin.play.character.CharacterDataParser;
+import funkin.play.character.CharacterType;
+import funkin.play.stage.Stage;
+import funkin.data.stage.StageRegistry;
+import funkin.play.components.HealthIcon;
+import funkin.graphics.FunkinSprite;
+import funkin.modding.events.ScriptEvent;
+import funkin.modding.events.ScriptEventDispatcher;
+import flixel.FlxSprite;
+import flixel.FlxG;
+import flixel.text.FlxText;
+
+class CharSwitch extends Module {
+	public override function handleEvent(data) {
+	if (PlayState.instance == null || PlayState.instance.currentStage == null) return;
+	if (PlayState.instance.isMinimalMode) return;
+    	SwapOut(data.value.chartype, data.value.newchar);
+    
+    	PlayState.instance.currentStage.refresh();
+	}
+
+	function SwapOut(type:String = "dad", newC:String = "dad") {
+		var char = CharacterDataParser.fetchCharacter(newC);
+		if (char != null) {
+		switch(type) {
+			case "dad":
+				SetDad(char);
+			case "bf":
+				SetBoyfriend(char);
+			case "gf":
+				SetGirlfriend(char);
+		}
+		}
+		PlayState.instance.currentStage.refresh();
+	}
+	function SetDad(charToSet:BaseCharacter)
+	{				
+		var _data = _StageData(PlayState.instance.currentStage.id);
+		var stageCharData:StageDataCharacter = _data.characters.dad;
+		charToSet.characterType = PlayState.instance.currentStage.getDad().characterType;
+		charToSet.idleSuffix = PlayState.instance.currentStage.getDad().idleSuffix;
+	        charToSet.flipX = charToSet.getDataFlipX();
+		charToSet.name = 'dad';
+		PlayState.instance.currentStage.getDad(true);
+		PlayState.instance.currentStage.characters.set('dad', charToSet);
+		charToSet.initHealthIcon(true);
+		charToSet.resetCharacter(true);
+		charToSet.zIndex = stageCharData.zIndex;
+      		charToSet.x = stageCharData.position[0] - charToSet.characterOrigin.x + charToSet.globalOffsets[0];
+      		charToSet.y = stageCharData.position[1] - charToSet.characterOrigin.y + charToSet.globalOffsets[1];
+		var finalScale = charToSet.getBaseScale() * stageCharData.scale;
+		charToSet.setScale(finalScale);
+		charToSet.cameraFocusPoint.x += stageCharData.cameraOffsets[0];
+      		charToSet.cameraFocusPoint.y += stageCharData.cameraOffsets[1];
+		PlayState.instance.currentStage.add(charToSet);
+		ScriptEventDispatcher.callEvent(charToSet, new ScriptEvent('ADDED', false));
+	}
+	function SetBoyfriend(charToSet:BaseCharacter)
+	{				
+		var _data = _StageData(PlayState.instance.currentStage.id);
+		var stageCharData:StageDataCharacter = _data.characters.bf;
+		charToSet.characterType = PlayState.instance.currentStage.getBoyfriend().characterType;
+		charToSet.idleSuffix = PlayState.instance.currentStage.getBoyfriend().idleSuffix;
+	        charToSet.flipX = !charToSet.getDataFlipX();
+		charToSet.name = 'bf';
+		PlayState.instance.currentStage.getBoyfriend(true);
+		PlayState.instance.currentStage.characters.set('bf', charToSet);
+		charToSet.initHealthIcon(false);
+		charToSet.resetCharacter(true);
+		charToSet.zIndex = stageCharData.zIndex;
+      		charToSet.x = stageCharData.position[0] - charToSet.characterOrigin.x + charToSet.globalOffsets[0];
+      		charToSet.y = stageCharData.position[1] - charToSet.characterOrigin.y + charToSet.globalOffsets[1];
+		var finalScale = charToSet.getBaseScale() * stageCharData.scale;
+		charToSet.setScale(finalScale);
+		charToSet.cameraFocusPoint.x += stageCharData.cameraOffsets[0];
+      		charToSet.cameraFocusPoint.y += stageCharData.cameraOffsets[1];
+		PlayState.instance.currentStage.add(charToSet);
+		ScriptEventDispatcher.callEvent(charToSet, new ScriptEvent('ADDED', false));
+	}
+	function SetGirlfriend(charToSet:BaseCharacter)
+	{				
+		var _data = _StageData(PlayState.instance.currentStage.id);
+		var stageCharData:StageDataCharacter = _data.characters.gf;
+		charToSet.characterType = PlayState.instance.currentStage.getGirlfriend().characterType;
+		charToSet.idleSuffix = PlayState.instance.currentStage.getGirlfriend().idleSuffix;
+	        charToSet.flipX = charToSet.getDataFlipX();
+		charToSet.name = 'gf';
+		PlayState.instance.currentStage.getGirlfriend(true);
+		PlayState.instance.currentStage.characters.set('gf', charToSet);
+		charToSet.resetCharacter(true);
+		charToSet.zIndex = stageCharData.zIndex;
+      		charToSet.x = stageCharData.position[0] - charToSet.characterOrigin.x + charToSet.globalOffsets[0];
+      		charToSet.y = stageCharData.position[1] - charToSet.characterOrigin.y + charToSet.globalOffsets[1];
+		var finalScale = charToSet.getBaseScale() * stageCharData.scale;
+		charToSet.setScale(finalScale);
+		charToSet.cameraFocusPoint.x += stageCharData.cameraOffsets[0];
+      		charToSet.cameraFocusPoint.y += stageCharData.cameraOffsets[1];
+		PlayState.instance.currentStage.add(charToSet);
+		ScriptEventDispatcher.callEvent(charToSet, new ScriptEvent('ADDED', false));
+	}
+
+
+
+
+
+
+	function _StageData(id:String):Null<StageData>
+	{
+		return StageRegistry.instance.parseEntryDataWithMigration(id, StageRegistry.instance.fetchEntryVersion(id));
+	}
+
+	public function getEventSchema() {
+	  return [{
+        name: 'chartype',
+        title: 'Character Type',
+        defaultValue: "dad",
+        type: "string"
+    },
+    {
+      name: 'newchar',
+      title: 'New Character',
+      type: "string",
+      defaultValue: "dad"
+    }];
+  }
+
+	public function getTitle() {
+		return "Switch Character";
+	}
+	
+	public function new() {
+		super('CharSwitch');
+	}
+}

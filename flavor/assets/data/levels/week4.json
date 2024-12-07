@@ -1,0 +1,76 @@
+{
+  "version": "1.0.0",
+  "name": "A SHOWSTOPPING START",
+  "titleAsset": "storymenu/titles/week1",
+  "props": [
+    {
+      "assetPath": "storymenu/props/Sour",
+      "scale": 0.4,
+      "offsets": [-150, 0],
+      "animations": [
+        {
+          "name": "idle",
+          "prefix": "Sour Idle",
+          "frameRate": 24
+        }
+      ]
+    },
+    {
+      "assetPath": "storymenu/props/Sweet",
+      "scale": 0.4,
+      "offsets": [100, -50],
+      "animations": [
+        {
+          "name": "idle",
+          "prefix": "Sweet Idle",
+		  "frameRate": 24
+        }
+      ]
+    },
+    {
+      "assetPath": "storymenu/props/Showman",
+      "scale": 0.38,
+      "offsets": [-400, -200],
+      "animations": [
+        {
+          "name": "idle",
+          "prefix": "Showman Idle",
+		  "frameRate": 24
+        }
+      ]
+    },
+    {
+      "assetPath": "storymenu/stageprev/showroom",
+      "scale": 0.7,
+      "offsets": [-222, 15],
+      "animations": []
+    },
+    {
+      "assetPath": "storymenu/chartags/Sour",
+      "scale": 0.7,
+      "offsets": [-542, 230],
+      "animations": []
+    },
+    {
+      "assetPath": "storymenu/chartags/Sweet",
+      "scale": 0.7,
+      "offsets": [-862, 272],
+      "animations": []
+    },
+    {
+      "assetPath": "storymenu/chartags/Empty",
+      "scale": 0.7,
+      "offsets": [-1182, 312],
+      "animations": []
+    },
+    {
+      "assetPath": "storymenu/chartags/Empty",
+      "scale": 0.7,
+      "offsets": [-1502, 352],
+      "animations": []
+    }		
+  ],
+  "background": "#9D39AB",
+  "visible": true,
+  "songs": ["cranberry-pop", "rockcandy"]
+}

@@ -1,0 +1,228 @@
+import funkin.play.character.SparrowCharacter;
+import funkin.play.character.CharacterType;
+import funkin.play.character.BaseCharacter;
+import funkin.play.PlayState;
+import flixel.tweens.FlxTween;
+import flixel.tweens.FlxEase;
+import flixel.util.FlxTimer;
+import funkin.graphics.FunkinSprite;
+import flixel.FlxG;
+import flixel.FlxSprite;
+import funkin.Paths;
+import flixel.text.FlxTextBorderStyle;
+import funkin.util.Constants;
+import funkin.play.Countdown;
+import funkin.util.FlxTweenUtil;
+import openfl.utils.Assets;
+import funkin.Conductor;
+import funkin.audio.FunkinSound;
+import funkin.play.song.Song;
+import funkin.play.components.HealthIcon;
+import funkin.play.notes.Strumline;
+import funkin.play.notes.notestyle.NoteStyle;
+import funkin.data.notestyle.NoteStyleRegistry;
+import funkin.modding.module.ModuleHandler;
+import funkin.Preferences;
+import flixel.addons.display.FlxBackdrop;
+
+class Rockcandy extends Song {
+    var game;
+	var eventTweens:Array<FlxTween> = [];
+	var eventTimers:Array<FlxTimer> = [];
+	var extraTimers:Array<FlxTimer> = [];
+	var titleCard:FlxSprite;
+	var whitescreen:FlxSprite;
+	
+
+
+	
+	public function new() {
+		super('rockcandy');
+	}
+	  
+	public function onCreate(event:ScriptEvent):Void{
+	  super.onCreate(event);
+	  
+	  game = PlayState.instance;
+		  
+		FlxG.bitmap.add(Paths.image('characters/SourCloseUp'));
+		FlxG.bitmap.add(Paths.image('characters/SweetCloseUp'));
+		
+		titleCard = new FlxSprite();
+		titleCard.frames = Paths.getSparrowAtlas('tbd/titlecard/' + game.currentChart.songName);
+		titleCard.animation.addByPrefix('idle', 'card', 24, false);
+		titleCard.antialiasing = false;
+		titleCard.cameras = [game.camHUD];
+		titleCard.screenCenter();
+		titleCard.alpha = 0.001;
+		game.add(titleCard);
+		
+		whitescreen = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, 0xFFFFFFFF);
+		whitescreen.setGraphicSize(Std.int(whitescreen.width * 10));
+		whitescreen.zIndex = 450;
+		whitescreen.cameras = [game.camHUD];
+		whitescreen.alpha = 0.0001;
+		game.add(whitescreen);
+		
+		game.currentStage.getNamedProp('bordersour').cameras = [game.camHUD];
+		game.currentStage.getNamedProp('bordersour').screenCenter();
+		game.currentStage.getNamedProp('bordersweet').cameras = [game.camHUD];
+		game.currentStage.getNamedProp('bordersweet').screenCenter();
+		
+		game.refresh();
+
+	
+		
+	
+	}
+	public function onCountdownStart(event:CountdownScriptEvent):Void
+	{
+	     super.onCountdownStart(event);
+		 
+		 game.currentStage.getDad().idleSuffix = '-sad';
+		 game.currentStage.getBoyfriend().idleSuffix = '-sad';
+		 ModuleHandler.getModule("RaveHealthbar").scriptCall("TweenRaveHuds",[0.0001, 0, false, FlxEase.INSTANT]);
+		 game.currentStage.getGirlfriend().visible = false;
+		 toggleLights(3);
+		 game.currentStage.getNamedProp('bglights').alpha = 0.0001;
+		 game.tweenCameraToPosition(727, 410, 0);
+		 
+}
+
+    public function onStepHit(ev:SongTimeScriptEvent){
+	  
+	super.onStepHit(ev);
+	
+	switch(ev.step){
+	case 1:
+	ModuleHandler.getModule("RaveHealthbar").scriptCall("TweenRaveHuds",[0.0001, 0, false, FlxEase.INSTANT]);
+	case 13:
+	titleCard.alpha = 1;
+	titleCard.animation.play('idle');
+	case 48:
+	eventTweens.push(FlxTween.tween(titleCard, {alpha: 0.0001}, 1, {ease: FlxEase.linear}));
+	ModuleHandler.getModule("RaveHealthbar").scriptCall("TweenRaveHuds",[1, 0.5, true]);
+	case 272:
+	game.currentStage.getNamedProp('bglights').alpha = 1;
+	toggleLights(1);
+	case 332:
+	toggleLights(3);
+	case 336:
+	toggleLights(0);
+	case 400:
+	toggleLights(1);
+	case 460:
+	toggleLights(3);
+	case 464:
+	toggleLights(0);
+	case 524:
+	toggleLights(3);
+	case 528:
+	toggleLights(2);
+	case 652:
+	toggleLights(3);
+	case 656:
+	toggleLights(2);
+	case 1168:
+	toggleLights(1);
+	whitescreen.alpha = 1;
+	eventTweens.push(FlxTween.tween(whitescreen, {alpha: 0.0001}, 0.3, {ease: FlxEase.linear}));
+	game.currentStage.getNamedProp('bordersour').alpha = 1;
+	case 1296:
+	toggleLights(0);
+	eventTweens.push(FlxTween.tween(game.currentStage.getNamedProp('bordersour'), {alpha: 0.0001}, 2, {ease: FlxEase.linear}));
+	eventTweens.push(FlxTween.tween(game.currentStage.getNamedProp('bordersweet'), {alpha: 1}, 2, {ease: FlxEase.linear}));
+	case 1424:
+	toggleLights(2);
+	eventTweens.push(FlxTween.tween(game.currentStage.getNamedProp('bordersweet'), {alpha: 0.0001}, 2, {ease: FlxEase.linear}));
+	case 1676:
+	toggleLights(3);
+	whitescreen.alpha = 1;
+	eventTweens.push(FlxTween.tween(whitescreen, {alpha: 0.0001}, 0.3, {ease: FlxEase.linear}));
+	game.currentStage.getNamedProp('bordersour').alpha = 1;
+	game.currentStage.getNamedProp('bordersweet').alpha = 1;
+	case 1936:
+	toggleLights(0);
+	case 1944:
+	toggleLights(1);
+	case 1952:
+	toggleLights(2);
+	case 1972:
+	eventTweens.push(FlxTween.tween(game.currentStage.getNamedProp('bordersour'), {alpha: 0.0001}, 3.4, {ease: FlxEase.linear}));
+	eventTweens.push(FlxTween.tween(game.currentStage.getNamedProp('bordersweet'), {alpha: 0.0001}, 3.4, {ease: FlxEase.linear}));
+	}
+	
+	
+	}
+	
+    function onNoteHit(ev:HitNoteScriptEvent) {
+		super.onNoteHit(ev);
+		
+	}
+	
+   function onNoteMiss(ev:NoteScriptEvent) {
+   
+        super.onNoteMiss(ev);
+   
+   }
+   
+  function onNoteGhostMiss(ev:GhostMissNoteScriptEvent){
+  
+       super.onNoteGhostMiss(ev);
+  
+  }
+	
+   public function onSongRetry(event:ScriptEvent) {
+       super.onSongRetry(event);
+	   
+	   for (tween in eventTweens){
+	   
+	      tween.cancel();
+	   }
+	   
+	   titleCard.alpha = 0.001;
+	   game.currentStage.getNamedProp('bordersour').alpha = 0.0001;
+	   game.currentStage.getNamedProp('bordersweet').alpha = 0.0001;
+	   whitescreen.alpha = 0.0001;
+	   
+	}
+	
+	function onPause(event) {
+        super.onPause(event);
+		
+		for(tim in eventTimers) tim.active = false;
+		for(extim in extraTimers) extim.active = false;
+        for(twn in eventTweens) if(twn.active) if(!twn.finished) twn.active = false;
+    }
+    
+	function onResume(event) {
+        super.onResume(event);
+		
+		for(tim in eventTimers) tim.active = true;
+		for(extim in extraTimers) extim.active = true;
+        for(twn in eventTweens) if(!twn.active) if(!twn.finished) twn.active = true;
+    }
+
+	function toggleLights(num:Int){
+	
+	switch (num){
+	case 0:
+	game.currentStage.getNamedProp('leftLights').alpha = 0.0001;
+	game.currentStage.getNamedProp('rightLights').alpha = 1;
+	case 1:
+	game.currentStage.getNamedProp('leftLights').alpha = 1;
+	game.currentStage.getNamedProp('rightLights').alpha = 0.0001;
+	case 2:
+	game.currentStage.getNamedProp('leftLights').alpha = 1;
+	game.currentStage.getNamedProp('rightLights').alpha = 1;
+	case 3:
+	game.currentStage.getNamedProp('leftLights').alpha = 0.0001;
+	game.currentStage.getNamedProp('rightLights').alpha = 0.0001;
+	
+	
+	}
+	}
+	
+	
+
+}

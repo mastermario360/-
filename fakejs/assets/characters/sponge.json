@@ -1,0 +1,89 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "idle",
+			"indices": [],
+			"name": "sponge idle"
+		},
+		{
+			"offsets": [
+				120,
+				13
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "sponge left"
+		},
+		{
+			"offsets": [
+				55,
+				33
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "sponge right"
+		},
+		{
+			"offsets": [
+				9,
+				-12
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "sponge down"
+		},
+		{
+			"offsets": [
+				2,
+				71
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singUP",
+			"indices": [],
+			"name": "sponge up"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				20,
+				0
+			],
+			"anim": "chase",
+			"fps": 24,
+			"name": "chase",
+			"indices": []
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/spongebob",
+	"position": [
+		0,
+		190
+	],
+	"healthicon": "sponge",
+	"flip_x": false,
+	"healthbar_colors": [
+		255,
+		223,
+		81
+	],
+	"camera_position": [
+		50,
+		70
+	],
+	"sing_duration": 4.2,
+	"scale": 0.8
+}

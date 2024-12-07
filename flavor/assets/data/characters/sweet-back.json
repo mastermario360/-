@@ -1,0 +1,107 @@
+{
+    "version": "1.0.0",
+    "name": "Sweet Back",
+    "assetPath": "characters/SweetBack",
+    "singTime": 6,
+    "isPixel": false,
+    "scale": 1,
+    "healthIcon": {
+        "id": "sweet",
+        "isPixel": false,
+        "flipX": false,
+        "scale": 1
+    },
+    "animations": [
+        {
+            "name": "idle",
+            "prefix": "SweetBackIdle",
+            "offsets": [
+                0,
+                0
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singLEFT",
+            "prefix": "SweetBackLeft",
+            "offsets": [
+                -2,
+                27
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singDOWN",
+            "prefix": "SweetBackDown",
+            "offsets": [
+                0,
+                -19
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singUP",
+            "prefix": "SweetBackUp",
+            "offsets": [
+                12,
+                6
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singRIGHT",
+            "prefix": "SweetBackRight",
+            "offsets": [
+                -21,
+                -4
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singLEFTmiss",
+            "prefix": "SweetBackMissLeft",
+            "offsets": [
+                24,
+                23
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singDOWNmiss",
+            "prefix": "SweetBackMissDown",
+            "offsets": [
+                0,
+                -21
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singUPmiss",
+            "prefix": "SweetBackMissUp",
+            "offsets": [
+                13,
+                6
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singRIGHTmiss",
+            "prefix": "SweetBackMissRight",
+            "offsets": [
+                -14,
+                -7
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        }
+    ],
+    "flipX": false
+}

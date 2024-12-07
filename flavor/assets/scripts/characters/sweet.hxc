@@ -1,0 +1,103 @@
+import funkin.play.character.SparrowCharacter;
+import funkin.play.character.CharacterType;
+import funkin.play.PlayState;
+import flixel.FlxSprite;
+import funkin.Paths;
+import flixel.tweens.FlxTween;
+import flixel.tweens.FlxEase;
+import flixel.FlxG;
+import flixel.math.FlxMath;
+
+class Sweet extends SparrowCharacter {
+	
+	function new() {
+		super('sweet');
+	}
+
+	function onNoteHit(event:HitNoteScriptEvent)
+	{
+		if (!event.note.noteData.getMustHitNote() && characterType == CharacterType.DAD) {
+			// Override the hit note animation.
+			switch(event.note.kind) {
+				case "dadalt":
+				holdTimer = 0;
+				makeMusicNote(this, event.note.noteData.getDirection());
+				this.playSingAnimation(event.note.noteData.getDirection(), false, 'alt');
+				return;
+				case "bfalt":
+				holdTimer = 0;
+				makeMusicNote(this, event.note.noteData.getDirection());
+				this.playSingAnimation(event.note.noteData.getDirection(), false, 'alt');
+				return;
+				
+			}
+		}
+		if (event.note.noteData.getMustHitNote() && characterType == CharacterType.BF) {
+			// Override the hit note animation.
+			switch(event.note.kind) {
+				case "dadalt":
+				holdTimer = 0;
+				makeMusicNote(this, event.note.noteData.getDirection());
+				this.playSingAnimation(event.note.noteData.getDirection(), false, 'alt');
+				return;
+				case "bfalt":
+				holdTimer = 0;
+				makeMusicNote(this, event.note.noteData.getDirection());
+				this.playSingAnimation(event.note.noteData.getDirection(), false, 'alt');
+				return;
+				
+			}
+		}		
+
+		super.onNoteHit(event);
+	}
+	
+	function onNoteMiss(event:NoteScriptEvent)
+	{
+	    super.onNoteMiss(event);
+	
+	}
+	
+	function makeMusicNote(char:BaseCharacter, dir:Int):Void
+	{
+		var musicNote:FlxSprite = new FlxSprite().loadGraphic(Paths.image('strumnote/sweet'));
+		
+		var xPos:Float = char.flipX ? 100 : -100;
+		var noteWidth:Float = char.flipX ? (musicNote.width / 2) : -(musicNote.width / 2);
+
+		musicNote.setPosition(char.getMidpoint().x + xPos + noteWidth, char.getMidpoint().y + -200 + (musicNote.height / 2));
+		musicNote.antialiasing = true;
+		PlayState.instance.currentStage.add(musicNote);
+
+		musicNote.scale.set(0.5, 0.5);
+		musicNote.alpha = 1;
+
+		var randAngle:Float = 0;
+
+		switch (dir) // DOWN AND UP WERE MIRRORED. FUCK.
+		{
+			case 0:
+				randAngle = FlxG.random.int(240, 300);
+			case 2:
+				randAngle = FlxG.random.int(150, 210);
+			case 1:
+				randAngle = FlxG.random.int(330, 390);
+			case 3:
+				randAngle = FlxG.random.int(60, 120);
+		}
+		if (randAngle > 360) randAngle = randAngle % 360;
+		// i cannot radian properly, go go gadget multiply
+
+		randAngle *= 0.0174533;
+
+		musicNote.velocity.x = (FlxG.random.int(200, 400) * Math.sin(randAngle));
+		musicNote.velocity.y = (FlxG.random.int(200, 400) * Math.cos(randAngle));
+
+		FlxTween.tween(musicNote.velocity, {x: 0, y:0}, 1, {ease: FlxEase.cubeOut});
+		FlxTween.tween(musicNote.scale, {x: 2, y:2}, 1, {ease: FlxEase.cubeOut});
+		FlxTween.tween(musicNote, {alpha: 0}, 1, {ease: FlxEase.cubeOut, onComplete: function(twn:FlxTween) {
+			musicNote.destroy();
+		}});
+	}
+	
+}

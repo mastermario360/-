@@ -1,0 +1,431 @@
+{
+  "version": "1.0.0",
+  "cameraZoom": 0.98,
+  "props": [
+    {
+      "zIndex": 10,
+      "danceEvery": 0,
+      "position": [-520, -480],
+      "scale": [0.7, 0.7],
+      "name": "Sky",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [0.35, 0.35],
+      "assetPath": "tbd/enZ-TV/sky_day",
+      "animations": []
+    },
+    {
+      "zIndex": 20,
+      "danceEvery": 0,
+      "position": [-520, -480],
+      "scale": [0.7, 0.7],
+      "name": "city",
+      "animType": "sparrow",
+      "isPixel": false,	  
+      "scroll": [0.7, 0.85],
+      "assetPath": "tbd/enZ-TV/city_day",
+      "animations": []
+    },
+    {
+      "zIndex": 30,
+      "danceEvery": 0,
+      "position": [-520, -480],
+      "scale": [0.7, 0.7],
+      "name": "roof",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [1, 1],
+      "assetPath": "tbd/enZ-TV/rooftop_day",
+      "animations": []
+    },
+    {
+      "zIndex": 400,
+      "danceEvery": 0,
+      "position": [-520, -480],
+      "scale": [0.7, 0.7],
+      "name": "tvfront",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [1.2, 1.2],
+      "assetPath": "tbd/enZ-TV/frontTV",
+      "animations": []
+    },
+    {
+      "zIndex": 55,
+      "danceEvery": 0,
+      "position": [-135, -100],
+      "scale": [0.35, 0.35],
+      "name": "tvScreens",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [1, 1],
+	  "alpha": 1,
+      "assetPath": "tbd/enZ-TV/tvScreen",
+      "animations": []
+    },
+    {
+      "zIndex": 60,
+      "danceEvery": 0,
+      "position": [-100, -100],
+      "scale": [0.7, 0.7],
+      "name": "introstatic",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [1, 1],
+	  "startingAnimation": "idle",
+	  "alpha": 0.0001,
+      "assetPath": "tbd/sweetroom/static",
+      "animations": [
+	    {
+          "offsets": [0, 0],
+          "flipY": false,
+          "frameRate": 30,
+          "prefix": "static",
+          "name": "idle",
+          "looped": true,
+          "flipX": false
+        }	  
+	  ]
+    },
+    {
+      "zIndex": 65,
+      "danceEvery": 0,
+      "position": [-100, -50],
+      "scale": [1, 1],
+      "name": "RikaDanceBG",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [1, 1],
+	  "alpha": 0.0001,
+      "assetPath": "tbd/closeup/RikaBG",
+      "animations": []
+    },
+    {
+      "zIndex": 65,
+      "danceEvery": 0,
+      "position": [-100, -50],
+      "scale": [1, 1],
+      "name": "SweetDanceBG",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [1, 1],
+	  "alpha": 0.0001,
+      "assetPath": "tbd/closeup/SweetBG",
+      "animations": []
+    },
+    {
+      "zIndex": 65,
+      "danceEvery": 0,
+      "position": [-100, -50],
+      "scale": [1, 1],
+      "name": "SourDanceBG",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [1, 1],
+	  "alpha": 0.0001,
+      "assetPath": "tbd/closeup/SourBG",
+      "animations": []
+    },
+    {
+      "zIndex": 70,
+      "danceEvery": 0,
+      "position": [-41, -40],
+      "scale": [1.2, 1.2],
+      "name": "sour_chibi",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [1, 1],
+	  "startingAnimation": "idle",
+	  "alpha": 0.0001,
+      "assetPath": "tbd/enZ-TV/sour_chibi",
+      "animations": [
+	    {
+          "offsets": [0, 0],
+          "flipY": false,
+          "frameRate": 24,
+          "prefix": "sour dance",
+          "name": "idle",
+          "looped": true,
+          "flipX": false
+        }	  
+	  ]
+    },
+    {
+      "zIndex": 70,
+      "danceEvery": 0,
+      "position": [576, -70],
+      "scale": [1.2, 1.2],
+      "name": "rika_chibi",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [1, 1],
+	  "startingAnimation": "idle",
+	  "alpha": 0.0001,
+      "assetPath": "tbd/enZ-TV/rika_chibi",
+      "animations": [
+	    {
+          "offsets": [0, 0],
+          "flipY": false,
+          "frameRate": 24,
+          "prefix": "rika dance",
+          "name": "idle",
+          "looped": true,
+          "flipX": false
+        }	  
+	  ]
+    },
+    {
+      "zIndex": 70,
+      "danceEvery": 0,
+      "position": [33, -35],
+      "scale": [1.2, 1.2],
+      "name": "sweet_chibi",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [1, 1],
+	  "startingAnimation": "idle",
+	  "alpha": 0.0001,
+      "assetPath": "tbd/enZ-TV/sweet_chibi",
+      "animations": [
+	    {
+          "offsets": [0, 0],
+          "flipY": false,
+          "frameRate": 24,
+          "prefix": "sweet dance",
+          "name": "idle",
+          "looped": true,
+          "flipX": false
+        }	  
+	  ]
+    },
+    {
+      "zIndex": 70,
+      "danceEvery": 0,
+      "position": [-81, -30],
+      "scale": [1, 1],
+      "name": "SourTV",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [1, 1],
+	  "startingAnimation": "idle",
+	  "alpha": 0.0001,
+      "assetPath": "tbd/enZ-TV/SourTV",
+      "animations": [
+	    {
+          "offsets": [0, 0],
+          "flipY": false,
+          "frameRate": 24,
+          "prefix": "SourTV",
+          "name": "idle",
+          "looped": true,
+          "flipX": false
+        }	  
+	  ]
+    },
+    {
+      "zIndex": 70,
+      "danceEvery": 0,
+      "position": [525, -30],
+      "scale": [1, 1],
+      "name": "RikaTV",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [1, 1],
+	  "startingAnimation": "idle",
+	  "alpha": 0.0001,
+      "assetPath": "tbd/enZ-TV/RikaTV",
+      "animations": [
+	    {
+          "offsets": [0, 0],
+          "flipY": false,
+          "frameRate": 24,
+          "prefix": "RikaTV",
+          "name": "idle",
+          "looped": true,
+          "flipX": false
+        }	  
+	  ]
+    },
+    {
+      "zIndex": 70,
+      "danceEvery": 0,
+      "position": [-82, -28],
+      "scale": [1, 1],
+      "name": "SweetTV",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [1, 1],
+	  "startingAnimation": "idle",
+	  "alpha": 0.0001,
+      "assetPath": "tbd/enZ-TV/SweetTV",
+      "animations": [
+	    {
+          "offsets": [0, 0],
+          "flipY": false,
+          "frameRate": 24,
+          "prefix": "SweetTV",
+          "name": "idle",
+          "looped": true,
+          "flipX": false
+        }	  
+	  ]
+    },
+    {
+      "zIndex": 490,
+      "danceEvery": 0,
+      "position": [-140, 555],
+      "scale": [1, 1],
+      "name": "bottomscreens",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [1, 1],
+	  "startingAnimation": "idle",
+	  "alpha": 1,
+      "assetPath": "tbd/enZ-TV/bottomscreens",
+      "animations": [
+	    {
+          "offsets": [0, 0],
+          "flipY": false,
+          "frameRate": 24,
+          "prefix": "ConsoleScreens",
+          "name": "idle",
+          "looped": true,
+          "flipX": false
+        }	  
+	  ]
+    },
+    {
+      "zIndex": 500,
+      "danceEvery": 0,
+      "position": [-135, -100],
+      "scale": [0.35, 0.35],
+      "name": "computerRoom",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [1, 1],
+	  "alpha": 1,
+      "assetPath": "tbd/enZ-TV/Computer_Room",
+      "animations": []
+    },
+    {
+      "zIndex": 510,
+      "danceEvery": 0,
+      "position": [-135, -100],
+      "scale": [0.35, 0.35],
+      "name": "buttonGlow",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [1, 1],
+	  "alpha": 0.0001,
+      "assetPath": "tbd/enZ-TV/ButtonGlow",
+      "animations": []
+    },
+    {
+      "zIndex": 80,
+      "danceEvery": 0,
+      "position": [-135, -100],
+      "scale": [0.35, 0.35],
+      "name": "CamLeft",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [1, 1],
+	  "alpha": 0.0001,
+      "assetPath": "tbd/enZ-TV/BGCloseLeft",
+      "animations": []
+    },
+    {
+      "zIndex": 80,
+      "danceEvery": 0,
+      "position": [-135, -100],
+      "scale": [0.35, 0.35],
+      "name": "CamRight",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [1, 1],
+	  "alpha": 0.0001,
+      "assetPath": "tbd/enZ-TV/BGCloseRight",
+      "animations": []
+    },
+    {
+      "zIndex": 600,
+      "danceEvery": 0,
+      "position": [-260, -100],
+      "scale": [1, 1],
+      "name": "outrostatic",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [1, 1],
+	  "startingAnimation": "idle",
+	  "alpha": 0.0001,
+      "assetPath": "tbd/sweetroom/static",
+      "animations": [
+	    {
+          "offsets": [0, 0],
+          "flipY": false,
+          "frameRate": 30,
+          "prefix": "static",
+          "name": "idle",
+          "looped": true,
+          "flipX": false
+        }	  
+	  ]
+    },
+    {
+      "zIndex": 610,
+      "danceEvery": 0,
+      "position": [-235, -200],
+      "scale": [1, 1],
+      "name": "tvScreenOutro",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [1, 1],
+	  "alpha": 0.0001,
+      "assetPath": "tbd/enZ-TV/tvScreen",
+      "animations": []
+    },
+    {
+      "zIndex": 610,
+      "danceEvery": 0,
+      "position": [0, 0],
+      "scale": [1, 1],
+      "name": "vcr",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [0, 0],
+	  "alpha": 0.0001,
+      "assetPath": "tbd/enZ-TV/vcr",
+      "animations": []
+    },
+    {
+      "zIndex": 620,
+      "danceEvery": 0,
+      "position": [0, 0],
+      "scale": [1, 1],
+      "name": "border",
+      "animType": "sparrow",
+      "isPixel": false,
+      "scroll": [0, 0],
+	  "alpha": 0.0001,
+      "assetPath": "tbd/enZ-TV/tvborder",
+      "animations": []
+    }
+  ],
+  "characters": {
+    "bf": {
+      "zIndex": 200,
+      "position": [870, 650],
+      "cameraOffsets": [-100, -100]
+    },
+    "gf": {
+      "zIndex": 100,
+      "position": [850, 650],
+      "cameraOffsets": [0, -100]
+    },
+    "dad": {
+      "zIndex": 300,
+      "position": [220, 650],
+      "cameraOffsets": [150, -100]
+    }
+  },
+  "name": "megahurtz"
+}

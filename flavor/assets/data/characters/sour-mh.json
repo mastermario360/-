@@ -1,0 +1,63 @@
+{
+    "version": "1.0.0",
+    "name": "Sour Mh",
+    "assetPath": "characters/sour_mh",
+    "singTime": 4,
+    "isPixel": false,
+    "healthIcon": {
+        "id": "sour"
+    },
+    "animations": [
+        {
+            "name": "idle",
+            "prefix": "idle",
+            "offsets": [
+                0,
+                0
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singLEFT",
+            "prefix": "right",
+            "offsets": [
+                32,
+                -26
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singRIGHT",
+            "prefix": "left",
+            "offsets": [
+               -51,
+                -13
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singDOWN",
+            "prefix": "down",
+            "offsets": [
+                19,
+                12
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singUP",
+            "prefix": "up",
+            "offsets": [
+                -39,
+                37
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        }
+    ],
+    "flipX": false
+}

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="Showman.png">
+	<!-- Created with Adobe Animate version 24.0.2.12 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Showman Idle0000" x="5" y="5" width="414" height="884" frameX="0" frameY="-16" frameWidth="414" frameHeight="900"/>
+	<SubTexture name="Showman Idle0001" x="5" y="5" width="414" height="884" frameX="0" frameY="-16" frameWidth="414" frameHeight="900"/>
+	<SubTexture name="Showman Idle0002" x="424" y="5" width="407" height="891" frameX="-5" frameY="-9" frameWidth="414" frameHeight="900"/>
+	<SubTexture name="Showman Idle0003" x="424" y="5" width="407" height="891" frameX="-5" frameY="-9" frameWidth="414" frameHeight="900"/>
+	<SubTexture name="Showman Idle0004" x="836" y="5" width="403" height="898" frameX="-8" frameY="-2" frameWidth="414" frameHeight="900"/>
+	<SubTexture name="Showman Idle0005" x="836" y="5" width="403" height="898" frameX="-8" frameY="-2" frameWidth="414" frameHeight="900"/>
+	<SubTexture name="Showman Idle0006" x="1244" y="5" width="407" height="900" frameX="-5" frameY="0" frameWidth="414" frameHeight="900"/>
+	<SubTexture name="Showman Idle0007" x="1244" y="5" width="407" height="900" frameX="-5" frameY="0" frameWidth="414" frameHeight="900"/>
+	<SubTexture name="Showman Idle0008" x="1244" y="5" width="407" height="900" frameX="-5" frameY="0" frameWidth="414" frameHeight="900"/>
+	<SubTexture name="Showman Idle0009" x="1244" y="5" width="407" height="900" frameX="-5" frameY="0" frameWidth="414" frameHeight="900"/>
+	<SubTexture name="Showman Idle0010" x="1244" y="5" width="407" height="900" frameX="-5" frameY="0" frameWidth="414" frameHeight="900"/>
+	<SubTexture name="Showman Idle0011" x="1244" y="5" width="407" height="900" frameX="-5" frameY="0" frameWidth="414" frameHeight="900"/>
+	<SubTexture name="Showman Idle0012" x="1244" y="5" width="407" height="900" frameX="-5" frameY="0" frameWidth="414" frameHeight="900"/>
+	<SubTexture name="Showman Idle0013" x="1244" y="5" width="407" height="900" frameX="-5" frameY="0" frameWidth="414" frameHeight="900"/>
+	<SubTexture name="Showman Idle0014" x="1244" y="5" width="407" height="900" frameX="-5" frameY="0" frameWidth="414" frameHeight="900"/>
+</TextureAtlas>

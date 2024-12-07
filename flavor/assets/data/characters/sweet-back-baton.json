@@ -1,0 +1,67 @@
+{
+    "version": "1.0.0",
+    "name": "Sweet Back Baton",
+    "assetPath": "characters/SweetCorianda",
+    "singTime": 6,
+    "isPixel": false,
+    "scale": 1,
+    "healthIcon": {
+        "id": "sweet",
+        "isPixel": false,
+        "flipX": false,
+        "scale": 1
+    },
+    "animations": [
+        {
+            "name": "idle",
+            "prefix": "SweetBackBatonIdle",
+            "offsets": [
+                0,
+                0
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singLEFT",
+            "prefix": "SweetBackBatonLeft",
+            "offsets": [
+                -11,
+                28
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singDOWN",
+            "prefix": "SweetBackBatonDown",
+            "offsets": [
+                0,
+                -16
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singUP",
+            "prefix": "SweetBackBatonUp",
+            "offsets": [
+                13,
+                7
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singRIGHT",
+            "prefix": "SweetBackBatonRight",
+            "offsets": [
+                -10,
+                -4
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        }
+    ],
+    "flipX": false
+}

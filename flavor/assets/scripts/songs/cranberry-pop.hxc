@@ -1,0 +1,303 @@
+import funkin.play.character.SparrowCharacter;
+import funkin.play.character.CharacterType;
+import funkin.play.character.BaseCharacter;
+import funkin.play.PlayState;
+import flixel.tweens.FlxTween;
+import flixel.tweens.FlxEase;
+import flixel.util.FlxTimer;
+import funkin.graphics.FunkinSprite;
+import flixel.FlxG;
+import flixel.FlxSprite;
+import funkin.Paths;
+import flixel.text.FlxTextBorderStyle;
+import funkin.util.Constants;
+import funkin.play.Countdown;
+import funkin.util.FlxTweenUtil;
+import openfl.utils.Assets;
+import funkin.Conductor;
+import funkin.audio.FunkinSound;
+import funkin.play.song.Song;
+import funkin.play.components.HealthIcon;
+import funkin.play.notes.Strumline;
+import funkin.play.notes.notestyle.NoteStyle;
+import funkin.data.notestyle.NoteStyleRegistry;
+import funkin.modding.module.ModuleHandler;
+import funkin.Preferences;
+import flixel.addons.display.FlxBackdrop;
+
+class Cranberrypop extends Song {
+    var game;
+	var eventTweens:Array<FlxTween> = [];
+	var eventTimers:Array<FlxTimer> = [];
+	var extraTimers:Array<FlxTimer> = [];
+	var Gfsection:Bool = false;
+	var titleCard:FlxSprite;
+	
+	var topSweetRow:FlxBackdrop;
+	var bottomSweetRow:FlxBackdrop;
+	var topSourRow:FlxBackdrop;
+	var bottomSourRow:FlxBackdrop;
+	
+
+
+	
+	public function new() {
+		super('cranberry-pop');
+	}
+	  
+	public function onCreate(event:ScriptEvent):Void{
+	  super.onCreate(event);
+	  
+	  game = PlayState.instance;
+		  
+		FlxG.bitmap.add(Paths.image('characters/SourCloseUp'));
+		FlxG.bitmap.add(Paths.image('characters/SweetCloseUp'));
+		
+		titleCard = new FlxSprite();
+		titleCard.frames = Paths.getSparrowAtlas('tbd/titlecard/' + game.currentChart.songName);
+		titleCard.animation.addByPrefix('idle', 'card', 24, false);
+		titleCard.antialiasing = false;
+		titleCard.cameras = [game.camHUD];
+		titleCard.screenCenter();
+		titleCard.alpha = 0.001;
+		game.add(titleCard);
+		
+		topSweetRow = new FlxBackdrop(Paths.image('tbd/closeup/sweetroll'), 0x01);
+		topSweetRow.velocity.x = -30;
+		topSweetRow.antialiasing = true;
+		topSweetRow.scrollFactor.set(0, 0);
+		topSweetRow.zIndex = 80;
+		topSweetRow.y = -600;
+		game.currentStage.add(topSweetRow);
+		
+		bottomSweetRow = new FlxBackdrop(Paths.image('tbd/closeup/sweetroll'), 0x01);
+		bottomSweetRow.velocity.x = 30;
+		bottomSweetRow.antialiasing = true;
+		bottomSweetRow.zIndex = 80;
+		bottomSweetRow.scrollFactor.set(0, 0);
+		bottomSweetRow.y = 1280;
+		game.currentStage.add(bottomSweetRow);
+		
+		topSourRow = new FlxBackdrop(Paths.image('tbd/closeup/sourroll'), 0x01);
+		topSourRow.velocity.x = -30;
+		topSourRow.antialiasing = true;
+		topSourRow.zIndex = 80;
+		topSourRow.scrollFactor.set(0, 0);
+		topSourRow.y = -600;
+		game.currentStage.add(topSourRow);
+		
+		bottomSourRow = new FlxBackdrop(Paths.image('tbd/closeup/sourroll'), 0x01);
+		bottomSourRow.velocity.x = 30;
+		bottomSourRow.antialiasing = true;
+		bottomSourRow.zIndex = 80;
+		bottomSourRow.scrollFactor.set(0, 0);
+		bottomSourRow.y = 1280;
+		game.currentStage.add(bottomSourRow);
+		
+		game.currentStage.getNamedProp('SweetCutIn').cameras = [game.camHUD];
+		game.currentStage.getNamedProp('SourCutin').cameras = [game.camHUD];
+		game.currentStage.getNamedProp('barTop').cameras = [game.camHUD];
+		game.currentStage.getNamedProp('barBottom').cameras = [game.camHUD];
+		game.currentStage.getNamedProp('transition').cameras = [game.camHUD];
+		
+		game.currentStage.getNamedProp('SweetCutIn').alpha = 1;
+		game.currentStage.getNamedProp('SourCutin').alpha = 1;
+		game.currentStage.getNamedProp('barTop').alpha = 1;
+		game.currentStage.getNamedProp('barBottom').alpha = 1;
+		game.currentStage.getNamedProp('transition').alpha = 1;
+		
+		game.refresh();
+
+	
+		
+	
+	}
+	public function onCountdownStart(event:CountdownScriptEvent):Void
+	{
+	     super.onCountdownStart(event);
+		 
+		 game.currentStage.getDad().idleSuffix = '-sad';
+		 game.currentStage.getBoyfriend().idleSuffix = '-sad';
+		 ModuleHandler.getModule("RaveHealthbar").scriptCall("TweenRaveHuds",[0.0001, 0, false, FlxEase.INSTANT]);
+		 
+}
+	function onUpdate(ev:UpdateScriptEvent):Void {
+		super.onUpdate(ev); 
+		
+		game.currentStage.getNamedProp('sweettrucklight').alpha = game.currentStage.getNamedProp('sweettrucklight').alpha - (Conductor.instance.beatLengthMs / 1000) * ev.elapsed * 2;
+		game.currentStage.getNamedProp('sourvanlight').alpha = game.currentStage.getNamedProp('sourvanlight').alpha - (Conductor.instance.beatLengthMs / 1000) * ev.elapsed * 2;
+		game.currentStage.getNamedProp('sweetbuslight').alpha = game.currentStage.getNamedProp('sweetbuslight').alpha - (Conductor.instance.beatLengthMs / 1000) * ev.elapsed * 2;
+		game.currentStage.getNamedProp('streetlights').alpha = game.currentStage.getNamedProp('streetlights').alpha - (Conductor.instance.beatLengthMs / 1000) * ev.elapsed * 2;
+		game.currentStage.getNamedProp('venuespotR').alpha = game.currentStage.getNamedProp('venuespotR').alpha - (Conductor.instance.beatLengthMs / 1000) * ev.elapsed * 2;
+		game.currentStage.getNamedProp('venuespotL').alpha = game.currentStage.getNamedProp('venuespotL').alpha - (Conductor.instance.beatLengthMs / 1000) * ev.elapsed * 2;
+	}
+	
+	function fetchAssetPaths():Array<String>
+	{
+		var results:Array<String> = super.fetchAssetPaths();
+		results.push(Paths.image('characters/SourCloseUp'));
+		results.push(Paths.image('characters/SweetCloseUp'));
+		results.push(Paths.sound('sodapour'));
+		return results;
+	}
+	
+	public function onBeatHit(ev:SongTimeScriptEvent)
+	{
+	  super.onBeatHit(ev);
+	  
+	  if(ev.beat % 2 == 0){
+      	  game.currentStage.getNamedProp('sweettrucklight').alpha = 1;
+		  game.currentStage.getNamedProp('sourvanlight').alpha = 1;
+		  game.currentStage.getNamedProp('sweetbuslight').alpha = 1;
+	  }
+	  if(ev.beat % 4 == 0){
+	  
+	      game.currentStage.getNamedProp('streetlights').alpha = 1;
+		  game.currentStage.getNamedProp('venuespotR').alpha = 1;
+		  game.currentStage.getNamedProp('venuespotL').alpha = 1;
+
+	  }
+	  
+	}
+
+    public function onStepHit(ev:SongTimeScriptEvent){
+	  
+	super.onStepHit(ev);
+	
+	switch(ev.step){
+	case 1:
+	ModuleHandler.getModule("RaveHealthbar").scriptCall("TweenRaveHuds",[0.0001, 0, false, FlxEase.INSTANT]);
+	case 20:
+	titleCard.alpha = 1;
+	titleCard.animation.play('idle');
+	FlxG.sound.play(Paths.sound('sodapour'), 1);
+	case 48:
+	eventTweens.push(FlxTween.tween(titleCard, {alpha: 0.0001}, 1, {ease: FlxEase.linear}));
+	ModuleHandler.getModule("RaveHealthbar").scriptCall("TweenRaveHuds",[1, 0.5, true]);
+	case 457:
+	game.currentStage.getGirlfriend().idleSuffix = '-alt';
+	case 493:
+	game.currentStage.getNamedProp('SweetCutIn').animation.play('idle');
+	game.currentStage.getNamedProp('SourCutin').animation.play('idle');
+	case 494:
+	eventTweens.push(FlxTween.tween(game.currentStage.getNamedProp('SweetCutIn'), {x: 0}, 1, {ease: FlxEase.cubeInOut}));
+	eventTweens.push(FlxTween.tween(game.currentStage.getNamedProp('SourCutin'), {x: 0}, 1, {ease: FlxEase.cubeInOut}));
+	eventTweens.push(FlxTween.tween(game.currentStage.getNamedProp('barTop'), {y: 0}, 0.5, {ease: FlxEase.circInOut}));
+	eventTweens.push(FlxTween.tween(game.currentStage.getNamedProp('barBottom'), {y: 628}, 0.5, {ease: FlxEase.circInOut}));
+	case 510:
+	eventTweens.push(FlxTween.tween(game.currentStage.getNamedProp('sourBack'), {x: 300}, 0.7, {ease: FlxEase.cubeInOut}));
+	eventTweens.push(FlxTween.tween(game.currentStage.getBoyfriend(), {x: 1000}, 0.7, {ease: FlxEase.cubeInOut}));
+	eventTweens.push(FlxTween.tween(topSweetRow, {y: 50}, 0.7, {ease: FlxEase.cubeInOut}));
+	eventTweens.push(FlxTween.tween(bottomSweetRow, {y: 450}, 0.7, {ease: FlxEase.cubeInOut}));
+	game.currentStage.getNamedProp('sourBack').alpha = 1;
+	game.currentStage.getNamedProp('sweetBG').alpha = 1;
+	game.currentStage.getNamedProp('sweetBack').alpha = 1;
+	ModuleHandler.getModule("CharSwitch").scriptCall("SwapOut",['bf' , 'sweet-close']);
+	ModuleHandler.getModule("CharSwitch").scriptCall("SwapOut",['dad' , 'sour-close']);
+	eventTweens.push(FlxTween.tween(game.currentStage.getDad(), {x: -500}, 0.3, {ease: FlxEase.cubeInOut}));
+	case 515:
+	eventTweens.push(FlxTween.tween(game.currentStage.getNamedProp('SweetCutIn'), {x: -1280}, 0.5, {ease: FlxEase.circInOut}));
+	eventTweens.push(FlxTween.tween(game.currentStage.getNamedProp('SourCutin'), {x: 1280}, 0.5, {ease: FlxEase.circInOut}));
+	case 570:
+	eventTweens.push(FlxTween.tween(game.currentStage.getNamedProp('sourBack'), {x: -500}, 0.7, {ease: FlxEase.cubeInOut}));
+	eventTweens.push(FlxTween.tween(game.currentStage.getBoyfriend(), {x: 1800}, 0.7, {ease: FlxEase.cubeInOut}));
+	eventTweens.push(FlxTween.tween(topSweetRow, {y: -180}, 0.7, {ease: FlxEase.cubeInOut}));
+	eventTweens.push(FlxTween.tween(bottomSweetRow, {y: 1280}, 0.7, {ease: FlxEase.cubeInOut}));
+	case 572:
+	eventTweens.push(FlxTween.tween(game.currentStage.getNamedProp('SourBG'), {alpha: 1}, 0.4));
+	eventTweens.push(FlxTween.tween(game.currentStage.getNamedProp('sweetBack'), {x: 900}, 0.7, {ease: FlxEase.cubeInOut}));
+	eventTweens.push(FlxTween.tween(game.currentStage.getDad(), {x: 300}, 0.7, {ease: FlxEase.cubeInOut}));
+	eventTweens.push(FlxTween.tween(topSourRow, {y: 50}, 0.7, {ease: FlxEase.cubeInOut}));
+	eventTweens.push(FlxTween.tween(bottomSourRow, {y: 450}, 0.7, {ease: FlxEase.cubeInOut}));
+	case 634:
+	eventTweens.push(FlxTween.tween(game.currentStage.getNamedProp('SourBG'), {alpha: 0.0001}, 0.4));
+	eventTweens.push(FlxTween.tween(game.currentStage.getNamedProp('sweetBack'), {x: 1700}, 0.7, {ease: FlxEase.cubeInOut}));
+	eventTweens.push(FlxTween.tween(game.currentStage.getDad(), {x: -500}, 0.7, {ease: FlxEase.cubeInOut}));
+	eventTweens.push(FlxTween.tween(topSourRow, {y: -180}, 0.7, {ease: FlxEase.cubeInOut}));
+	eventTweens.push(FlxTween.tween(bottomSourRow, {y: 1280}, 0.7, {ease: FlxEase.cubeInOut}));
+	case 638:
+	eventTweens.push(FlxTween.tween(game.currentStage.getNamedProp('bothBG'), {alpha: 1}, 0.4));
+	eventTweens.push(FlxTween.tween(game.currentStage.getDad(), {x: 300}, 0.7, {ease: FlxEase.cubeInOut}));
+	eventTweens.push(FlxTween.tween(game.currentStage.getBoyfriend(), {x: 1000}, 0.7, {ease: FlxEase.cubeInOut}));
+	eventTweens.push(FlxTween.tween(topSourRow, {y: 50}, 0.7, {ease: FlxEase.cubeInOut}));
+	eventTweens.push(FlxTween.tween(bottomSweetRow, {y: 450}, 0.7, {ease: FlxEase.cubeInOut}));
+	case 768:
+	eventTweens.push(FlxTween.tween(game.currentStage.getNamedProp('transition'), {x: 1280}, 0.8));
+	eventTweens.push(FlxTween.tween(game.currentStage.getNamedProp('barTop'), {y: -102}, 0.7, {ease: FlxEase.circInOut}));
+	eventTweens.push(FlxTween.tween(game.currentStage.getNamedProp('barBottom'), {y: 822}, 0.7, {ease: FlxEase.circInOut}));
+	eventTweens.push(FlxTween.tween(topSourRow, {y: -600}, 0.7, {ease: FlxEase.cubeInOut}));
+	eventTweens.push(FlxTween.tween(topSweetRow, {y: -600}, 0.7, {ease: FlxEase.cubeInOut}));
+	eventTweens.push(FlxTween.tween(bottomSweetRow, {y: 1280}, 0.7, {ease: FlxEase.cubeInOut}));
+	case 770:
+	game.currentStage.getNamedProp('bothBG').alpha = 0.0001;
+	game.currentStage.getNamedProp('sweetBG').alpha = 0.0001;
+	game.currentStage.getNamedProp('sourBack').alpha = 0.0001;
+	game.currentStage.getNamedProp('sweetBack').alpha = 0.0001;
+	case 771:
+	ModuleHandler.getModule("CharSwitch").scriptCall("SwapOut",['bf' , 'sweet']);
+	ModuleHandler.getModule("CharSwitch").scriptCall("SwapOut",['dad' , 'sour']);
+	game.currentStage.getDad().playAnimation('singLEFT', false);
+	}
+	
+	
+	}
+	
+    function onNoteHit(ev:HitNoteScriptEvent) {
+		super.onNoteHit(ev);
+		
+	}
+	
+   function onNoteMiss(ev:NoteScriptEvent) {
+   
+        super.onNoteMiss(ev);
+   
+   }
+   
+  function onNoteGhostMiss(ev:GhostMissNoteScriptEvent){
+  
+       super.onNoteGhostMiss(ev);
+  
+  }
+	
+   public function onSongRetry(event:ScriptEvent) {
+       super.onSongRetry(event);
+	   
+	   for (tween in eventTweens){
+	   
+	      tween.cancel();
+	   }
+	   
+	   titleCard.alpha = 0.001;
+	   game.currentStage.getNamedProp('sourBack').alpha = 0.001;
+	   game.currentStage.getNamedProp('sweetBG').alpha = 0.001;
+	   game.currentStage.getNamedProp('SourBG').alpha = 0.001;
+	   game.currentStage.getNamedProp('sweetBack').alpha = 0.001;
+	   game.currentStage.getNamedProp('bothBG').alpha = 0.0001;
+	   topSweetRow.y = -600;
+	   topSourRow.y = -600;
+	   bottomSweetRow.y = 1280;
+	   bottomSourRow.y = 1280;
+	   
+	}
+	
+	function onPause(event) {
+        super.onPause(event);
+		
+		for(tim in eventTimers) tim.active = false;
+		for(extim in extraTimers) extim.active = false;
+        for(twn in eventTweens) if(twn.active) if(!twn.finished) twn.active = false;
+    }
+    
+	function onResume(event) {
+        super.onResume(event);
+		
+		for(tim in eventTimers) tim.active = true;
+		for(extim in extraTimers) extim.active = true;
+        for(twn in eventTweens) if(!twn.active) if(!twn.finished) twn.active = true;
+    }
+
+	
+	
+	
+
+}

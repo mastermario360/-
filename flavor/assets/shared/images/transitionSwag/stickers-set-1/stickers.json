@@ -1,0 +1,11 @@
+{
+  "name": "stickers-set-1",
+  "artist": "PhantomArcade3K",
+  "stickers": {
+    "bf": ["bfSticker1", "bfSticker2", "bfSticker3"],
+    "gf": ["gfSticker1", "gfSticker2", "gfSticker3"]
+  },
+  "stickerPacks": {
+    "all": ["bf", "gf"]
+  }
+}

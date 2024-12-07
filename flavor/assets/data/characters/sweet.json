@@ -1,0 +1,177 @@
+{
+    "version": "1.0.0",
+    "name": "Sweet",
+    "assetPath": "characters/Sweet",
+    "singTime": 6,
+    "isPixel": false,
+    "scale": 1,
+    "healthIcon": {
+        "id": "sweet",
+        "isPixel": false,
+        "flipX": false,
+        "scale": 1
+    },
+    "animations": [
+        {
+            "name": "singLEFT",
+            "prefix": "Sweet Left0",
+            "offsets": [
+                114,
+                -5
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singDOWN",
+            "prefix": "Sweet Down0",
+            "offsets": [
+                -102,
+                -20
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singUP",
+            "prefix": "Sweet Up0",
+            "offsets": [
+                -75,
+                13
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singRIGHT",
+            "prefix": "Sweet Right0",
+            "offsets": [
+                -103,
+                62
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singLEFTmiss",
+            "prefix": "Sweet Left MISS",
+            "offsets": [
+                116,
+                -4
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singDOWNmiss",
+            "prefix": "Sweet Down MISS",
+            "offsets": [
+                -82,
+                -21
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singUPmiss",
+            "prefix": "Sweet Up MISS",
+            "offsets": [
+                -71,
+                14
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singRIGHTmiss",
+            "prefix": "Sweet Right MISS",
+            "offsets": [
+                -77,
+                64
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singLEFT-alt",
+            "prefix": "Sweet Left Baton",
+            "offsets": [
+                114,
+                -6
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singDOWN-alt",
+            "prefix": "Sweet Down Baton",
+            "offsets": [
+                -106,
+                -19
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singUP-alt",
+            "prefix": "Sweet Up Baton",
+            "offsets": [
+                -74,
+                17
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singRIGHT-alt",
+            "prefix": "Sweet Right Baton",
+            "offsets": [
+                -106,
+                -5
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "idle",
+            "prefix": "Sweet Idle0",
+            "offsets": [
+                0,
+                0
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "idle-alt",
+            "prefix": "Sweet Idle Baton0",
+            "offsets": [
+                0,
+                0
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "idle-sad",
+            "prefix": "Sweet Idle Sad0",
+            "offsets": [
+                0,
+                0
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "idle-altsad",
+            "prefix": "Sweet Idle Baton Sad0",
+            "offsets": [
+                0,
+                0
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        }
+    ],
+    "flipX": true
+}

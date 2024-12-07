@@ -1,0 +1,305 @@
+import funkin.play.PlayState;
+import funkin.Paths;
+import flixel.math.FlxMath;
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
+import flixel.FlxSprite;
+import openfl.utils.Assets;
+import funkin.util.Constants;
+import funkin.graphics.FunkinSprite;
+import funkin.modding.module.Module;
+import funkin.Conductor;
+import flixel.FlxG;
+import funkin.audio.FunkinSound;
+import flixel.text.FlxTextBorderStyle;
+import flixel.util.FlxTimer;
+import flixel.text.FlxText;
+import flixel.math.FlxMath;
+import funkin.play.Countdown;
+import funkin.play.PlayStatePlaylist;
+import funkin.ui.story.StoryMenuState;
+import funkin.ui.freeplay.FreeplayState;
+import funkin.ui.mainmenu.MainMenuState;
+
+class RaveCountdown extends Module
+{
+	public function new()
+    {
+        super('RaveCountdown');
+    }
+	var state;
+	
+	var player1Box:FlxSprite;
+	var player2Box:FlxSprite;
+	var rave:FlxSprite;
+	var locked:FlxSprite;
+	var loaded:FlxSprite;
+	var andsprite:FlxSprite;
+	var leftbox:FlxSprite;
+	var rightbox:FlxSprite;
+	var leftboxmask:FlxSprite;
+	var rightboxmask:FlxSprite;
+	
+	var PortraitP1:String;
+	var PortraitP2:String;
+	
+	var OnDialog:Bool = false;
+	
+	var SongList:Array<String> = ['cranberry-pop','rockcandy','timeshock','megaheartz'];
+	
+	
+	var startTimer:FlxTimer;
+	var countdownTimer:FlxTimer = null;
+	
+	private var countdownTime:Float = 0.667;
+	private var countdownLoop:Int = 5;
+	
+	var swagCounter:Int = 0;
+	
+	var StartCount = false;
+	
+    function BuildCountdown() {
+	
+			switch (state.currentStage.getBoyfriend().characterId){
+			
+			  case 'rika-close':
+			  PortraitP1 = 'rika';
+			  case 'sour-close-mh':
+			  PortraitP1 = 'flavorrave';
+			  case 'sweet':
+			  PortraitP1 = 'sweet';
+			  case 'sour':
+			  PortraitP1 = 'sour';
+			  case 'bf-holding-gf':
+			  PortraitP1 = 'funkin';
+			  default:
+			  PortraitP1 = 'bf';
+			
+			}
+			
+			switch (state.currentStage.getDad().characterId){
+			
+			  case 'rika-close':
+			  PortraitP2 = 'rika';
+			  case 'sour':
+			  PortraitP2 = 'sour';
+			  default:
+			  PortraitP2 = 'bf';
+			
+			}
+			
+		leftboxmask = new FlxSprite(FlxG.width, 0).loadGraphic(Paths.image('countdown/rightbox-mask'));
+		leftboxmask.cameras = [state.camHUD];
+		leftboxmask.flipX = true;
+		leftboxmask.zIndex = 2000;
+		state.add(leftboxmask);
+		rightboxmask = new FlxSprite(-642, 356).loadGraphic(Paths.image('countdown/leftbox-mask'));
+		rightboxmask.cameras = [state.camHUD];
+		rightboxmask.zIndex = 2000;
+		state.add(rightboxmask);
+			
+		leftbox = new FlxSprite(FlxG.width, 0).loadGraphic(Paths.image('countdown/rightbox'));
+		leftbox.cameras = [state.camHUD];
+		leftbox.zIndex = 2000;
+		state.add(leftbox);
+		rightbox = new FlxSprite(-642, 356).loadGraphic(Paths.image('countdown/leftbox'));
+		rightbox.cameras = [state.camHUD];
+		rightbox.zIndex = 2000;
+		state.add(rightbox);
+
+		player1Box = new FlxSprite(FlxG.width, 0).loadGraphic(Paths.image('countdown/portraits/' + PortraitP1));
+		player1Box.cameras = [state.camHUD];
+		player1Box.flipX = true;
+		player1Box.zIndex = 2000;
+		state.add(player1Box);
+		player2Box = new FlxSprite(-642, 356).loadGraphic(Paths.image('countdown/portraits/' + PortraitP2));
+		player2Box.cameras = [state.camHUD];
+		player2Box.zIndex = 2000;
+		state.add(player2Box);
+
+		locked = new FlxSprite(-623, 187).loadGraphic(Paths.image('countdown/locked'));
+		locked.cameras = [state.camHUD];
+		locked.zIndex = 2000;
+		state.add(locked);
+
+		loaded = new FlxSprite(1903, 352).loadGraphic(Paths.image('countdown/loaded'));
+		loaded.cameras = [state.camHUD];
+		loaded.zIndex = 2000;
+		state.add(loaded);
+
+		andsprite = new FlxSprite(584, 298).loadGraphic(Paths.image('countdown/and'));
+		andsprite.cameras = [state.camHUD];
+		andsprite.screenCenter();
+		andsprite.zIndex = 2000;
+		andsprite.alpha = 0.001;
+		state.add(andsprite);	
+		
+		rave = new FlxSprite();
+		rave.frames = Paths.getSparrowAtlas('countdown/rave');
+		rave.animation.addByPrefix('idle', 'RaveText', 24, false);
+		rave.setGraphicSize(Std.int(rave.width * 0.9));
+		rave.alpha = 0.0001;
+		rave.zIndex = 2000;
+		rave.screenCenter();
+		rave.cameras = [state.camHUD];
+		state.add(rave);
+	
+	
+	}
+    public function StartCountDown() {
+					
+	        startTimer = new FlxTimer().start(countdownTime, function(tmr:FlxTimer)
+				{
+					switch (swagCounter)
+					{
+					    case 0:
+				        new FlxTimer().start(countdownTime - 0.575, function(tmr:FlxTimer)
+				        {
+					       FlxG.sound.play(Paths.sound('TONALFX_LNL'), 0.6);
+				        });						
+						
+						case 1:
+
+							FlxTween.tween(player2Box, {x: 0}, Conductor.instance.beatLengthMs / 1000, {ease: FlxEase.cubeInOut});
+							FlxTween.tween(player1Box, {x: FlxG.width - player1Box.width}, Conductor.instance.beatLengthMs / 1000, {ease: FlxEase.cubeInOut, startDelay: 0.4});
+							FlxTween.tween(rightbox, {x: 0}, Conductor.instance.beatLengthMs / 1000, {ease: FlxEase.cubeInOut});
+							FlxTween.tween(leftbox, {x: FlxG.width - player1Box.width}, Conductor.instance.beatLengthMs / 1000, {ease: FlxEase.cubeInOut, startDelay: 0.4});
+							FlxTween.tween(rightboxmask, {x: 0}, Conductor.instance.beatLengthMs / 1000, {ease: FlxEase.cubeInOut});
+							FlxTween.tween(leftboxmask, {x: FlxG.width - player1Box.width}, Conductor.instance.beatLengthMs / 1000, {ease: FlxEase.cubeInOut, startDelay: 0.4});
+
+							FlxTween.tween(locked, {x: 42}, Conductor.instance.beatLengthMs / 1000, {ease: FlxEase.cubeInOut});
+							FlxTween.tween(andsprite, {alpha: 1}, Conductor.instance.beatLengthMs / 1000, {ease: FlxEase.cubeInOut, startDelay: 0.28});
+							FlxTween.tween(loaded, {x: 622}, Conductor.instance.beatLengthMs / 1000, {ease: FlxEase.cubeInOut, startDelay: 0.4});
+
+							FlxG.sound.play(Paths.sound('newintroLNL'), 0.6);
+						case 2:
+						case 3:
+							new FlxTimer().start(countdownTime - 0.1, function(tmr:FlxTimer)
+							{
+								FlxG.sound.play(Paths.sound('TONALFX_go'), 0.6);
+							});
+						case 4:
+							FlxTween.tween(player1Box, {alpha: 0}, Conductor.instance.beatLengthMs / 1000, {ease: FlxEase.cubeInOut, onComplete: function(twn:FlxTween)
+							{
+								player1Box.destroy();
+								player1Box = null;
+							}});
+							FlxTween.tween(leftbox, {alpha: 0}, Conductor.instance.beatLengthMs / 1000, {ease: FlxEase.cubeInOut, onComplete: function(twn:FlxTween)
+							{
+								leftbox.destroy();
+								leftbox = null;
+							}});
+							FlxTween.tween(rightbox, {alpha: 0}, Conductor.instance.beatLengthMs / 1000, {ease: FlxEase.cubeInOut, onComplete: function(twn:FlxTween)
+							{
+								rightbox.destroy();
+								rightbox = null;
+							}});
+							FlxTween.tween(player2Box, {alpha: 0}, Conductor.instance.beatLengthMs / 1000, {ease: FlxEase.cubeInOut, onComplete: function(twn:FlxTween)
+							{
+								player2Box.destroy();
+								player2Box = null;
+							}});
+							FlxTween.tween(leftboxmask, {alpha: 0}, Conductor.instance.beatLengthMs / 1000, {ease: FlxEase.cubeInOut, onComplete: function(twn:FlxTween)
+							{
+								leftboxmask.destroy();
+								leftboxmask = null;
+							}});
+							FlxTween.tween(rightboxmask, {alpha: 0}, Conductor.instance.beatLengthMs / 1000, {ease: FlxEase.cubeInOut, onComplete: function(twn:FlxTween)
+							{
+								rightboxmask.destroy();
+								rightboxmask = null;
+							}});
+							FlxTween.tween(locked, {alpha: 0}, Conductor.instance.beatLengthMs / 1000, {ease: FlxEase.cubeInOut, onComplete: function(twn:FlxTween)
+							{
+								locked.destroy();
+								locked = null;
+							}});
+							FlxTween.tween(loaded, {alpha: 0}, Conductor.instance.beatLengthMs / 1000, {ease: FlxEase.cubeInOut, onComplete: function(twn:FlxTween)
+							{
+								loaded.destroy();
+								loaded = null;
+							}});
+							FlxTween.tween(andsprite, {alpha: 0}, Conductor.instance.beatLengthMs / 1000, {ease: FlxEase.cubeInOut, onComplete: function(twn:FlxTween)
+							{
+								andsprite.destroy();
+								andsprite = null;
+							}});
+							
+                            rave.alpha = 1;
+                            rave.animation.play('idle');
+
+							FlxTween.tween(rave, {alpha: 0}, Conductor.instance.beatLengthMs / 1000, {ease: FlxEase.cubeInOut, startDelay: Conductor.instance.beatLengthMs / 200, onComplete: function(twn:FlxTween)
+							{
+								rave.destroy();
+								rave = null;
+							}});
+							FlxG.sound.play(Paths.sound('newgo'), 0.6);
+						}
+						
+					swagCounter += 1;
+				}, countdownLoop);		
+			
+    } 
+	
+	function fetchAssetPaths():Array<String>
+	{
+		var results:Array<String> = super.fetchAssetPaths();
+		results.push(Paths.image('countdown/rave'));
+		results.push(Paths.image('countdown/locked'));
+		results.push(Paths.image('countdown/loaded'));
+		results.push(Paths.image('countdown/and'));
+		results.push(Paths.image('countdown/portraits/' + PortraitP1));
+		results.push(Paths.image('countdown/portraits/' + PortraitP2));
+		results.push(Paths.sound('TONALFX_LNL'));
+		results.push(Paths.sound('TONALFX_go'));
+		results.push(Paths.sound('countdown/leftbox'));
+		results.push(Paths.sound('countdown/rightbox'));
+		return results;
+	}
+	
+    function onSongRetry(event:ScriptEvent) {
+       super.onSongRetry(event);
+
+	}
+	
+	override function onDestroy(event:ScriptEvent) {
+		super.onDestroy();
+
+	}
+	
+	function onSongStart(event:ScriptEvent):Void{
+	    super.onSongStart(event);
+		state.mayPauseGame = true;	
+	
+	}
+	
+    public function onStateChangeEnd(event) {
+        super.onStateChangeEnd(event);
+        
+        if (Std.isOfType(event.targetState, StoryMenuState)) {
+            OnDialog = true;
+        }
+        if (Std.isOfType(event.targetState, MainMenuState)) {
+            OnDialog = false;
+        }
+    }
+
+	public function onCountdownStart(event:CountdownScriptEvent):Void
+	{
+		state = PlayState.instance;
+        		
+        if (SongList.contains(state.currentSong.id))
+        {		
+		 event.cancel();  
+		PlayState.instance.isInCountdown = true;        
+        Conductor.instance.update(PlayState.instance.startTimestamp + Conductor.instance.beatLengthMs * -14);
+		if(rave == null) BuildCountdown();
+        state.mayPauseGame = false;
+		swagCounter = 0;
+		
+		StartCountDown();
+		}
+	}
+        
+
+}

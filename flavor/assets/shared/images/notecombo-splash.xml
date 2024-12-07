@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="notecombo-splash.png">
+	<!-- Created with Adobe Animate version 22.0.8.217 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="notecombo0000" x="0" y="0" width="1" height="1" frameX="-689" frameY="-62" frameWidth="1309" frameHeight="187"/>
+	<SubTexture name="notecombo0001" x="0" y="0" width="503" height="108" frameX="0" frameY="-79" frameWidth="1309" frameHeight="187"/>
+	<SubTexture name="notecombo0002" x="0" y="252" width="462" height="104" frameX="-354" frameY="-31" frameWidth="1309" frameHeight="187"/>
+	<SubTexture name="notecombo0003" x="868" y="335" width="399" height="114" frameX="-490" frameY="-2" frameWidth="1309" frameHeight="187"/>
+	<SubTexture name="notecombo0004" x="868" y="335" width="399" height="114" frameX="-490" frameY="-2" frameWidth="1309" frameHeight="187"/>
+	<SubTexture name="notecombo0005" x="868" y="335" width="399" height="114" frameX="-490" frameY="-2" frameWidth="1309" frameHeight="187"/>
+	<SubTexture name="notecombo0006" x="868" y="335" width="399" height="114" frameX="-490" frameY="-2" frameWidth="1309" frameHeight="187"/>
+	<SubTexture name="notecombo0007" x="868" y="335" width="399" height="114" frameX="-490" frameY="-2" frameWidth="1309" frameHeight="187"/>
+	<SubTexture name="notecombo0008" x="868" y="335" width="399" height="114" frameX="-490" frameY="-2" frameWidth="1309" frameHeight="187"/>
+	<SubTexture name="notecombo0009" x="868" y="335" width="399" height="114" frameX="-490" frameY="-2" frameWidth="1309" frameHeight="187"/>
+	<SubTexture name="notecombo0010" x="868" y="335" width="399" height="114" frameX="-490" frameY="-2" frameWidth="1309" frameHeight="187"/>
+	<SubTexture name="notecombo0011" x="868" y="335" width="399" height="114" frameX="-490" frameY="-2" frameWidth="1309" frameHeight="187"/>
+	<SubTexture name="notecombo0012" x="868" y="335" width="399" height="114" frameX="-490" frameY="-2" frameWidth="1309" frameHeight="187"/>
+	<SubTexture name="notecombo0013" x="868" y="335" width="399" height="114" frameX="-490" frameY="-2" frameWidth="1309" frameHeight="187"/>
+	<SubTexture name="notecombo0014" x="868" y="335" width="399" height="114" frameX="-490" frameY="-2" frameWidth="1309" frameHeight="187"/>
+	<SubTexture name="notecombo0015" x="868" y="335" width="399" height="114" frameX="-490" frameY="-2" frameWidth="1309" frameHeight="187"/>
+	<SubTexture name="notecombo0016" x="868" y="335" width="399" height="114" frameX="-490" frameY="-2" frameWidth="1309" frameHeight="187"/>
+	<SubTexture name="notecombo0017" x="505" y="0" width="421" height="125" frameX="-482" frameY="0" frameWidth="1309" frameHeight="187"/>
+	<SubTexture name="notecombo0018" x="0" y="110" width="419" height="125" frameX="-483" frameY="0" frameWidth="1309" frameHeight="187"/>
+	<SubTexture name="notecombo0019" x="421" y="127" width="415" height="123" frameX="-485" frameY="-1" frameWidth="1309" frameHeight="187"/>
+	<SubTexture name="notecombo0020" x="838" y="127" width="411" height="123" frameX="-487" frameY="-1" frameWidth="1309" frameHeight="187"/>
+	<SubTexture name="notecombo0021" x="928" y="0" width="409" height="123" frameX="-488" frameY="-1" frameWidth="1309" frameHeight="187"/>
+	<SubTexture name="notecombo0022" x="464" y="335" width="402" height="117" frameX="-490" frameY="-2" frameWidth="1309" frameHeight="187"/>
+	<SubTexture name="notecombo0023" x="464" y="335" width="402" height="117" frameX="-490" frameY="-2" frameWidth="1309" frameHeight="187"/>
+	<SubTexture name="notecombo0024" x="464" y="335" width="402" height="117" frameX="-490" frameY="-2" frameWidth="1309" frameHeight="187"/>
+	<SubTexture name="notecombo0025" x="464" y="335" width="402" height="117" frameX="-490" frameY="-2" frameWidth="1309" frameHeight="187"/>
+	<SubTexture name="notecombo0026" x="464" y="335" width="402" height="117" frameX="-490" frameY="-2" frameWidth="1309" frameHeight="187"/>
+	<SubTexture name="notecombo0027" x="464" y="252" width="582" height="81" frameX="-727" frameY="-1" frameWidth="1309" frameHeight="187"/>
+	<SubTexture name="notecombo0028" x="0" y="0" width="1" height="1" frameX="-689" frameY="-62" frameWidth="1309" frameHeight="187"/>
+</TextureAtlas>

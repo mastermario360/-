@@ -1,0 +1,55 @@
+import funkin.play.character.SparrowCharacter;
+import funkin.play.character.CharacterType;
+import funkin.play.PlayState;
+
+class SourMegaheartz extends SparrowCharacter {
+	
+	function new() {
+		super('sour-mh');
+	}
+
+	function onNoteHit(event:HitNoteScriptEvent)
+	{
+		if (event.note.noteData.getMustHitNote()) {
+			// Override the hit note animation.
+			switch(event.note.kind) {
+				case "gf":
+				
+				return;
+				
+			}
+		}
+		if (event.note.noteData.getMustHitNote() && characterType == CharacterType.DAD) {
+			// Override the hit note animation.
+			switch(event.note.kind) {
+				case "normal":
+				
+				return;
+				
+			}
+		}
+		if (!event.note.noteData.getMustHitNote()) {
+			// Override the hit note animation.
+			switch(event.note.kind) {
+				case "gf":
+				
+				return;
+				
+			}
+		}
+
+		super.onNoteHit(event);
+	}
+	
+	function onNoteMiss(event:NoteScriptEvent)
+	{
+	     super.onNoteMiss(event);
+		    if (event.note.noteData.kind == "gfsing") 
+			{
+				 return;
+            }
+	
+	
+	}
+	
+}

@@ -1,0 +1,147 @@
+{
+    "version": "1.0.0",
+    "name": "Sweet Rave",
+    "assetPath": "characters/Sweet-RAVE",
+    "singTime": 6,
+    "isPixel": false,
+    "scale": 1,
+    "healthIcon": {
+        "id": "sweet",
+        "isPixel": false,
+        "flipX": false,
+        "scale": 1
+    },
+    "animations": [
+        {
+            "name": "singLEFT",
+            "prefix": "NEW RAVE Sweet Left",
+            "offsets": [
+                94,
+                -5
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singDOWN",
+            "prefix": "NEW RAVE Sweet Down",
+            "offsets": [
+                28,
+                -29
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singUP",
+            "prefix": "NEW RAVE Sweet Up",
+            "offsets": [
+                115,
+                288
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singRIGHT",
+            "prefix": "NEW RAVE Sweet Right",
+            "offsets": [
+                47,
+                -58
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singLEFTmiss",
+            "prefix": "NEW RAVE Sweet Miss Left",
+            "offsets": [
+                94,
+                -5
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singDOWNmiss",
+            "prefix": "NEW RAVE Sweet Miss Down",
+            "offsets": [
+                35,
+                -30
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singUPmiss",
+            "prefix": "NEW RAVE Sweet Miss Up",
+            "offsets": [
+                120,
+                289
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singRIGHTmiss",
+            "prefix": "NEW RAVE Sweet Miss Right",
+            "offsets": [
+                46,
+                -59
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singLEFT-alt",
+            "prefix": "NEW RAVE Sweet Play Left",
+            "offsets": [
+                194,
+                -26
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singDOWN-alt",
+            "prefix": "NEW RAVE Sweet Play Down",
+            "offsets": [
+                43,
+                -30
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singUP-alt",
+            "prefix": "NEW RAVE Sweet Play Up",
+            "offsets": [
+                55,
+                198
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singRIGHT-alt",
+            "prefix": "NEW RAVE Sweet Play Right",
+            "offsets": [
+                27,
+                -56
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "idle",
+            "prefix": "NEW RAVE Sweet Idle",
+            "offsets": [
+                10,
+                -20
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        }
+    ],
+    "flipX": true
+}

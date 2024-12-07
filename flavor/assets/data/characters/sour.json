@@ -1,0 +1,157 @@
+{
+    "version": "1.0.0",
+    "name": "Sour",
+    "assetPath": "characters/Sour",
+    "singTime": 6,
+    "isPixel": false,
+    "scale": 1,
+    "healthIcon": {
+        "id": "sour",
+        "isPixel": false,
+        "flipX": false,
+        "scale": 1
+    },
+    "animations": [
+        {
+            "name": "idle",
+            "prefix": "Sour Idle0",
+            "offsets": [
+                0,
+                -1
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "idle-sad",
+            "prefix": "Sour Idle Sad",
+            "offsets": [
+                0,
+                -1
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singLEFT",
+            "prefix": "Sour Left0",
+            "offsets": [
+                6,
+                62
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singDOWN",
+            "prefix": "Sour Down0",
+            "offsets": [
+                -73,
+                -66
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singUP",
+            "prefix": "Sour Up0",
+            "offsets": [
+                -56,
+                199
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singRIGHT",
+            "prefix": "Sour Right0",
+            "offsets": [
+                -18,
+                -3
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singLEFT-alt",
+            "prefix": "Sour Left Keytar",
+            "offsets": [
+                6,
+                60
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singRIGHT-alt",
+            "prefix": "Sour Right Keytar",
+            "offsets": [
+                -18,
+                -3
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singUP-alt",
+            "prefix": "Sour Up Keytar",
+            "offsets": [
+                -49,
+                50
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singDOWN-alt",
+            "prefix": "Sour Down Keytar",
+            "offsets": [
+                -80,
+                -70
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singLEFTmiss",
+            "prefix": "Sour Left Miss",
+            "offsets": [
+                38,
+                68
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singUPmiss",
+            "prefix": "Sour Up Miss",
+            "offsets": [
+                -49,
+                203
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singDOWNmiss",
+            "prefix": "Sour Down Miss",
+            "offsets": [
+                -75,
+                -65
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singRIGHTmiss",
+            "prefix": "Sour Right Miss",
+            "offsets": [
+                -17,
+                -4
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        }
+    ],
+    "flipX": false
+}

@@ -1,0 +1,32 @@
+{
+	"songs": [
+		[
+			"Deb8",
+			"yuri-bucks",
+			[
+				166,
+				73,
+				195
+			]
+		]
+	],
+	"hiddenUntilUnlocked": false,
+	"hideFreeplay": false,
+	"weekBackground": "stag",
+	"difficulties": "Normal",
+	"weekCharacters": [
+		"",
+		"",
+		""
+	],
+	"storyName": "I am debating with this one",
+	"weekName": "Custom week",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"hideStoryMode": false,
+	"weekBefore": "tutorial",
+	"startUnlocked": true
+}

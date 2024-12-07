@@ -1,0 +1,429 @@
+import funkin.play.character.SparrowCharacter;
+import funkin.play.character.CharacterType;
+import funkin.play.character.BaseCharacter;
+import funkin.play.PlayState;
+import flixel.tweens.FlxTween;
+import flixel.tweens.FlxEase;
+import flixel.util.FlxTimer;
+import funkin.graphics.FunkinSprite;
+import flixel.FlxG;
+import flixel.FlxSprite;
+import funkin.Paths;
+import flixel.text.FlxTextBorderStyle;
+import funkin.ui.debug.charting.util.ChartEditorDropdowns;
+import funkin.util.Constants;
+import funkin.play.Countdown;
+import funkin.util.FlxTweenUtil;
+import openfl.utils.Assets;
+import funkin.Conductor;
+import funkin.audio.FunkinSound;
+import funkin.play.song.Song;
+import funkin.play.components.HealthIcon;
+import funkin.play.notes.Strumline;
+import funkin.play.notes.notestyle.NoteStyle;
+import funkin.data.notestyle.NoteStyleRegistry;
+import funkin.modding.module.ModuleHandler;
+import funkin.Preferences;
+
+class Megaheartz extends Song {
+    var game;
+	var eventTweens:Array<FlxTween> = [];
+	var eventTimers:Array<FlxTimer> = [];
+	var extraTimers:Array<FlxTimer> = [];
+	var Gfsection:Bool = false;
+	var playerStrum;
+	var titleCard:FlxSprite;
+	var partOne = true;
+	var whitescreen:FlxSprite;
+	
+
+
+	
+	public function new() {
+		super('megaheartz');
+	}
+	  
+	public function onCreate(event:ScriptEvent):Void{
+	  super.onCreate(event);
+	  if (PlayState.instance == null) return;
+	  
+	  game = PlayState.instance;
+	  
+	  FlxG.bitmap.add(Paths.image('characters/rika'));
+	  FlxG.bitmap.add(Paths.image('characters/sour_mh'));
+	  FlxG.bitmap.add(Paths.image('characters/sweet_mh'));
+	  
+      ChartEditorDropdowns.NOTE_KINDS = [
+            "normal" => "Default",
+			"gf" => "Gf Note",
+			"duet" => "Duo Note"
+          ];
+		  
+		titleCard = new FlxSprite();
+		titleCard.frames = Paths.getSparrowAtlas('tbd/titlecard/' + game.currentChart.songName);
+		titleCard.animation.addByPrefix('idle', 'card', 24, false);
+		titleCard.antialiasing = false;
+		titleCard.cameras = [game.camHUD];
+		titleCard.screenCenter();
+		titleCard.alpha = 0.001;
+		game.add(titleCard);
+		  
+	    whitescreen = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, 0xFFFFFFFF);
+		whitescreen.setGraphicSize(Std.int(whitescreen.width * 10));
+		whitescreen.zIndex = 120;
+		whitescreen.cameras = [game.camHUD];
+		whitescreen.alpha = 0.0001;
+		game.add(whitescreen);
+		
+		game.currentStage.getNamedProp('vcr').cameras = [game.camHUD];
+		game.currentStage.getNamedProp('vcr').zIndex = 130;
+		game.currentStage.getNamedProp('border').cameras = [game.camHUD];
+		game.currentStage.getNamedProp('border').zIndex = 130;
+		
+		game.refresh();
+
+	
+		
+	
+	}
+	public function onCountdownStart(event:CountdownScriptEvent):Void
+	{
+	     super.onCountdownStart(event);
+		 event.cancel();
+        game.tweenCameraToPosition(520, 400, 0);
+        game.currentStage.getGirlfriend().flipX = false;
+        game.currentStage.getGirlfriend().alpha = 0.0001;
+        game.currentStage.getDad().alpha = 0.0001;
+        game.currentStage.getBoyfriend().alpha = 0.0001;
+		
+		ModuleHandler.getModule("RaveHealthbar").scriptCall("TweenRaveHuds",[0.0001, 0, false, FlxEase.INSTANT]);
+		
+		playerStrum = game.playerStrumline.strumlineNotes.members;
+		oppStrum = game.opponentStrumline.strumlineNotes.members;
+		partOne = true;
+		
+		 game.currentStage.getGirlfriend().name = 'bf';
+		 game.currentStage.getBoyfriend().name = 'gf';
+		 
+}
+	public function onUpdate(event:UpdateScriptEvent):Void {
+		super.onUpdate(event); 
+		if (PlayState.instance == null) return;
+		
+		if(!ModuleHandler.getModule("RaveHealthbar").scriptGet('oppmode')){
+		if (Gfsection && game.currentStage.getBoyfriend().characterType == CharacterType.BF) {
+		game.currentStage.getBoyfriend().characterType = CharacterType.OTHER;
+		game.currentStage.getGirlfriend().initHealthIcon(false);
+		}
+		if (!Gfsection && game.currentStage.getBoyfriend().characterType == CharacterType.OTHER) {
+		game.currentStage.getBoyfriend().characterType = CharacterType.BF;
+		game.currentStage.getBoyfriend().initHealthIcon(false);
+		}
+       }else{
+	   	if (Gfsection && game.currentStage.getBoyfriend().characterType == CharacterType.DAD) {
+		game.currentStage.getBoyfriend().characterType = CharacterType.OTHER;
+		game.currentStage.getGirlfriend().initHealthIcon(false);
+		}
+		if (!Gfsection && game.currentStage.getBoyfriend().characterType == CharacterType.OTHER) {
+		game.currentStage.getBoyfriend().characterType = CharacterType.DAD;
+		game.currentStage.getBoyfriend().initHealthIcon(false);
+		}
+	   }		
+	}
+	
+	function fetchAssetPaths():Array<String>
+	{
+		var results:Array<String> = super.fetchAssetPaths();
+		results.push(Paths.image('characters/rika'));
+		results.push(Paths.image('characters/sour_mh'));
+		results.push(Paths.image('characters/sweet_mh'));
+		return results;
+	}
+	
+	public function onBeatHit(ev:SongTimeScriptEvent)
+	{
+	  super.onBeatHit(ev);
+	  
+	  if(ev.beat % 2 == 0 && partOne){
+	  game.currentStage.getNamedProp('buttonGlow').alpha = 1;
+	  eventTweens.push(FlxTween.tween(game.currentStage.getNamedProp('buttonGlow'), {alpha: 0.0001}, 0.5, {ease: FlxEase.linear}));
+	  }
+	  
+	}
+
+    public function onStepHit(ev:SongTimeScriptEvent){
+	  
+	super.onStepHit(ev);
+	
+	switch(ev.step){
+	case 1:
+	ModuleHandler.getModule("RaveHealthbar").scriptCall("TweenRaveHuds",[0.0001, 0, false, FlxEase.INSTANT]);
+	game.currentStage.getNamedProp('introstatic').alpha = 1;
+	if(Preferences.get_flashingLights()){
+	whitescreen.alpha = 1;
+	eventTweens.push(FlxTween.tween(whitescreen, {alpha: 0.0001}, 0.5, {ease: FlxEase.linear}));
+	}
+	case 6:
+	titleCard.alpha = 1;
+	titleCard.animation.play('idle');
+	case 12:
+	eventTweens.push(FlxTween.tween(game.cameraFollowPoint, {y: 270}, 5, {ease: FlxEase.linear}));
+	case 38:
+	eventTweens.push(FlxTween.tween(titleCard, {alpha: 0.0001}, 1, {ease: FlxEase.linear}));
+	ModuleHandler.getModule("RaveHealthbar").scriptCall("TweenRaveHuds",[1, 0.5, true]);
+	case 66:
+	game.currentStage.getDad().alpha = 1;
+	game.currentStage.getNamedProp('CamLeft').alpha = 1;
+	case 130:
+	game.currentStage.getDad().alpha = 0.0001;
+	game.currentStage.getNamedProp('CamLeft').alpha = 0.0001;
+	game.currentStage.getBoyfriend().alpha = 1;
+	game.currentStage.getNamedProp('CamRight').alpha = 1;
+	case 192:
+	game.currentStage.getNamedProp('sour_chibi').alpha = 1;
+	game.currentStage.getNamedProp('SourDanceBG').alpha = 1;
+	case 224:
+	game.currentStage.getNamedProp('sour_chibi').alpha = 0.0001;
+	game.currentStage.getNamedProp('SourDanceBG').alpha = 0.0001;
+	game.currentStage.getDad().alpha = 1;
+	game.currentStage.getNamedProp('CamLeft').alpha = 1;
+	case 320:
+	game.currentStage.getBoyfriend().alpha = 0.0001;
+	game.currentStage.getNamedProp('CamRight').alpha = 0.0001;
+	game.currentStage.getNamedProp('rika_chibi').alpha = 1;
+	game.currentStage.getNamedProp('RikaDanceBG').alpha = 1;
+	case 384:
+	game.currentStage.getNamedProp('rika_chibi').alpha = 0.0001;
+	game.currentStage.getNamedProp('RikaDanceBG').alpha = 0.0001;
+	game.currentStage.getDad().alpha = 0.0001;
+	game.currentStage.getNamedProp('CamLeft').alpha = 0.0001;
+	game.currentStage.getGirlfriend().alpha = 1;
+	game.currentStage.getNamedProp('CamRight').alpha = 1;
+	game.currentStage.getNamedProp('sweet_chibi').alpha = 1;
+	game.currentStage.getNamedProp('SweetDanceBG').alpha = 1;
+	case 466:
+	game.currentStage.getNamedProp('sweet_chibi').alpha = 0.0001;
+	game.currentStage.getNamedProp('SweetDanceBG').alpha = 0.0001;
+	game.currentStage.getDad().alpha = 1;
+	game.currentStage.getNamedProp('CamLeft').alpha = 1;
+	case 510:
+	game.currentStage.getGirlfriend().alpha = 0.0001;
+	game.currentStage.getNamedProp('CamRight').alpha = 0.0001;
+	case 512:
+	game.currentStage.getBoyfriend().alpha = 1;
+	game.currentStage.getNamedProp('CamRight').alpha = 1;
+	case 576:
+	game.currentStage.getBoyfriend().alpha = 0.0001;
+	game.currentStage.getNamedProp('CamRight').alpha = 0.0001;
+	game.currentStage.getNamedProp('RikaTV').alpha = 1;
+	case 608:
+	game.currentStage.getDad().alpha = 0.0001;
+	game.currentStage.getNamedProp('CamLeft').alpha = 0.0001;
+	game.currentStage.getGirlfriend().alpha = 1;
+	game.currentStage.getNamedProp('CamRight').alpha = 1;
+	game.currentStage.getNamedProp('SweetTV').alpha = 1;
+	case 642:
+	game.currentStage.getDad().alpha = 1;
+	game.currentStage.getNamedProp('CamLeft').alpha = 1;
+	game.currentStage.getGirlfriend().alpha = 0.0001;
+	game.currentStage.getNamedProp('CamRight').alpha = 0.0001;
+	case 658:
+	game.currentStage.getDad().alpha = 0.0001;
+	game.currentStage.getNamedProp('CamLeft').alpha = 0.0001;
+	game.currentStage.getBoyfriend().alpha = 1;
+	game.currentStage.getNamedProp('CamRight').alpha = 1;
+	game.currentStage.getNamedProp('SourTV').alpha = 1;
+	case 672:
+	eventTweens.push(FlxTween.tween(whitescreen, {alpha: 1}, 2, {ease: FlxEase.quadOut}));
+	eventTweens.push(FlxTween.tween(game, {currentCameraZoom: 1.3}, 4, {ease: FlxEase.quadOut}));
+	case 688:
+	ModuleHandler.getModule("CharSwitch").scriptCall("SwapOut",['dad' , 'rika-day']);
+	ModuleHandler.getModule("CharSwitch").scriptCall("SwapOut",['gf' , 'sweet-mh']);
+	ModuleHandler.getModule("CharSwitch").scriptCall("SwapOut",['bf' , 'sour-mh']);
+	game.currentStage.getDad().y += 130;
+	game.currentStage.getBoyfriend().y += 220;
+	game.currentStage.getGirlfriend().y += 130;
+	game.currentStage.getBoyfriend().x += 40;
+	game.currentStage.getGirlfriend().x -= 100;
+	if(!ModuleHandler.getModule("RaveHealthbar").scriptGet('oppmode')){
+	eventTweens.push(FlxTween.tween(game.playerStrumline, {x: game.playerStrumline.x - 70}, 1, {ease: FlxEase.linear}));
+	eventTweens.push(FlxTween.tween(game.opponentStrumline, {x: game.opponentStrumline.x + 70}, 1, {ease: FlxEase.linear}));
+	}else{
+	eventTweens.push(FlxTween.tween(game.playerStrumline, {x: game.playerStrumline.x + 70}, 1, {ease: FlxEase.linear}));
+	eventTweens.push(FlxTween.tween(game.opponentStrumline, {x: game.opponentStrumline.x - 70}, 1, {ease: FlxEase.linear}));
+	}
+	game.currentStage.getDad().alpha = 1;
+	game.currentStage.getNamedProp('CamLeft').alpha = 1;
+	game.currentStage.getNamedProp('SourTV').alpha = 0.0001;
+	game.currentStage.getNamedProp('SweetTV').alpha = 0.0001;
+	game.currentStage.getNamedProp('RikaTV').alpha = 0.0001;
+	case 704:
+	partOne = false;
+	eventTweens.push(FlxTween.tween(game, {currentCameraZoom: 0.9}, 1, {ease: FlxEase.quadOut}));
+	game.currentStage.getNamedProp('CamLeft').alpha = 0.0001;
+	game.currentStage.getNamedProp('CamRight').alpha = 0.0001;
+	game.currentStage.getNamedProp('vcr').alpha = 1;
+	game.currentStage.getNamedProp('border').alpha = 1;
+	eventTweens.push(FlxTween.tween(whitescreen, {alpha: 0.0001}, 1, {ease: FlxEase.quadOut}));
+	game.currentStage.getNamedProp('bottomscreens').alpha = 0.0001;
+	game.currentStage.getNamedProp('computerRoom').alpha = 0.0001;
+	game.currentStage.getNamedProp('buttonGlow').alpha = 0.0001;
+	game.currentStage.getNamedProp('introstatic').alpha = 0.0001;
+	game.currentStage.getNamedProp('tvScreens').alpha = 0.0001;
+	case 831:
+	eventTweens.push(FlxTween.tween(game, {currentCameraZoom: 0.9}, 0.4, {ease: FlxEase.quadOut}));
+	case 836:
+	eventTweens.push(FlxTween.tween(game, {currentCameraZoom: 1}, 0.4, {ease: FlxEase.quadOut}));
+	case 960:
+	eventTweens.push(FlxTween.tween(game, {currentCameraZoom: 1.2}, 0.8, {ease: FlxEase.quadOut}));
+	case 1024:
+	eventTweens.push(FlxTween.tween(game, {currentCameraZoom: 1}, 0.8, {ease: FlxEase.quadOut}));
+	case 1036:
+	eventTweens.push(FlxTween.tween(game, {currentCameraZoom: 1.2}, 0.8, {ease: FlxEase.quadOut}));
+	case 1216:
+	eventTweens.push(FlxTween.tween(game, {currentCameraZoom: 0.85}, 0.8, {ease: FlxEase.quadOut}));
+	case 1344:
+	eventTweens.push(FlxTween.tween(game, {currentCameraZoom: 1.1}, 0.8, {ease: FlxEase.quadOut}));
+	case 1408:
+	eventTweens.push(FlxTween.tween(game, {currentCameraZoom: 1.2}, 0.6, {ease: FlxEase.quadOut}));
+	case 1472:
+	eventTweens.push(FlxTween.tween(game, {currentCameraZoom: 0.9}, 0.8, {ease: FlxEase.quadOut}));
+	case 1510:
+	eventTweens.push(FlxTween.tween(game.currentStage.getNamedProp('outrostatic'), {alpha: 1}, 2, {ease: FlxEase.linear}));
+	case 1537:
+	if(Preferences.get_flashingLights()){
+	whitescreen.alpha = 1;
+	eventTweens.push(FlxTween.tween(whitescreen, {alpha: 0.0001}, 0.5, {ease: FlxEase.linear}));
+	}
+	game.currentStage.getNamedProp('tvScreenOutro').alpha = 1;
+	
+	}
+	
+	
+	}
+	
+    function onNoteHit(ev:HitNoteScriptEvent) {
+		super.onNoteHit(ev);
+		
+		if (ev.note.noteData.getMustHitNote()) {
+		
+		if(!ModuleHandler.getModule("RaveHealthbar").scriptGet('oppmode')){
+			switch (ev.note.kind){
+			case 'normal':
+			Gfsection = false;
+			game.currentStage.getBoyfriend().playSingAnimation(ev.note.noteData.getDirection(), false);
+			game.currentStage.getBoyfriend().holdTimer = 0;
+			return;
+			case 'gf':
+			Gfsection = true;
+			game.currentStage.getGirlfriend().playSingAnimation(ev.note.noteData.getDirection(), false);
+			game.currentStage.getGirlfriend().holdTimer = 0;
+			return;
+			case 'duet':
+			Gfsection = false;
+			game.currentStage.getGirlfriend().playSingAnimation(ev.note.noteData.getDirection(), false);
+			game.currentStage.getGirlfriend().holdTimer = 0;
+			return;
+			}
+		  }
+		}
+		
+		if (!ev.note.noteData.getMustHitNote()) {
+		    
+			if(ModuleHandler.getModule("RaveHealthbar").scriptGet('oppmode')){
+			switch (ev.note.kind){
+			case 'normal':
+			Gfsection = false;
+			game.currentStage.getBoyfriend().playSingAnimation(ev.note.noteData.getDirection(), false);
+			game.currentStage.getBoyfriend().holdTimer = 0;
+			return;
+			case 'gf':
+			Gfsection = true;
+			game.currentStage.getGirlfriend().playSingAnimation(ev.note.noteData.getDirection(), false);
+			game.currentStage.getGirlfriend().holdTimer = 0;
+			return;
+			case 'duet':
+			Gfsection = false;
+			game.currentStage.getGirlfriend().playSingAnimation(ev.note.noteData.getDirection(), false);
+			game.currentStage.getGirlfriend().holdTimer = 0;
+			return;
+			}
+		  }
+		}
+		
+	}
+	
+   function onNoteMiss(ev:NoteScriptEvent) {
+   
+        super.onNoteMiss(ev);
+    
+        if (!ModuleHandler.getModule("RaveHealthbar").scriptGet('oppmode') && Gfsection) game.currentStage.getGirlfriend().playSingAnimation(ev.note.noteData.getDirection(), true);
+   
+   }
+   
+  function onNoteGhostMiss(ev:GhostMissNoteScriptEvent){
+  
+       super.onNoteGhostMiss(ev);
+	   
+       if (!ModuleHandler.getModule("RaveHealthbar").scriptGet('oppmode') && Gfsection) game.currentStage.getGirlfriend().playSingAnimation(ev.dir, true);
+  
+  }
+	
+   public function onSongRetry(event:ScriptEvent) {
+       super.onSongRetry(event);
+	   
+	   for (tween in eventTweens){
+	   
+	      tween.cancel();
+	   }
+	   
+	   eventTweens.push(FlxTween.tween(game, {currentCameraZoom: 0.98}, 1, {ease: FlxEase.INSTANT}));
+        
+       Gfsection = false;
+	   game.currentStage.getNamedProp('RikaTV').alpha = 0.0001;
+	   game.currentStage.getNamedProp('SweetTV').alpha = 0.0001;
+	   game.currentStage.getNamedProp('SourTV').alpha = 0.0001;
+	   game.currentStage.getNamedProp('CamLeft').alpha = 0.0001;
+	   game.currentStage.getNamedProp('introstatic').alpha = 0.0001;
+	   game.currentStage.getNamedProp('CamRight').alpha = 0.0001;
+	   game.tweenCameraToPosition(520, 400, 0);
+	   game.currentStage.getNamedProp('rika_chibi').alpha = 0.0001;
+	   game.currentStage.getNamedProp('RikaDanceBG').alpha = 0.0001;
+	   game.currentStage.getNamedProp('sweet_chibi').alpha = 0.0001;
+	   game.currentStage.getNamedProp('SweetDanceBG').alpha = 0.0001;
+	   game.currentStage.getNamedProp('sour_chibi').alpha = 0.0001;
+	   game.currentStage.getNamedProp('SourDanceBG').alpha = 0.0001;
+	   game.currentStage.getNamedProp('tvScreenOutro').alpha = 0.0001;
+	   game.currentStage.getNamedProp('outrostatic').alpha = 0.0001;
+	   titleCard.alpha = 0.0001;
+	   whitescreen.alpha = 0.0001;
+	   
+	   game.currentStage.getNamedProp('vcr').alpha = 0.0001;
+	   game.currentStage.getNamedProp('border').alpha = 0.0001;
+	   game.currentStage.getNamedProp('bottomscreens').alpha = 1;
+	   game.currentStage.getNamedProp('computerRoom').alpha = 1;
+	   game.currentStage.getNamedProp('buttonGlow').alpha = 1;
+	   game.currentStage.getNamedProp('tvScreens').alpha = 1;
+	}
+	
+	function onPause(event) {
+        super.onPause(event);
+		
+		for(tim in eventTimers) tim.active = false;
+		for(extim in extraTimers) extim.active = false;
+        for(twn in eventTweens) if(twn.active) if(!twn.finished) twn.active = false;
+    }
+    
+	function onResume(event) {
+        super.onResume(event);
+		
+		for(tim in eventTimers) tim.active = true;
+		for(extim in extraTimers) extim.active = true;
+        for(twn in eventTweens) if(!twn.active) if(!twn.finished) twn.active = true;
+    }
+
+	
+	
+	
+
+}

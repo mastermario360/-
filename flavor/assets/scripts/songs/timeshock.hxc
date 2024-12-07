@@ -1,0 +1,472 @@
+import funkin.play.character.SparrowCharacter;
+import funkin.play.character.CharacterType;
+import funkin.play.character.BaseCharacter;
+import funkin.play.PlayState;
+import flixel.tweens.FlxTween;
+import flixel.tweens.FlxEase;
+import flixel.util.FlxTimer;
+import funkin.graphics.FunkinSprite;
+import flixel.FlxG;
+import flixel.FlxSprite;
+import funkin.Paths;
+import flixel.text.FlxTextBorderStyle;
+import funkin.util.Constants;
+import funkin.play.Countdown;
+import funkin.util.FlxTweenUtil;
+import openfl.utils.Assets;
+import funkin.Conductor;
+import funkin.audio.FunkinSound;
+import funkin.play.song.Song;
+import funkin.play.components.HealthIcon;
+import funkin.play.notes.Strumline;
+import funkin.modding.module.ModuleHandler;
+import funkin.Preferences;
+
+class Timeshock extends Song {
+    var game;
+	var eventTweens:Array<FlxTween> = [];
+	var eventTimers:Array<FlxTimer> = [];
+	var extraTimers:Array<FlxTimer> = [];
+	var titleCard:FlxSprite;
+	var whitescreen:FlxSprite;
+	var blackscreen:FlxSprite;
+	
+	var fogSlowdown:Bool;
+	var charBacklight:Bool;
+	var curLightName:String = 'off';
+	var beatNum:Float = 1;
+	var particles:Bool;
+	
+
+
+	
+	public function new() {
+		super('timeshock');
+	}
+	  
+	public function onCreate(event:ScriptEvent):Void{
+	  super.onCreate(event);
+	  
+	  game = PlayState.instance;
+	  
+		FlxG.bitmap.add(Paths.image('characters/Sour-RAVE'));
+	    FlxG.bitmap.add(Paths.image('characters/Sweet-RAVE'));
+		FlxG.bitmap.add(Paths.image('tbd/closeup/RaveParticle'));
+		
+		titleCard = new FlxSprite();
+		titleCard.frames = Paths.getSparrowAtlas('tbd/titlecard/' + game.currentChart.songName);
+		titleCard.animation.addByPrefix('idle', 'card', 24, false);
+		titleCard.antialiasing = false;
+		titleCard.zIndex = 150;
+		titleCard.cameras = [game.camHUD];
+		titleCard.screenCenter();
+		titleCard.alpha = 0.001;
+		game.add(titleCard);
+		
+		whitescreen = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, 0xFFFFFFFF);
+		whitescreen.setGraphicSize(Std.int(whitescreen.width * 10));
+		whitescreen.zIndex = 100;
+		whitescreen.alpha = 0.0001;
+		game.add(whitescreen);
+		
+		blackscreen = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, 0xFF000000);
+		blackscreen.setGraphicSize(Std.int(blackscreen.width * 10));
+		blackscreen.zIndex = 100;
+		blackscreen.alpha = 0.0001;
+		game.add(blackscreen);
+		
+		game.currentStage.getNamedProp('vin').cameras = [game.camHUD];
+		game.currentStage.getNamedProp('transition').cameras = [game.camHUD];
+		game.currentStage.getNamedProp('transition').alpha = 1;
+		game.currentStage.getNamedProp('Rave').screenCenter();
+		game.currentStage.getNamedProp('spotlight').screenCenter();
+		
+		game.refresh();
+
+	
+		
+	
+	}
+	
+	function fetchAssetPaths():Array<String>
+	{
+		var results:Array<String> = super.fetchAssetPaths();
+		results.push(Paths.image('characters/Sour-RAVE'));
+		results.push(Paths.image('characters/Sweet-RAVE'));
+		results.push(Paths.image('tbd/closeup/RaveParticle'));
+		results.push(Paths.sound('RaveEngage'));
+		results.push(Paths.sound('RAVEFlash'));
+		return results;
+	}
+	
+	public function onCountdownStart(event:CountdownScriptEvent):Void
+	{
+	     super.onCountdownStart(event);
+		 
+		 ModuleHandler.getModule("RaveHealthbar").scriptCall("TweenRaveHuds",[0.0001, 0, false, FlxEase.INSTANT]);
+		 game.currentStage.getGirlfriend().visible = false;
+		 toggleLights(3);
+		 game.currentStage.getNamedProp('bglights').alpha = 0.0001;
+		 game.tweenCameraToPosition(727, 410, 0);
+		 game.currentStage.getDad().color = 0x00000000;
+		 game.currentStage.getBoyfriend().color = 0x00000000;
+		 blackscreen.alpha = 1;
+		 fogSlowdown = false;
+		 particles = false;
+		 
+}
+
+   function onUpdate(ev:UpdateScriptEvent):Void {
+	     super.onUpdate(ev); 
+		 
+		if (fogSlowdown) {
+		game.currentStage.getNamedProp('fogLeft').velocity.x = game.currentStage.getNamedProp('fogLeft').velocity.x - (ev.elapsed * 20);
+		game.currentStage.getNamedProp('fogRight').velocity.x = game.currentStage.getNamedProp('fogRight').velocity.x + (ev.elapsed * 20);
+        }
+		if (game.currentStage.getNamedProp('fogLeft').velocity.x <= 0){
+			game.currentStage.getNamedProp('fogLeft').velocity.x = 0;
+			game.currentStage.getNamedProp('fogRight').velocity.x = 0;
+			fogSlowdown = false;
+	       }
+	
+	}
+
+    public function onStepHit(ev:SongTimeScriptEvent){
+	  
+	super.onStepHit(ev);
+	
+	switch(ev.step){
+	case 1:
+	game.camGame.shake(0.02, 0.5);
+	eventTweens.push(FlxTween.tween(blackscreen, {alpha: 0.0001}, 0.1, {ease: FlxEase.cubeInOut}));
+	ModuleHandler.getModule("RaveHealthbar").scriptCall("TweenRaveHuds",[0.0001, 0, false, FlxEase.INSTANT]);
+	case 64:
+	game.camGame.shake(0.02, 0.5);
+	titleCard.alpha = 1;
+	titleCard.animation.play('idle');
+	case 96:
+	eventTweens.push(FlxTween.tween(titleCard, {alpha: 0.0001}, 1, {ease: FlxEase.linear}));
+	ModuleHandler.getModule("RaveHealthbar").scriptCall("TweenRaveHuds",[1, 0.5, true]);
+	case 122:
+	eventTweens.push(FlxTween.tween(whitescreen, {alpha: 1}, 0.55, {ease: FlxEase.cubeInOut}));
+	case 128:
+	game.currentStage.getNamedProp('fogLeft').alpha = 0.75;
+	game.currentStage.getNamedProp('fogRight').alpha = 0.75;
+	game.currentStage.getNamedProp('fogLeft').x = -1150;
+	game.currentStage.getNamedProp('fogLeft').velocity.x = 100;
+	game.currentStage.getNamedProp('fogRight').x = 1000;
+	game.currentStage.getNamedProp('fogRight').velocity.x = -100;
+	eventTweens.push(FlxTween.tween(whitescreen, {alpha: 0.0001}, 0.2, {ease: FlxEase.cubeInOut}));
+	case 138:
+	fogSlowdown = true;
+	case 256:
+	game.currentStage.getDad().color = 0xFFFFFF;
+	toggleLights(1);
+	case 384:
+	game.currentStage.getDad().color = 0x00000000;
+	game.currentStage.getBoyfriend().color = 0xFFFFFF;
+	toggleLights(0);
+	case 496:
+	eventTweens.push(FlxTween.tween(game.currentStage.getNamedProp('fogLeft'), {alpha: 0.0001}, 1.5, {ease: FlxEase.linear}));
+	eventTweens.push(FlxTween.tween(game.currentStage.getNamedProp('fogRight'), {alpha: 0.0001}, 1.5, {ease: FlxEase.linear}));
+	case 512:
+	StageLights('all');
+	game.currentStage.getNamedProp('bglights').alpha = 1;
+	game.currentStage.getDad().color = 0xFFFFFF;
+	toggleLights(2);
+	case 1024:
+	StageLights('sour');
+	toggleLights(1);
+	case 1032:
+	StageLights('sweet');
+	toggleLights(0);
+	case 1040:
+	StageLights('sour');
+	toggleLights(1);
+	case 1048:
+	StageLights('sweet');
+	toggleLights(0);
+	case 1056:
+	StageLights('sour');
+	toggleLights(1);
+	case 1064:
+	StageLights('sweet');
+	toggleLights(0);
+	case 1072:
+	StageLights('all');
+	toggleLights(2);
+	case 1152:
+	StageLights('sour');
+	case 1216:
+	StageLights('sweet');
+	case 1280:
+	StageLights('all');
+	case 1408:
+	StageLights('off');
+	toggleLights(0);
+	game.currentStage.getNamedProp('bglights').alpha = 0.0001;
+	game.currentStage.getDad().color = 0x00000000;
+	case 1680:
+	whitescreen.alpha = 1;
+	eventTweens.push(FlxTween.tween(whitescreen, {alpha: 0.0001}, 0.7, {ease: FlxEase.cubeInOut}));
+	toggleLights(2);
+	particles = true;
+	FlxG.sound.play(Paths.sound('RaveEngage'), 1);
+	eventTweens.push(FlxTween.tween(game.currentStage.getNamedProp('dramalight'), {alpha: 1}, 5, {ease: FlxEase.cubeInOut}));
+	game.currentStage.getDad().color = 0xFFFFFF;
+	case 1700:
+	eventTweens.push(FlxTween.tween(game.currentStage.getNamedProp('vin'), {alpha: 1}, 6, {ease: FlxEase.linear}));
+	case 1888:
+	eventTweens.push(FlxTween.tween(whitescreen, {alpha: 1}, 2.5, {ease: FlxEase.cubeInOut}));
+	case 1920:
+	ModuleHandler.getModule("CharSwitch").scriptCall("SwapOut",['dad' , 'sour-rave']);
+	ModuleHandler.getModule("CharSwitch").scriptCall("SwapOut",['bf' , 'sweet-RAVE']);
+	eventTweens.push(FlxTween.tween(game.currentStage.getBoyfriend().offset, {y: game.currentStage.getBoyfriend().offset.y + 200}, 4, {ease: FlxEase.sineInOut, type: 4}));
+	game.currentStage.getBoyfriend().y -= 80;
+	FlxG.sound.play(Paths.sound('RAVEFlash'), 1);
+	game.currentStage.getNamedProp('Rave').alpha = 1;
+	game.currentStage.getNamedProp('foreground').alpha = 0.0001;
+	game.currentStage.getNamedProp('spotlight').alpha = 1;
+	game.currentStage.getNamedProp('vin').alpha = 0.0001;
+	eventTweens.push(FlxTween.tween(whitescreen, {alpha: 0.001}, 0.7, {ease: FlxEase.cubeInOut}));
+	toggleLights(3);
+	case 1925:
+	game.currentStage.getNamedProp('Rave').alpha = 1;
+	game.currentStage.getNamedProp('spotlight').alpha = 1;
+	whitescreen.alpha = 0.0001;
+	game.currentStage.getNamedProp('vin').alpha = 0.0001;
+	case 2172:
+	blackscreen.alpha = 1;
+	whitescreen.alpha = 0.0001;
+	eventTweens.push(FlxTween.tween(game.currentStage.getNamedProp('transition'), {x: 1280}, 0.8, {ease: FlxEase.linear}));
+	case 2176:
+	StageLights('all');
+	toggleLights(0);
+	blackscreen.alpha = 0.0001;
+	game.currentStage.getNamedProp('foreground').alpha = 1;
+	game.currentStage.getNamedProp('bglights').alpha = 1;
+	game.currentStage.getNamedProp('Rave').alpha = 0.0001;
+	game.currentStage.getNamedProp('spotlight').alpha = 0.0001;
+	game.currentStage.getNamedProp('crowd0').alpha = 1;
+	game.currentStage.getNamedProp('crowd1').alpha = 1;
+	game.currentStage.getNamedProp('crowd2').alpha = 1;
+	case 2464:
+	whitescreen.alpha = 1;
+	eventTweens.push(FlxTween.tween(whitescreen, {alpha: 0.0001}, 0.6, {ease: FlxEase.cubeInOut}));
+	particles = false;
+	StageLights('off');
+	ModuleHandler.getModule("CharSwitch").scriptCall("SwapOut",['dad' , 'sour']);
+	ModuleHandler.getModule("CharSwitch").scriptCall("SwapOut",['bf' , 'sweet']);
+	eventTweens.push(FlxTween.tween(game.currentStage.getNamedProp('dramalight'), {alpha: 0.0001}, 3, {ease: FlxEase.cubeInOut}));
+	game.currentStage.getDad().color = 0x00000000;
+	game.currentStage.getBoyfriend().color = 0x00000000;
+	toggleLights(3);
+	game.currentStage.getNamedProp('bglights').alpha = 0.0001;
+	}
+	
+	
+	}
+	
+	public function onBeatHit(ev:SongTimeScriptEvent)
+	{
+	  super.onBeatHit(ev);
+	  
+	  if (ev.beat % 2 == 0){
+	  if(beatNum == 2){
+	  beatNum = 1;
+	  }else{
+	  beatNum = 2;
+	  }
+	  
+	  if (charBacklight){
+	  
+	  if (curLightName == 'sour'){
+	  
+	  if(beatNum == 2){
+	  game.currentStage.getNamedProp('backlightsour1').alpha = 0.0001;
+	  game.currentStage.getNamedProp('backlightsour2').alpha = 1;
+	  }else{
+	  game.currentStage.getNamedProp('backlightsour1').alpha = 1;
+	  game.currentStage.getNamedProp('backlightsour2').alpha = 0.0001;
+	  }
+	  }
+	  if (curLightName == 'sweet'){
+	  
+	  if(beatNum == 2){
+	  game.currentStage.getNamedProp('backlightsweet1').alpha = 0.0001;
+	  game.currentStage.getNamedProp('backlightsweet2').alpha = 1;
+	  }else{
+	  game.currentStage.getNamedProp('backlightsweet1').alpha = 1;
+	  game.currentStage.getNamedProp('backlightsweet2').alpha = 0.0001;
+	  }
+	  }
+	  
+	  
+	  }	
+	  
+	  }
+	  
+	  bopCrowd();
+	  
+	  if(particles){
+	  	  	var funniSprite:String = "tbd/closeup/RaveParticle";
+			var spriteArray:Array<String> = funniSprite.split(',');
+			var scale:Float = FlxG.random.float(0.6, 1);
+			
+			var parti:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image(spriteArray[FlxG.random.int(0, spriteArray.length - 1)]));
+			parti.antialiasing = true;
+			parti.x = FlxG.random.int(-500, 2000);
+			parti.y = game.currentStage.getBoyfriend().y + 500;
+			parti.scale.set(scale, scale);
+			game.add(parti);
+
+			FlxTween.tween(parti, {y: parti.y - 600, alpha: 0}, FlxG.random.float(1, 7), {
+			onComplete: function(tween:FlxTween){
+				parti.destroy();
+				parti = null;
+			}});
+		}
+	  
+	}
+	
+    function onNoteHit(ev:HitNoteScriptEvent) {
+		super.onNoteHit(ev);
+		
+	}
+	
+   function onNoteMiss(ev:NoteScriptEvent) {
+   
+        super.onNoteMiss(ev);
+   
+   }
+   
+  function onNoteGhostMiss(ev:GhostMissNoteScriptEvent){
+  
+       super.onNoteGhostMiss(ev);
+  
+  }
+	
+   public function onSongRetry(event:ScriptEvent) {
+       super.onSongRetry(event);
+	   
+	   for (tween in eventTweens){
+	   
+	      tween.cancel();
+	   }
+	   
+	   titleCard.alpha = 0.001;
+	   whitescreen.alpha = 0.0001;
+	   game.currentStage.getNamedProp('backlightsour1').alpha = 0.0001;
+	   game.currentStage.getNamedProp('backlightsour2').alpha = 0.0001;
+	   game.currentStage.getNamedProp('backlightsweet1').alpha = 0.0001;
+	   game.currentStage.getNamedProp('backlightsweet2').alpha = 0.0001;
+	   game.currentStage.getNamedProp('vin').alpha = 0.0001;
+	   game.currentStage.getNamedProp('backlightall').alpha = 0.0001;
+	   game.currentStage.getNamedProp('Rave').alpha = 0.0001;
+	   game.currentStage.getNamedProp('spotlight').alpha = 0.0001;
+	   game.currentStage.getNamedProp('crowd0').alpha = 0.0001;
+	   game.currentStage.getNamedProp('crowd1').alpha = 0.0001;
+	   game.currentStage.getNamedProp('crowd2').alpha = 0.0001;
+	   game.currentStage.getNamedProp('fogLeft').alpha = 0.001;
+	   game.currentStage.getNamedProp('fogRight').alpha = 0.001;
+	   game.currentStage.getNamedProp('foreground').alpha = 1;
+	   game.currentStage.getNamedProp('dramalight').alpha = 0.001;
+	   
+	}
+	
+	function onPause(event) {
+        super.onPause(event);
+		
+		for(tim in eventTimers) tim.active = false;
+		for(extim in extraTimers) extim.active = false;
+        for(twn in eventTweens) if(twn.active) if(!twn.finished) twn.active = false;
+    }
+    
+	function onResume(event) {
+        super.onResume(event);
+		
+		for(tim in eventTimers) tim.active = true;
+		for(extim in extraTimers) extim.active = true;
+        for(twn in eventTweens) if(!twn.active) if(!twn.finished) twn.active = true;
+    }
+	
+	function bopCrowd(){
+	    game.currentStage.getNamedProp('crowd0').y = -900;
+	    game.currentStage.getNamedProp('crowd1').y = -900;
+	    game.currentStage.getNamedProp('crowd2').y = -900;
+		
+		new FlxTimer().start(0.001, function(tmr:FlxTimer)
+			{
+			  eventTweens.push(FlxTween.tween(game.currentStage.getNamedProp('crowd0'), {y: -950}, 0.15, {ease: FlxEase.circOut}));
+			});
+		new FlxTimer().start(0.1, function(tmr:FlxTimer)
+			{
+			  eventTweens.push(FlxTween.tween(game.currentStage.getNamedProp('crowd1'), {y: -950}, 0.15, {ease: FlxEase.circOut}));
+			});
+		new FlxTimer().start(0.2, function(tmr:FlxTimer)
+			{
+			  eventTweens.push(FlxTween.tween(game.currentStage.getNamedProp('crowd2'), {y: -950}, 0.15, {ease: FlxEase.circOut}));
+			});
+	
+	
+	}
+	
+	function StageLights(Name:String){
+			
+			switch (Name){
+			
+			case 'off':
+			game.currentStage.getNamedProp('backlightsour1').alpha = 0.0001;
+	        game.currentStage.getNamedProp('backlightsour2').alpha = 0.0001;
+	        game.currentStage.getNamedProp('backlightsweet1').alpha = 0.0001;
+	        game.currentStage.getNamedProp('backlightsweet2').alpha = 0.0001;
+			game.currentStage.getNamedProp('backlightall').alpha = 0.0001;
+			charBacklight = false;
+			case 'sour':
+			game.currentStage.getNamedProp('backlightall').alpha = 0.0001;
+			game.currentStage.getNamedProp('backlightsweet1').alpha = 0.0001;
+	        game.currentStage.getNamedProp('backlightsweet2').alpha = 0.0001;
+			curLightName = 'sour';
+			charBacklight = true;
+			case 'sweet':
+			game.currentStage.getNamedProp('backlightall').alpha = 0.0001;
+			game.currentStage.getNamedProp('backlightsour1').alpha = 0.0001;
+	        game.currentStage.getNamedProp('backlightsour2').alpha = 0.0001;
+			curLightName = 'sweet';
+			charBacklight = true;
+			case 'all':
+			game.currentStage.getNamedProp('backlightsour1').alpha = 0.0001;
+	        game.currentStage.getNamedProp('backlightsour2').alpha = 0.0001;
+	        game.currentStage.getNamedProp('backlightsweet1').alpha = 0.0001;
+	        game.currentStage.getNamedProp('backlightsweet2').alpha = 0.0001;
+			game.currentStage.getNamedProp('backlightall').alpha = 1;
+			charBacklight = false;
+			
+			
+			
+			}
+	}
+
+	function toggleLights(num:Int){
+	
+	switch (num){
+	case 0:
+	game.currentStage.getNamedProp('leftLights').alpha = 0.0001;
+	game.currentStage.getNamedProp('rightLights').alpha = 1;
+	case 1:
+	game.currentStage.getNamedProp('leftLights').alpha = 1;
+	game.currentStage.getNamedProp('rightLights').alpha = 0.0001;
+	case 2:
+	game.currentStage.getNamedProp('leftLights').alpha = 1;
+	game.currentStage.getNamedProp('rightLights').alpha = 1;
+	case 3:
+	game.currentStage.getNamedProp('leftLights').alpha = 0.0001;
+	game.currentStage.getNamedProp('rightLights').alpha = 0.0001;
+	
+	
+	}
+	}
+	
+	
+
+}
