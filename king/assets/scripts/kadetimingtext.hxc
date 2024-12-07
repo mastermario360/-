@@ -1,0 +1,118 @@
+import funkin.play.PlayState;
+
+import funkin.modding.module.Module;
+import funkin.util.tools.StringTools;
+import funkin.util.Constants;
+import funkin.Paths;
+
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
+import flixel.text.FlxTextBorderStyle;
+import flixel.text.FlxText;
+import flixel.FlxSprite;
+import flixel.FlxG;
+import funkin.play.scoring.Scoring;
+
+import Std;
+import Math;
+
+class KadeTimingModule extends Module {
+	public function new() {
+		super("Kade Timing Text");
+	}
+
+	static var blackColor = 0xFF000000;
+	static var cyanColor = 0xFF00FFFF;
+	static var limeColor = 0xFF00FF00;
+	static var redColor = 0xFFFF0000;
+
+
+	var state;
+	var inPlay = false;
+	override function onStateChangeBegin(ev:ScriptEvent) {
+		super.onStateChangeBegin(ev);
+		inPlay = false;
+	}
+
+	override function onStateChangeEnd(ev:ScriptEvent) {
+		super.onStateChangeEnd(ev);
+
+		state = PlayState.instance;
+		inPlay = Std.isOfType(FlxG.state, PlayState);
+		if (state != null && inPlay) {
+			onPlayStateEnter();
+			return;
+		}
+	}
+
+	override function onDestroy(ev:ScriptEvent) {
+		super.onDestroy(ev);
+		cleanup();
+		state = null;
+	}
+
+	var timingText;
+
+	function cleanup() 
+	{
+		if (timingText != null) {
+			timingText.destroy();
+			timingText = null;
+		}
+	}
+
+	function onPlayStateEnter() {
+
+		cleanup();
+		timingText = new FlxText((FlxG.width * 0.474 + state.comboPopUps.offsets[0]) + 50,(FlxG.camera.height * 0.45 - 60 + state.comboPopUps.offsets[1]) + 40,0,"69ms");
+		timingText.setFormat(Paths.font("pixel.otf"),18,-1,"CENTER",FlxTextBorderStyle.OUTLINE_FAST);
+		timingText.borderColor = blackColor;
+		timingText.borderSize = 2.0;
+		timingText.zIndex = 801;
+		timingText.alpha = 0.001;
+		timingText.cameras = [state.camHUD];
+		state.add(timingText);
+	}
+
+	override function onNoteHit(event) {
+    	super.onNoteHit(event);
+
+		if (state == null || state.playerStrumline == null || !event.note.noteData.getMustHitNote()) // Check if the note sang is from the player (aka musthit field)
+			return;
+
+		var diff = state.conductorInUse.songPosition-event.note.strumTime;
+		FlxTween.cancelTweensOf(timingText);
+		
+		timingText.setPosition((FlxG.width * 0.474 + state.comboPopUps.offsets[0]) + 50,(FlxG.camera.height * 0.45 - 60 + state.comboPopUps.offsets[1]) + 40);
+		timingText.alpha = 1.0;
+		timingText.color = getRatingColor(diff);
+		timingText.text = truncateFloat(diff,2)+'ms';
+		
+		FlxTween.tween(timingText,{alpha:0.001},0.2,{startDelay:0.1});
+  	}
+
+	function getRatingColor(diff)
+	{
+		var daRating = Scoring.judgeNote(diff, "PBOT1");
+		if (daRating == null)
+			return -1;
+		switch(daRating){
+			case "bad":
+				return redColor;
+         	case "good":
+				return limeColor;
+         	case "shit":
+				return redColor;
+         	case "sick":
+           		return cyanColor;
+		}
+	}
+
+	function truncateFloat(number, precision)
+	{
+		var num = number;
+		num = num * Math.pow(10, precision);
+		num = Math.round(num) / Math.pow(10, precision);
+		return num;
+	}
+}

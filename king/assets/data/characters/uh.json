@@ -1,0 +1,107 @@
+{
+    "version": "1.0.0",
+    "name": "Annie",
+    "assetPath": "characters/Annie_assetss",
+    "singTime": 4,
+    "isPixel": false,
+    "scale": 1,
+    "healthIcon": {
+        "id": "annie",
+        "isPixel": false,
+        "flipX": false,
+        "scale": 1
+    },
+    "animations": [
+        {
+            "name": "singRIGHTmiss",
+            "prefix": "Pico NOTE LEFT miss",
+            "offsets": [
+                -60,
+                41
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singLEFTmiss",
+            "prefix": "Pico Note Right Miss",
+            "offsets": [
+                62,
+                64
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singDOWNmiss",
+            "prefix": "Pico Down Note MISS",
+            "offsets": [
+                210,
+                -28
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singUPmiss",
+            "prefix": "pico Up note miss",
+            "offsets": [
+                -19,
+                67
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singLEFT",
+            "prefix": "Annie Note Right0",
+            "offsets": [
+                65,
+                9
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "idle",
+            "prefix": "Annie Idle Dance",
+            "offsets": [
+                0,
+                0
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singRIGHT",
+            "prefix": "Annie NOTE LEFT0",
+            "offsets": [
+                -68,
+                -7
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singUP",
+            "prefix": "Annie Up note0",
+            "offsets": [
+                -29,
+                27
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singDOWN",
+            "prefix": "Annie Down Note0",
+            "offsets": [
+                200,
+                -70
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        }
+    ],
+    "flipX": true
+}

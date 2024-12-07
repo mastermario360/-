@@ -1,0 +1,56 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				215,
+				200
+			],
+			"anim": "firstDeath",
+			"fps": 24,
+			"name": "dead dies",
+			"indices": []
+		},
+		{
+			"loop": true,
+			"offsets": [
+				216,
+				200
+			],
+			"anim": "deathLoop",
+			"fps": 24,
+			"name": "dead Dead Loop",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				215,
+				200
+			],
+			"anim": "deathConfirm",
+			"fps": 42,
+			"name": "dead Dead confirm",
+			"indices": []
+		}
+	],
+	"image": "characters/bf-dead2",
+	"scale": 0.6,
+	"sing_duration": 6.1,
+	"healthicon": "bf",
+	"position": [
+		-500,
+		-20
+	],
+	"camera_position": [
+		-300,
+		225
+	],
+	"flip_x": true,
+	"no_antialiasing": false,
+	"healthbar_colors": [
+		49,
+		176,
+		209
+	]
+}

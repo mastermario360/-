@@ -1,0 +1,92 @@
+{
+	"version": "1.0.0",
+	"renderType": "multisparrow",
+	"offsets": [
+		0,
+		0
+	],
+	"danceEvery": 1,
+	"scale": 1,
+	"name": "King",
+	"flipX": false,
+	"cameraOffsets": [
+		0,
+		0
+	],
+	"singTime": 8,
+	"startingAnimation": "idle",
+	"isPixel": false,
+	"assetPath": "characters/king",
+	"healthIcon": {
+		"offsets": [
+			0,
+			0
+		],
+		"id": "king",
+		"flipX": false,
+		"isPixel": false,
+		"scale": 1
+	},
+	"animations": [
+		{
+			"flipY": false,
+			"offsets": [
+				0,
+				0
+			],
+			"frameRate": 24,
+			"prefix": "idle",
+			"flipX": false,
+			"looped": false,
+			"name": "idle"
+		},
+		{
+			"flipY": false,
+			"offsets": [
+				3,
+				-1
+			],
+			"frameRate": 24,
+			"prefix": "left",
+			"flipX": false,
+			"looped": false,
+			"name": "singLEFT"
+		},
+		{
+			"flipY": false,
+			"offsets": [
+				2,
+				2
+			],
+			"frameRate": 24,
+			"prefix": "down",
+			"flipX": false,
+			"looped": false,
+			"name": "singDOWN"
+		},
+		{
+			"flipY": false,
+			"offsets": [
+				6,
+				1
+			],
+			"frameRate": 24,
+			"prefix": "up",
+			"flipX": false,
+			"looped": false,
+			"name": "singUP"
+		},
+		{
+			"flipY": false,
+			"offsets": [
+				4,
+				5
+			],
+			"frameRate": 24,
+			"prefix": "right",
+			"flipX": false,
+			"looped": false,
+			"name": "singRIGHT"
+		}
+	]
+}

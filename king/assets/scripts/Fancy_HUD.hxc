@@ -1,0 +1,473 @@
+import funkin.modding.module.Module;
+import funkin.modding.IPlayStateScriptedClass;
+import funkin.util.Constants;
+import funkin.graphics.FunkinSprite;
+import funkin.audio.FunkinSound;
+import funkin.play.PlayState;
+import funkin.Preferences;
+import funkin.Conductor;
+import funkin.Paths;
+import flixel.FlxG;
+import flixel.text.FlxText;
+import flixel.text.FlxTextBorderStyle;
+import flixel.tweens.FlxTween;
+import flixel.tweens.FlxEase;
+import flixel.util.FlxSave;
+import flixel.util.FlxTimer;
+import Std;
+
+class Fancy_HUD extends Module implements IPlayStateScriptedClass {
+	// configurable stuff
+	private var fontSize:Int = 18;
+	private var fontName:String = 'PhantomMuff 1.5'; // should be actual font name
+	private var separator:String = ' | '; //' • ';
+
+	// code shit
+	private var scoreTxt:FlxText;
+	private var timeLeftTxt:FlxText;
+	private var timeRemainingTxt:FlxText;
+	private var timeBar:FunkinSprite;
+	private var misses:Int = 0;
+	private var hits:Int = 0;
+	private var combo:Int = 0;
+	private var accuracy:Float = 1;
+	private var judgements:Array<Int> = [0, 0, 0, 0, 0];
+	private var judgementsTxt:FlxText;
+
+	private var totalNotesHit:Float = 0;
+	private var ratingMods:Array<Float> = [1.1, 1, .67, .34, 0];
+
+	private var healthBarBG:FunkinSprite;
+	private var healthBar:FunkinSprite;
+
+	private var notecombo:FunkinSprite;
+	private var nextCheckTime:Int = 1500;
+	private var lastComboCheck:Int = 0;
+
+	private var underlay:FunkinSprite;
+
+	private var turnTimer:FlxText;
+	private var turnTimerEvents:Array<Float> = [];
+	private var turnTimerEventsIndex:Int = 0;
+	private var curTurnTimerTween:FlxTween;
+
+	private var save:FlxSave;
+	private var game:PlayState;
+	private var cond:Conductor;
+	private var downscroll:Bool;
+
+	function new() {
+		super('Fancy_HUD', 800);
+	}
+
+	function onStateChangeEnd(event) {
+		super.onStateChangeEnd(event);
+
+		if (!Std.isOfType(event.targetState, PlayState))
+			return;
+
+		game = PlayState.instance;
+		cond = Conductor.instance;
+		save = new FlxSave();
+		save.bind('FancyHUD', 'Ralsi');
+
+		Constants.STRUMLINE_X_OFFSET = (FlxG.width * .5 - PlayState.instance.playerStrumline.width) * .5;
+		game.playerStrumline.x = FlxG.width * .5 + Constants.STRUMLINE_X_OFFSET;
+		game.opponentStrumline.x = Constants.STRUMLINE_X_OFFSET;
+		downscroll = Preferences.downscroll;
+		regenObjects();
+		resetStats();
+		updateStuffs();
+		if (save.data.fancyPopups == true || save.data.centerPopups == true) {
+			game.comboPopUps.memberAdded.add((spr) -> {
+				if (save.data.fancyPopups == true) {
+					var keysplit = spr.graphic.key.split('/');
+					switch keysplit[keysplit.length - 1] { // hscript switches dont support OR operators (these: | )
+						case 'killer.png':
+							funkRatingSprites(spr);
+						case 'sick.png':
+							funkRatingSprites(spr);
+						case 'good.png':
+							funkRatingSprites(spr);
+						case 'killer-pixel.png':
+							funkRatingSprites(spr, true);
+						case 'sick-pixel.png':
+							funkRatingSprites(spr, true);
+						case 'good-pixel.png':
+							funkRatingSprites(spr, true);
+						default:
+							var eh = Math.random() * 15 * (Math.random() > .5 ? 1 : -1);
+							spr.angularVelocity = eh * 4 * Math.random();
+							spr.angle = -eh;
+					}
+				}
+				if (save.data.centerPopups == true) {
+					spr.x += 360;
+					spr.y += downscroll ? 140 : 70;
+				}
+			});
+		}
+	}
+
+	function onStateChangeBegin(event:Dynamic) { // fix for the stupid onStepHit call
+		super.onStateChangeBegin(event);
+		
+		if (!Std.isOfType(event.targetState, PlayState))
+			game = null;
+	}
+
+	function onSongRetry(event:Dynamic) {
+		super.onSongRetry(event);
+		resetStats();
+	}
+
+	function onUpdate(event:Dynamic) {
+		super.onUpdate(event);
+
+		if (game == null)
+			return;
+
+		if (underlay != null || turnTimer != null) {
+			var strums = [];
+			for (strum in game.playerStrumline.strumlineNotes.members)
+				strums.push(strum);
+			strums.sort((a, b) -> return a.x - b.x);
+			var strumlineX:Float = strums[0].x;
+			var strumlineW:Float = strums[strums.length-1].x - strumlineX + strums[strums.length-1].width;
+			if (underlay != null) {
+				underlay.x = strumlineX + strumlineW * .5;
+				underlay.scale.x = strumlineW + 16;
+			}
+			if (turnTimer != null) {
+				strums.sort((a, b) -> return a.y - b.y);
+				var strumlineY:Float = strums[0].y;
+				var strumlineH:Float = strums[strums.length-1].y - strumlineY + strums[strums.length-1].height;
+				turnTimer.x = strumlineX + strumlineW * .5 - 50;
+				turnTimer.y = strumlineY + strumlineH * .5 - fontSize + (downscroll ? -120 : 120);
+			}
+		}
+	}
+	
+	function onCountdownEnd(event:Dynamic) {
+		super.onCountdownEnd(event);
+
+		PlayState.instance.camCutscene.visible = true;
+	}
+
+	function onStepHit(event:Dynamic) {
+		if (game == null)
+			return;
+		updateStuffs();
+	}
+
+	function onNoteHit(event:Dynamic) {
+		super.onNoteHit(event);
+
+		var note = event.note;
+		if (!note.noteData.getMustHitNote())
+			return;
+		hits += 1;
+		combo = event.comboCount;
+		var judgementID = ['killer', 'sick', 'good', 'bad', 'shit'].indexOf(event.judgement);
+		judgements[judgementID] += 1;
+		if (judgementsTxt != null)
+			updateJudgementsText();
+		if (save.data.scoreBounce == true) {
+			FlxTween.cancelTweensOf(scoreTxt.scale);
+			scoreTxt.scale.x = scoreTxt.scale.y = 1.1;
+			FlxTween.tween(scoreTxt.scale, {x: 1, y: 1}, .5, {ease: FlxEase.quartOut});
+		}
+		// accuracy calculation bullshittery
+		totalNotesHit += save.data.accuracyType == 'Psych' ? ratingMods[judgementID] : event.score / 500;
+		nextCheckTime = cond.songPosition + 1500;
+	}
+
+	function onNoteMiss(event:Dynamic) {
+		super.onNoteMiss(event);
+		
+		misses += 1;
+		combo = event.comboCount;
+		lastComboCheck = combo;
+		nextCheckTime = cond.songPosition + 1500;
+		if (judgementsTxt != null)
+			updateJudgementsText();
+	}
+
+	function onPause(event:Dynamic) {
+		super.onPause(event);
+
+		if (curTurnTimerTween != null)
+			curTurnTimerTween.active = false;
+	}
+	function onResume(event:Dynamic) {
+		super.onResume(event);
+
+		if (curTurnTimerTween != null)
+			curTurnTimerTween.active = true;
+	}
+
+	function onDestroy(event:Dynamic) {
+		super.onDestroy(event);
+
+		if (game != null) {
+			scoreTxt.destroy();
+			scoreTxt = null;
+			timeLeftTxt.destroy();
+			timeLeftTxt = null;
+			timeRemainingTxt.destroy();
+			timeRemainingTxt = null;
+			timeBar.destroy();
+			timeBar = null;
+		}
+		if (judgementsTxt != null) {
+			judgementsTxt.destroy();
+		}
+		if (healthBarBG != null) {
+			healthBarBG.destroy();
+			healthBarBG = null;
+		}
+		if (healthBar != null) {
+			healthBar.destroy();
+			healthBar = null;
+		}
+		if (notecombo != null) {
+			notecombo.destroy();
+			notecombo = null;
+		}
+		if (underlay != null) {
+			underlay.destroy();
+			underlay = null;
+		}
+		if (turnTimer != null) {
+			turnTimer.destroy();
+			turnTimer = null;
+		}
+	}
+
+	function regenObjects() {
+		game.scoreText.active = false;
+		game.scoreText.visible = false;
+		game.remove(game.scoreText);
+		// game.scoreText.destroy();
+		// game.scoreText = null;
+		scoreBG = new FunkinSprite(FlxG.width * .5, FlxG.height - fontSize - 20).makeGraphic(1, 1, 0x99000000);
+		scoreBG.setGraphicSize(FlxG.width * 2, fontSize + 12);
+		scoreBG.origin.x = .5;
+		scoreBG.origin.y = 0;
+		scoreBG.camera = game.camHUD;
+		
+		scoreTxt = new FlxText(0, FlxG.height - fontSize - 16, FlxG.width, 'Score: '+game.songScore+separator+'Hits: '+hits+separator+'Combo: '+combo+separator+'Misses: '+misses, fontSize);
+		scoreTxt.setFormat(fontName, fontSize, 0xFFFFFFFF, 'center', FlxTextBorderStyle.OUTLINE, 0xFF000000);
+		scoreTxt.borderSize = 2;
+		scoreTxt.camera = game.camHUD;
+		scoreTxt.zIndex = game.scoreText.zIndex;
+		scoreBG.zIndex = scoreTxt.zIndex - 1;
+
+		timeLeftTxt = new FlxText(32, FlxG.height - fontSize - 16, 100, toTimeString(0), fontSize);
+		timeLeftTxt.setFormat(fontName, fontSize, 0xFFFFFFFF, 'left', FlxTextBorderStyle.OUTLINE, 0xFF000000);
+		timeLeftTxt.borderSize = 2;
+		timeLeftTxt.camera = game.camHUD;
+		timeLeftTxt.zIndex = scoreTxt.zIndex;
+
+		timeRemainingTxt = new FlxText(FlxG.width - 132, FlxG.height - fontSize - 16, 100, '-'+toTimeString(0), fontSize);
+		timeRemainingTxt.setFormat(fontName, fontSize, 0xFFFFFFFF, 'right', FlxTextBorderStyle.OUTLINE, 0xFF000000);
+		timeRemainingTxt.borderSize = 2;
+		timeRemainingTxt.camera = game.camHUD;
+		timeRemainingTxt.zIndex = scoreTxt.zIndex;
+		game.add(scoreBG);
+		game.add(scoreTxt);
+		game.add(timeLeftTxt);
+		game.add(timeRemainingTxt);
+
+		timeBar = new FunkinSprite(0, FlxG.height - 4).makeGraphic(1, 1, 0xFFFFFFFF);
+		timeBar.scale.y = 4;
+		timeBar.camera = game.camCutscene;
+		timeBar.origin.x = timeBar.origin.y = 0;
+		game.add(timeBar);
+
+		if (save.data.showJudgements == true) {
+			judgementsTxt = new FlxText(FlxG.width - 216, FlxG.height * .5, 200, 'Sick: 0\nGood: 0\nBad: 0\nShit: 0\nMiss: 0', fontSize);
+			judgementsTxt.setFormat(fontName, fontSize, 0xFFFFFFFF, 'right', FlxTextBorderStyle.OUTLINE, 0xFF000000);
+			judgementsTxt.y -= judgementsTxt.height * .5;
+			judgementsTxt.camera = game.camHUD;
+			judgementsTxt.zIndex = scoreTxt.zIndex - 1;
+			game.add(judgementsTxt);
+		}
+
+		if (save.data.healthBarBGStyle == null)
+			save.data.healthBarBGStyle = 'Splash';
+		if (save.data.healthBarBGStyle != 'Default') {
+			game.healthBarBG.active = false;
+			game.healthBarBG.visible = false;
+			// game.healthBar.active = false;
+			game.healthBar.visible = false;
+
+			healthBarBG = new FunkinSprite(FlxG.width * .5, game.healthBar.y + 5).loadTexture('fancy-healthbars/'+save.data.healthBarBGStyle);
+			healthBarBG.x -= healthBarBG.width * .5;
+			healthBarBG.y -= healthBarBG.height * .5;
+			healthBarBG.color = Constants.COLOR_HEALTH_BAR_RED;
+			healthBarBG.origin.x = 1;
+			healthBarBG.origin.y = .5;
+			healthBarBG.zIndex = game.healthBarBG.zIndex;
+			healthBarBG.camera = game.camHUD;
+			healthBar = new FunkinSprite(game.healthBar.x + game.healthBar.barWidth, game.healthBar.y).makeGraphic(game.healthBar.barWidth, 10, Constants.COLOR_HEALTH_BAR_GREEN);
+			healthBar.origin.x = 1;
+			healthBar.zIndex = game.healthBar.zIndex;
+			healthBar.camera = game.camHUD;
+			game.add(healthBarBG);
+			game.add(healthBar);
+		}
+
+		if (save.data.comboSplash == true) {
+			notecombo = new FunkinSprite(-48, FlxG.height * .375).loadSparrow('notecombo-splash');
+			notecombo.animation.addByPrefix('appear', 'notecombo', 24, false);
+			notecombo.zIndex = 1000;
+			notecombo.camera = game.camHUD;
+			game.add(notecombo);
+		}
+
+		if (save.data.underlay) {
+			underlay = new FunkinSprite(game.playerStrumline.x + game.playerStrumline.width * .5 - 8, -FlxG.height).makeGraphic(1, 1, 0xFF000000);
+			underlay.setGraphicSize(game.playerStrumline.width + 16, FlxG.height * 3);
+			underlay.origin.x = .5;
+			underlay.origin.y = .33333333;
+			underlay.alpha = .33;
+			underlay.zIndex = 7;
+			underlay.camera = game.camHUD;
+			game.add(underlay);
+		}
+
+		if (save.data.turnTimer) {
+			turnTimerEvents = [];
+			var lastNoteTime:Float = 0;
+			for (note in game.playerStrumline.noteData) { // mapping the delays
+				if (note.time > lastNoteTime + 3000) {
+					turnTimerEvents.push(lastNoteTime);
+					turnTimerEvents.push(note.time - lastNoteTime);
+				}
+				lastNoteTime = note.time;
+			}
+			trace(turnTimerEvents);
+			turnTimer = new FlxText(0, 0, 100, '00:00', fontSize);
+			turnTimer.setFormat(fontName, fontSize+4, 0xFFFFFFFF, 'center', FlxTextBorderStyle.OUTLINE, 0xFF000000);
+			turnTimer.borderSize = 2;
+			turnTimer.camera = game.camHUD;
+			turnTimer.zIndex = game.playerStrumline.strumlineNotes.zIndex - 1;
+			turnTimer.visible = false;
+			game.add(turnTimer);
+		}
+
+		game.refresh();
+	}
+
+	function toTimeString(ms:Float) {
+		if (ms < 0)
+			return '00:00';
+		ms *= .001;
+		var m = Math.floor(ms / 60);
+		var s = Math.floor(ms % 60);
+		if (m < 10) m = '0'+m;
+		if (s < 10) s = '0'+s;
+		return m+':'+s;
+	}
+
+	function updateStuffs() {
+		accuracy = totalNotesHit / ((hits + misses) > 0 ? (hits + misses) : 1);
+		scoreTxt.text = 'Score: ' + game.songScore + separator + (save.data.hitsCounter == true ? 'Hits: ' + hits + separator : '') + 'Combo: ' + combo + separator + (save.data.displayMisses == true ? (save.data.missesToComboBreak == true ? 'Combo Breaks: ' : 'Misses: ') + misses + separator : '') + 'Accuracy: ' + (Math.ceil(accuracy * 10000) / 100) + '%';
+		timeLeftTxt.text = toTimeString(cond.songPosition);
+		timeRemainingTxt.text = '-'+toTimeString(game.currentSongLengthMs - cond.songPosition);
+		timeBar.scale.x = (cond.songPosition / game.currentSongLengthMs) * FlxG.width;
+		if (save.data.healthBarBGStyle != 'Default')
+			healthBar.scale.x = -game.healthLerp * .5;
+
+		if (notecombo != null && nextCheckTime < cond.songPosition) {
+			if (combo - lastComboCheck > 19) {
+				notecombo.animation.play('appear');
+				FunkinSound.playOnce(Paths.sound('comboSound'), .7);
+
+				var comboStreak = Std.string(Math.min(combo - lastComboCheck, 999));
+				if (comboStreak.length < 3)
+					comboStreak = '0' + comboStreak;
+				new FlxTimer().start(.2, (_)->{
+					var width:Float = 0;
+					for (i in 0...comboStreak.length) {
+						var num = comboStreak.charAt(i);
+						var spr = FunkinSprite.create(notecombo.x + width + 500, notecombo.y + 160, 'num'+num);
+						spr.scale.x = spr.scale.y = .5;
+						spr.updateHitbox();
+						width += spr.width - 4;
+						spr.acceleration.y = FlxG.random.int(250, 300);
+						spr.velocity.y -= FlxG.random.int(130, 150);
+						spr.velocity.x = FlxG.random.float(-7, 7);
+						spr.camera = game.camHUD;
+						var complet = function (_) {
+							game.remove(spr);
+							spr.destroy();
+						}
+						FlxTween.tween(spr, {alpha: 0}, 1, {startDelay: .5, onComplete: complet});
+						game.add(spr);
+					}
+				});
+			}
+			lastComboCheck = combo;
+			nextCheckTime += 1500;
+		}
+
+		if (turnTimer != null) {
+			var nextTurnTimerEvent = turnTimerEvents[turnTimerEventsIndex];
+			if (nextTurnTimerEvent != null && cond.songPosition > nextTurnTimerEvent) {
+				var waitTimeLength = turnTimerEvents[turnTimerEventsIndex+1];
+				curTurnTimerTween = FlxTween.num(waitTimeLength, 1000, waitTimeLength * .001 - 1, {onStart: (_) -> {
+					turnTimer.visible = true;
+				}, onComplete: () -> {
+					turnTimer.visible = false;
+					curTurnTimerTween = null;
+				}}, (num) -> {
+					turnTimer.text = toTimeString(num);
+				});
+				turnTimerEventsIndex += 2;
+			}
+		}
+	}
+	function updateJudgementsText() {
+		judgementsTxt.text = 'Sick: ' + judgements[1] + '\nGood: ' + judgements[2] + '\nBad: ' + judgements[3] + '\nShit: ' + judgements[4] + '\nMiss: ' + misses;
+	}
+	
+	function resetStats() {
+		misses = 0;
+		hits = 0;
+		combo = 0;
+		accuracy = 1;
+		judgements = [0, 0, 0, 0, 0];
+		totalNotesHit = 0;
+		nextCheckTime = 1500;
+		lastComboCheck = 0;
+		if (turnTimer != null) {
+			turnTimerEventsIndex = 0;
+			if (curTurnTimerTween != null) {
+				curTurnTimerTween.cancel();
+				curTurnTimerTween = null;
+				turnTimer.visible = false;
+			}
+		}
+		
+		if (judgementsTxt != null)
+			updateJudgementsText();
+	}
+
+	function funkRatingSprites(spr:FunkinSprite, isPixel:Bool) {
+		if (isPixel == null)
+			isPixel = false;
+		spr.angle = (Math.random() * 15 + 15) * (Math.random() > .5 ? 1 : -1);
+		var startscale = .1;
+		var endscale = .6;
+		if (isPixel) {
+			startscale *= Constants.PIXEL_ART_SCALE;
+			endscale *= Constants.PIXEL_ART_SCALE;
+		}
+		spr.width *= startscale * .65;
+		spr.height *= startscale * .65;
+		FlxTween.tween(spr, {angle: 0}, .5, {ease: FlxEase.backOut});
+		FlxTween.tween(spr.scale, {x: endscale, y: endscale}, .5, {ease: FlxEase.backOut});
+	}
+}

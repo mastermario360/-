@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="bf-dead2.png">
+<SubTexture name="dead dies0000" x="0.0" y="0.0" width="1486.0" height="1198.5" frameX="-293.5" frameY="0.0" frameWidth="2048.0" frameHeight="1198.5" />
+<SubTexture name="dead dies0001" x="0.0" y="0.0" width="1486.0" height="1198.5" frameX="-293.5" frameY="0.0" frameWidth="2048.0" frameHeight="1198.5" />
+<SubTexture name="dead dies0002" x="1486.0" y="0.0" width="1481.5" height="1198.5" frameX="-298.0" frameY="0.0" frameWidth="2048.0" frameHeight="1198.5" />
+<SubTexture name="dead dies0003" x="0.0" y="1198.5" width="1486.5" height="1198.5" frameX="-293.0" frameY="0.0" frameWidth="2048.0" frameHeight="1198.5" />
+<SubTexture name="dead dies0004" x="0.0" y="1198.5" width="1486.5" height="1198.5" frameX="-293.0" frameY="0.0" frameWidth="2048.0" frameHeight="1198.5" />
+<SubTexture name="dead dies0005" x="2967.5" y="0.0" width="1483.5" height="1198.5" frameX="-296.0" frameY="0.0" frameWidth="2048.0" frameHeight="1198.5" />
+<SubTexture name="dead dies0006" x="2967.5" y="0.0" width="1483.5" height="1198.5" frameX="-296.0" frameY="0.0" frameWidth="2048.0" frameHeight="1198.5" />
+<SubTexture name="dead dies0007" x="2967.5" y="1198.5" width="1481.0" height="1198.5" frameX="-298.5" frameY="0.0" frameWidth="2048.0" frameHeight="1198.5" />
+<SubTexture name="dead dies0008" x="2967.5" y="1198.5" width="1481.0" height="1198.5" frameX="-298.5" frameY="0.0" frameWidth="2048.0" frameHeight="1198.5" />
+<SubTexture name="dead dies0009" x="1486.5" y="1198.5" width="1480.5" height="1198.5" frameX="-299.0" frameY="0.0" frameWidth="2048.0" frameHeight="1198.5" />
+<SubTexture name="dead dies0010" x="1486.5" y="1198.5" width="1480.5" height="1198.5" frameX="-299.0" frameY="0.0" frameWidth="2048.0" frameHeight="1198.5" />
+<SubTexture name="dead dies0011" x="0.0" y="2397.0" width="1478.0" height="1198.5" frameX="-301.5" frameY="0.0" frameWidth="2048.0" frameHeight="1198.5" />
+<SubTexture name="dead dies0012" x="0.0" y="2397.0" width="1478.0" height="1198.5" frameX="-301.5" frameY="0.0" frameWidth="2048.0" frameHeight="1198.5" />
+<SubTexture name="dead dies0013" x="1478.0" y="2397.0" width="1479.0" height="1198.5" frameX="-300.5" frameY="0.0" frameWidth="2048.0" frameHeight="1198.5" />
+<SubTexture name="dead dies0014" x="1478.0" y="2397.0" width="1479.0" height="1198.5" frameX="-300.5" frameY="0.0" frameWidth="2048.0" frameHeight="1198.5" />
+<SubTexture name="dead dies0015" x="2957.0" y="2397.0" width="1218.5" height="1055.0" frameX="-561.0" frameY="-143.5" frameWidth="2048.0" frameHeight="1198.5" />
+<SubTexture name="dead dies0016" x="2957.0" y="2397.0" width="1218.5" height="1055.0" frameX="-561.0" frameY="-143.5" frameWidth="2048.0" frameHeight="1198.5" />
+<SubTexture name="dead Dead Loop0000" x="2957.0" y="2397.0" width="1218.5" height="1055.0" frameX="-561.0" frameY="-143.5" frameWidth="2048.0" frameHeight="1198.5" />
+<SubTexture name="dead Dead Loop0001" x="2957.0" y="2397.0" width="1218.5" height="1055.0" frameX="-561.0" frameY="-143.5" frameWidth="2048.0" frameHeight="1198.5" />
+<SubTexture name="dead Dead Loop0002" x="2957.0" y="2397.0" width="1218.5" height="1055.0" frameX="-561.0" frameY="-143.5" frameWidth="2048.0" frameHeight="1198.5" />
+<SubTexture name="dead Dead Loop0003" x="2957.0" y="2397.0" width="1218.5" height="1055.0" frameX="-561.0" frameY="-143.5" frameWidth="2048.0" frameHeight="1198.5" />
+<SubTexture name="dead Dead confirm0000" x="2957.0" y="2397.0" width="1218.5" height="1055.0" frameX="-561.0" frameY="-143.5" frameWidth="2048.0" frameHeight="1198.5" />
+<SubTexture name="dead Dead confirm0001" x="2957.0" y="2397.0" width="1218.5" height="1055.0" frameX="-561.0" frameY="-143.5" frameWidth="2048.0" frameHeight="1198.5" />
+<SubTexture name="dead Dead confirm0002" x="4451.0" y="0.0" width="1218.5" height="1055.0" frameX="-561.0" frameY="-143.5" frameWidth="2048.0" frameHeight="1198.5" />
+<SubTexture name="dead Dead confirm0003" x="4451.0" y="0.0" width="1218.5" height="1055.0" frameX="-561.0" frameY="-143.5" frameWidth="2048.0" frameHeight="1198.5" />
+<SubTexture name="dead Dead confirm0004" x="4451.0" y="1055.0" width="1218.5" height="1055.0" frameX="-561.0" frameY="-143.5" frameWidth="2048.0" frameHeight="1198.5" />
+<SubTexture name="dead Dead confirm0005" x="4451.0" y="1055.0" width="1218.5" height="1055.0" frameX="-561.0" frameY="-143.5" frameWidth="2048.0" frameHeight="1198.5" />
+<SubTexture name="dead Dead confirm0006" x="4451.0" y="2110.0" width="1218.5" height="1055.0" frameX="-561.0" frameY="-143.5" frameWidth="2048.0" frameHeight="1198.5" />
+<SubTexture name="dead Dead confirm0007" x="4451.0" y="2110.0" width="1218.5" height="1055.0" frameX="-561.0" frameY="-143.5" frameWidth="2048.0" frameHeight="1198.5" />
+<SubTexture name="dead Dead confirm0008" x="0.0" y="3595.5" width="1218.5" height="1055.0" frameX="-561.0" frameY="-143.5" frameWidth="2048.0" frameHeight="1198.5" />
+<SubTexture name="dead Dead confirm0009" x="0.0" y="3595.5" width="1218.5" height="1055.0" frameX="-561.0" frameY="-143.5" frameWidth="2048.0" frameHeight="1198.5" />
+<SubTexture name="dead Dead confirm0010" x="1218.5" y="3595.5" width="1218.5" height="1055.0" frameX="-561.0" frameY="-143.5" frameWidth="2048.0" frameHeight="1198.5" />
+<SubTexture name="dead Dead confirm0011" x="2437.0" y="3595.5" width="1218.5" height="1055.0" frameX="-561.0" frameY="-143.5" frameWidth="2048.0" frameHeight="1198.5" />
+<SubTexture name="dead Dead confirm0012" x="2437.0" y="3595.5" width="1218.5" height="1055.0" frameX="-561.0" frameY="-143.5" frameWidth="2048.0" frameHeight="1198.5" />
+<SubTexture name="dead Dead confirm0013" x="3655.5" y="3595.5" width="1218.5" height="1055.0" frameX="-561.0" frameY="-143.5" frameWidth="2048.0" frameHeight="1198.5" />
+<SubTexture name="dead Dead confirm0014" x="3655.5" y="3595.5" width="1218.5" height="1055.0" frameX="-561.0" frameY="-143.5" frameWidth="2048.0" frameHeight="1198.5" />
+<SubTexture name="dead Dead confirm0015" x="5669.5" y="0.0" width="1218.5" height="1055.0" frameX="-561.0" frameY="-143.5" frameWidth="2048.0" frameHeight="1198.5" />
+<SubTexture name="dead Dead confirm0016" x="5669.5" y="0.0" width="1218.5" height="1055.0" frameX="-561.0" frameY="-143.5" frameWidth="2048.0" frameHeight="1198.5" />
+</TextureAtlas>
