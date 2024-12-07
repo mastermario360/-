@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0",
+  "name": "SkyAnnoyed",
+  "assetPath": "dialogue/portraits/port_an",
+  "flipX": false,
+  "isPixel": false,
+  "scale": 1,
+  "offsets": [200, 155],
+  "animations": [
+    {
+      "name": "talk",
+      "prefix": "portrait an",
+      "offsets": [0, 0],
+      "frameRate": 24
+    }
+  ]
+}

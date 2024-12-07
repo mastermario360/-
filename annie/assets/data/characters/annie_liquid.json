@@ -1,0 +1,137 @@
+{
+    "version": "1.0.0",
+    "name": "Annie_liquid",
+    "assetPath": "characters/Annie_liquid",
+    "singTime": 4,
+    "isPixel": false,
+    "scale": 1,
+    "healthIcon": {
+        "id": "annie_liquid",
+        "isPixel": false,
+        "flipX": false,
+        "scale": 1
+    },
+    "animations": [
+        {
+            "name": "singUP-loop",
+            "prefix": "monster up note",
+            "offsets": [
+                -20,
+                50
+            ],
+            "frameRate": 24,
+            "frameIndices": [
+                21,
+                22,
+                23
+            ]
+        },
+        {
+            "name": "singDOWN-loop",
+            "prefix": "monster down",
+            "offsets": [
+                -40,
+                -94
+            ],
+            "frameRate": 24,
+            "frameIndices": [
+                27,
+                28,
+                29
+            ]
+        },
+        {
+            "name": "singRIGHT-loop",
+            "prefix": "Monster Right note",
+            "offsets": [
+                -51,
+                0
+            ],
+            "frameRate": 24,
+            "frameIndices": [
+                12,
+                13,
+                14
+            ]
+        },
+        {
+            "name": "singLEFT-loop",
+            "prefix": "Monster left note",
+            "offsets": [
+                -30,
+                0
+            ],
+            "frameRate": 24,
+            "frameIndices": [
+                17,
+                18,
+                19
+            ]
+        },
+        {
+            "name": "idle-loop",
+            "prefix": "monster idle",
+            "offsets": [
+                1,
+                0
+            ],
+            "frameRate": 24,
+            "frameIndices": [
+                12,
+                13,
+                14
+            ]
+        },
+        {
+            "name": "idle",
+            "prefix": "Annie idle",
+            "offsets": [
+                1,
+                0
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singLEFT",
+            "prefix": "Annie left note",
+            "offsets": [
+                -30,
+                0
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singUP",
+            "prefix": "Annie up note",
+            "offsets": [
+                -20,
+                50
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singRIGHT",
+            "prefix": "Annie Right note",
+            "offsets": [
+                -51,
+                0
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        },
+        {
+            "name": "singDOWN",
+            "prefix": "Annie down",
+            "offsets": [
+                -40,
+                -94
+            ],
+            "frameRate": 24,
+            "frameIndices": []
+        }
+    ],
+    "flipX": false
+}
