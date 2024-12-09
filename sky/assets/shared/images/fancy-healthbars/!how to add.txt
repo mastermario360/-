@@ -1,3 +1,0 @@
-use the "default" one as a template, otherwise you will have to edit the offsets
-you can find it in the "source-art" folder in the root of the this mod folder
-once you're done making one, just export it to this folder and name it as you would want it to appear in the options
